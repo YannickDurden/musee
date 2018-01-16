@@ -58,29 +58,11 @@ class Mark
     private $questions;
 
     /**
-     * Mark constructor.
-     * @param $id
-     * @param $name
-     * @param $coordinateX
-     * @param $coordinateY
-     * @param $image
-     * @param $medias
-     * @param $description
-     * @param $routes
-     * @param $questions
+     * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="marks")
      */
-    public function __construct($id, $name, $coordinateX, $coordinateY, $image, $medias, $description, $routes, $questions)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->coordinateX = $coordinateX;
-        $this->coordinateY = $coordinateY;
-        $this->image = $image;
-        $this->medias = $medias;
-        $this->description = $description;
-        $this->routes = $routes;
-        $this->questions = $questions;
-    }
+    private $museum;
+
+
 
 
     /**
@@ -226,6 +208,24 @@ class Mark
     {
         $this->questions = $questions;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMuseum()
+    {
+        return $this->museum;
+    }
+
+    /**
+     * @param mixed $museum
+     */
+    public function setMuseum($museum): void
+    {
+        $this->museum = $museum;
+    }
+
+
 
 
 

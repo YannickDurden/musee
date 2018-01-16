@@ -34,22 +34,7 @@ class Answer
      */
     private $correct;
 
-    /**
-     * Answer constructor.
-     * @param $id
-     * @param $user
-     * @param $question
-     * @param $value
-     * @param $correct
-     */
-    public function __construct($id, $user, $question, $value, $correct)
-    {
-        $this->id = $id;
-        $this->user = $user;
-        $this->question = $question;
-        $this->value = $value;
-        $this->correct = $correct;
-    }
+
 
     /**
      * @return mixed

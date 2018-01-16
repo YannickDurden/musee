@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -62,30 +63,21 @@ class Museum
     private $routes;
 
     /**
-     * Museum constructor.
-     * @param $id
-     * @param $name
-     * @param $website
-     * @param $address
-     * @param $phoneNumber
-     * @param $facebook
-     * @param $twitter
-     * @param $instagram
-     * @param $youtube
-     * @param $routes
+     * @ORM\Column(type="string", length=255)
      */
-    public function __construct($id, $name, $website, $address, $phoneNumber, $facebook, $twitter, $instagram, $youtube, $routes)
+    private $map;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="marks")
+     */
+    private $marks;
+
+    /**
+     * Museum constructor.
+     */
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->website = $website;
-        $this->address = $address;
-        $this->phoneNumber = $phoneNumber;
-        $this->facebook = $facebook;
-        $this->twitter = $twitter;
-        $this->instagram = $instagram;
-        $this->youtube = $youtube;
-        $this->routes = $routes;
+        $this->marks = new ArrayCollection();
     }
 
 
@@ -248,6 +240,24 @@ class Museum
     {
         $this->routes = $routes;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param mixed $map
+     */
+    public function setMap($map): void
+    {
+        $this->map = $map;
+    }
+
+
 
 
 }

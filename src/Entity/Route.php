@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -50,23 +51,11 @@ class Route
 
     /**
      * Route constructor.
-     * @param $id
-     * @param $name
-     * @param $duration
-     * @param $category
-     * @param $museum
-     * @param $marks
-     * @param $scores
      */
-    public function __construct($id, $name, $duration, $category, $museum, $marks, $scores)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->duration = $duration;
-        $this->category = $category;
-        $this->museum = $museum;
-        $this->marks = $marks;
-        $this->scores = $scores;
+        $this->marks = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
 

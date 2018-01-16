@@ -51,28 +51,6 @@ class User
      */
     private $answers;
 
-    /**
-     * User constructor.
-     * @param $id
-     * @param $firstName
-     * @param $lastName
-     * @param $email
-     * @param $newsletter
-     * @param $role
-     * @param $scores
-     * @param $answers
-     */
-    public function __construct($id, $firstName, $lastName, $email, $newsletter, $role, $scores, $answers)
-    {
-        $this->id = $id;
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->email = $email;
-        $this->newsletter = $newsletter;
-        $this->role = $role;
-        $this->scores = $scores;
-        $this->answers = $answers;
-    }
 
     /**
      * @return mixed

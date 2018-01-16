@@ -31,20 +31,6 @@ class Score
      */
     private $route;
 
-    /**
-     * Score constructor.
-     * @param $id
-     * @param $value
-     * @param $user
-     * @param $route
-     */
-    public function __construct($id, $value, $user, $route)
-    {
-        $this->id = $id;
-        $this->value = $value;
-        $this->user = $user;
-        $this->route = $route;
-    }
 
     /**
      * @return mixed

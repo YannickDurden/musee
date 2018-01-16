@@ -31,20 +31,7 @@ class Media
      */
     private $mark;
 
-    /**
-     * Media constructor.
-     * @param $id
-     * @param $name
-     * @param $file
-     * @param $mark
-     */
-    public function __construct($id, $name, $file, $mark)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->file = $file;
-        $this->mark = $mark;
-    }
+
 
     /**
      * @return mixed

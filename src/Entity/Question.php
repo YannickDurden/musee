@@ -41,24 +41,7 @@ class Question
      */
     private $answers;
 
-    /**
-     * Question constructor.
-     * @param $id
-     * @param $label
-     * @param $category
-     * @param $responses
-     * @param $mark
-     * @param $answers
-     */
-    public function __construct($id, $label, $category, $responses, $mark, $answers)
-    {
-        $this->id = $id;
-        $this->label = $label;
-        $this->category = $category;
-        $this->responses = $responses;
-        $this->mark = $mark;
-        $this->answers = $answers;
-    }
+
 
     /**
      * @return mixed
