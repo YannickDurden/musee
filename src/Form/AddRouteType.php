@@ -20,6 +20,7 @@
     use Symfony\Component\OptionsResolver\OptionsResolver;
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
+    use Symfony\Component\Validator\Constraints\NotNull;
 
     class AddRouteType extends AbstractType
     {
@@ -32,17 +33,20 @@
                 ]
             ]);
             $builder->add('duration', TimeType::class, [
+                'widget' => 'choice',
                 'constraints' => [
                     new NotBlank(),
                 ]
             ]);
             $builder->add('category', ChoiceType::class, [
                 'choices' => [
+                    'Choisir la catégorie' => null,
                     'Adulte' => 'adulte',
                     'Enfant' => 'enfant'
                 ],
                 'constraints' => [
                     new NotBlank(),
+                    new NotNull()
                 ]
             ]);
             $builder->add('marks', EntityType::class, [
