@@ -38,17 +38,6 @@
                     new NotBlank(),
                 ]
             ]);
-            $builder->add('category', ChoiceType::class, [
-                'choices' => [
-                    'Choisir la catégorie' => null,
-                    'Adulte' => 'adulte',
-                    'Enfant' => 'enfant'
-                ],
-                'constraints' => [
-                    new NotBlank(),
-                    new NotNull()
-                ]
-            ]);
             $builder->add('marks', EntityType::class, [
                 'class' => Mark::class,
                 'choice_label' => 'name',

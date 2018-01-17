@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -43,9 +44,9 @@ class Mark
     private $medias;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\OneToMany(targetEntity="App\Entity\Description", mappedBy="mark")
      */
-    private $description;
+    private $descriptions;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Route", mappedBy="marks")
@@ -62,7 +63,13 @@ class Mark
      */
     private $museum;
 
-
+    /**
+     * Mark constructor.
+     */
+    public function __construct()
+    {
+        $this->descriptions = new ArrayCollection();
+    }
 
 
     /**
@@ -224,6 +231,24 @@ class Mark
     {
         $this->museum = $museum;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * @param mixed $descriptions
+     */
+    public function setDescriptions($descriptions): void
+    {
+        $this->descriptions = $descriptions;
+    }
+
+
 
 
 

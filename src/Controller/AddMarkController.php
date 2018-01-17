@@ -27,7 +27,6 @@ class AddMarkController extends  Controller
         $mark = new Mark();
 
 
-
         $form = $this->createForm(AddMarkAddType::class, $mark);
 
 
@@ -37,7 +36,6 @@ class AddMarkController extends  Controller
 
 
         if ($form->isSubmitted() && $form->isValid()) {
-
 
             $markSave = $form->getData();
 
