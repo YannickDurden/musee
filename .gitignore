@@ -1,7 +1,11 @@
-.idea/
+composer.lock
+symfony.lock
+/bin/
+.idea/*
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/
+/public/uploads
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
