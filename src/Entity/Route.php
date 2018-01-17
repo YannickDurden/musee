@@ -50,7 +50,7 @@ class Route
     private $scores;
 
     /**
-     * Route constructor.
+     * route constructor.
      */
     public function __construct()
     {

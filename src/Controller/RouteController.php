@@ -2,22 +2,22 @@
 
 namespace App\Controller;
 
-use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Form\AddRouteType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Routing\Annotation\Route;
 
 class RouteController extends Controller
 {
     /**
-     * @Route("/route/add", name="add_route")
+     * @route("/route/add", name="add_route")
      */
     public function add(Request $request)
     {
+
         $idMuseum = 1;
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
         $form = $this->createForm(AddRouteType::class);
@@ -32,16 +32,16 @@ class RouteController extends Controller
 
             return new Response("Insertion faite");
         }
-        return $this->render('Route/add.html.twig', [
+        return $this->render('Back-office/Route/add.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
         ]);
     }
 
 
-        /**
-         * @Route("/route/edit/{id}", name="edit_route")
-         */
+    /**
+     * @route("/route/edit/{id}", name="edit_route")
+     */
     public function edit(Request $request, $id)
     {
         $idMuseum = 1;
@@ -63,7 +63,7 @@ class RouteController extends Controller
 
             return new Response("Modif faite");
         }
-        return $this->render('Route/add.html.twig', [
+        return $this->render('Back-Office/Route/add.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
         ]);
