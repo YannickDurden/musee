@@ -54,7 +54,7 @@ class Mark
     private $routes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="mark")
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="mark", cascade={"persist"})
      */
     private $questions;
 
@@ -68,8 +68,9 @@ class Mark
      */
     public function __construct()
     {
-        $this->descriptions = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
+
 
 
     /**
@@ -166,22 +167,6 @@ class Mark
     public function setMedias($medias): void
     {
         $this->medias = $medias;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description): void
-    {
-        $this->description = $description;
     }
 
     /**

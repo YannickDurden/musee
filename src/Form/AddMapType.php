@@ -19,7 +19,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class MapAddType extends AbstractType
+class AddMapType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {

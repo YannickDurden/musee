@@ -27,17 +27,12 @@ class Question
     private $category;
 
     /**
-     * @ORM\Column(type="text");
-     */
-    private $responses;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="questions")
      */
     private $mark;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     *@ORM\Column(type="string")
      */
     private $answers;
 
@@ -89,22 +84,6 @@ class Question
     public function setCategory($category): void
     {
         $this->category = $category;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
-     * @param mixed $responses
-     */
-    public function setResponses($responses): void
-    {
-        $this->responses = $responses;
     }
 
     /**

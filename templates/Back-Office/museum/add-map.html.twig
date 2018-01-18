@@ -8,12 +8,14 @@
             <div class="col col-12">
                 <h4>Ajouter une map</h4>
             </div>
-            <div class="col col-12 d-flex justify-content-center" id="museumMap">
-                <figure class="figure m-3">
-                    <figcaption class="figure-caption">Map actuelle</figcaption>
-                    <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="map du musée" height="300" width="400">
-                </figure>
-            </div>
+            {% if(museum != null) %}
+                <div class="col col-12 d-flex justify-content-center" id="museumMap">
+                    <figure class="figure m-3">
+                        <figcaption class="figure-caption">Map actuelle</figcaption>
+                        <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="map du musée" height="300" width="400">
+                    </figure>
+                </div>
+            {% endif %}
             <div class="col col-9">
                 <div class="form-group">
                     {{ form_label(formAdd.map, "Selection de la map") }}

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Form;
+use App\Entity\Description;
 use App\Entity\Mark;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Media;
@@ -8,6 +9,8 @@ use App\Entity\Question;
 use App\Entity\User;
 use Doctrine\DBAL\Types\DecimalType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -60,13 +63,20 @@ class AddMarkAddType extends AbstractType
                 new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
-        $builder->add('description', TextareaType::class, [
-				'label' => 'Description ',
+        $builder->add('descriptions', EntityType::class, [
+                'class' => Description::class,
+                'choice_label' => 'label',
+                'multiple' => true,
 				'constraints' => [
 					new NotBlank(),
 				]
 			]
         );
+        $builder->add('questions', CollectionType::class, [
+            'entry_type'   => AddQuestionType::class,
+            'allow_add'    => true,
+            'allow_delete' => true
+        ]);
         
        $builder->add('save', SubmitType::class, ['label' => 'Ajouter']);
     }
