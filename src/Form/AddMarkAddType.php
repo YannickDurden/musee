@@ -63,15 +63,11 @@ class AddMarkAddType extends AbstractType
                 new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
-        $builder->add('descriptions', EntityType::class, [
-                'class' => Description::class,
-                'choice_label' => 'label',
-                'multiple' => true,
-				'constraints' => [
-					new NotBlank(),
-				]
-			]
-        );
+        $builder->add('descriptions', CollectionType::class, [
+            'entry_type'   => AddDescriptionType::class,
+            'allow_add'    => true,
+            'allow_delete' => true
+        ]);
         $builder->add('questions', CollectionType::class, [
             'entry_type'   => AddQuestionType::class,
             'allow_add'    => true,

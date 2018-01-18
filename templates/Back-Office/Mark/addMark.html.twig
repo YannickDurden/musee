@@ -16,6 +16,9 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function() {
+
+            //Gestion des questions
+
             var $container = $('div#add_mark_add_questions');
 
             var count = $container.find(':input').length;
@@ -44,7 +47,6 @@
                     .replace(/__name__label__/g, 'Question n°' + (count+1))
                     .replace(/__name__/g, count)
                 ;
-                console.log(template);
 
                 var $prototype = $(template);
 
@@ -69,6 +71,29 @@
                     e.preventDefault();
                     return false;
                 });
+            }
+
+
+            //Gestion des descriptions
+
+            var $descriptionContainer = $('div#add_mark_add_descriptions');
+
+                addDescription($descriptionContainer);
+                addDescription($descriptionContainer);
+
+
+            function addDescription($descriptionContainer)
+            {
+                var template = $descriptionContainer.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Descritpion')
+                    .replace(/__name__/g, '')
+                ;
+
+
+                var $prototype = $(template);
+
+                $descriptionContainer.append($prototype);
+
             }
         });
     </script>

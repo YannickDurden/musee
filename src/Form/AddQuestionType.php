@@ -34,6 +34,7 @@ class AddQuestionType extends AbstractType
             ]
         ]);
         $builder->add('category', ChoiceType::class, [
+            'label' => 'Description :',
             'choices'  => [
                 'Choisir la categorie' => null,
                 'Adulte' => 'adulte',
