@@ -4,8 +4,98 @@
 
 {% block body %}
 
-                  {{ form_start(formAdd) }}
-                            
-                  {{ form_end(formAdd) }}
+    {{ form_start(formAdd) }}
+    {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
+
+    <div class="p-4">
+        {{ form_errors(formAdd.questions) }}
+        {{ form_widget(formAdd.questions) }}
+        <a href="#" id="add_question" class="btn btn-primary mt-3">Ajouter une question</a>
+    </div>
+    {{ form_end(formAdd) }}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            //Gestion des questions
+
+            var $container = $('div#add_mark_add_questions');
+
+            var count = $container.find(':input').length;
+
+            $('#add_question').click(function(e) {
+                addQuestion($container);
+
+                e.preventDefault();
+                return false;
+            });
+
+            if (count == 0)
+            {
+                addQuestion($container);
+            } else
+            {
+                $container.children('div').each(function()
+                {
+                    addDeleteLink($(this));
+                });
+            }
+
+            function addQuestion($container)
+            {
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Question n°' + (count+1))
+                    .replace(/__name__/g, count)
+                ;
+
+                var $prototype = $(template);
+
+                addDeleteLink($prototype);
+
+                $container.append($prototype);
+
+                count++;
+            }
+
+            function addDeleteLink($prototype)
+            {
+
+                var $delete = $('<a href="#" class="btn btn-danger">Supprimer</a>');
+                $prototype.append($delete);
+
+                $delete.click(function(e)
+                {
+                    count--;
+                    $prototype.remove();
+
+                    e.preventDefault();
+                    return false;
+                });
+            }
+
+
+            //Gestion des descriptions
+
+            var $descriptionContainer = $('div#add_mark_add_descriptions');
+
+                addDescription($descriptionContainer);
+                addDescription($descriptionContainer);
+
+
+            function addDescription($descriptionContainer)
+            {
+                var template = $descriptionContainer.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Descritpion')
+                    .replace(/__name__/g, '')
+                ;
+
+
+                var $prototype = $(template);
+
+                $descriptionContainer.append($prototype);
+
+            }
+        });
+    </script>
           
 {% endblock %}

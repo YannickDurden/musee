@@ -23,11 +23,7 @@ class AddMarkController extends  Controller
      */
     public function add(Request $request)
     {
-
-        $mark = new Mark();
-
-
-        $form = $this->createForm(AddMarkAddType::class, $mark);
+        $form = $this->createForm(AddMarkAddType::class);
 
 
         // Validation du formulaire
@@ -49,6 +45,15 @@ class AddMarkController extends  Controller
             $em->persist($markSave);
             $em->flush();
 
+            $markQuestions = $markSave->getQuestions();
+            $lastId = $this->getDoctrine()->getRepository(Mark::class)->findBy([],['id'=>'desc'],1);
+
+            foreach($markQuestions as $currentQuestion)
+            {
+                $currentQuestion->setMark($lastId[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
 
             return $this->redirectToRoute('mark_create_confirmation');
         }
