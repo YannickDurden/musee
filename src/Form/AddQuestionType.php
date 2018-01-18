@@ -27,14 +27,8 @@ class AddQuestionType extends AbstractType
                 new NotBlank(),
             ]
         ]);
-        $builder->add('answers', TextType::class, [
-            'label' => 'Ajouter les reponses',
-            'constraints' => [
-                new NotBlank(),
-            ]
-        ]);
         $builder->add('category', ChoiceType::class, [
-            'label' => 'Description :',
+            'label' => 'Categorie de la question:',
             'choices'  => [
                 'Choisir la categorie' => null,
                 'Adulte' => 'adulte',

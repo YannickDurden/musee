@@ -45,7 +45,9 @@ class AddMarkController extends  Controller
             $em->persist($markSave);
             $em->flush();
 
+
             $markQuestions = $markSave->getQuestions();
+            $markDescriptions = $markSave->getDescriptions();
             $lastId = $this->getDoctrine()->getRepository(Mark::class)->findBy([],['id'=>'desc'],1);
 
             foreach($markQuestions as $currentQuestion)
@@ -55,6 +57,12 @@ class AddMarkController extends  Controller
                 $em->flush();
             }
 
+            foreach($markDescriptions as $currentDescription)
+            {
+                $currentDescription->setMark($lastId[0]);
+                $em = $this->getDoctrine()->getManager();
+                $em->flush();
+            }
             return $this->redirectToRoute('mark_create_confirmation');
         }
 
