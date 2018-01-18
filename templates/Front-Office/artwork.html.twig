@@ -1,0 +1,49 @@
+{% extends 'front-base.twig' %}
+
+{% block body %}
+    <div class="wrapper">
+        <main>
+            <div class="row">
+                <section class="map">
+                    <div class="col-md-6">
+                        <img class="img-map"
+                             src="" alt="map-museum"><!-- Carte du musée-->
+                    </div>
+                </section>
+                <div class="col-md-6">
+                    <section class="picture-artwork">
+                        <img class="w-100" src="{{ currentMark.image }}"
+                             alt="le-penseur">
+                        <h1 class="text-center">{{ currentMark.name }}<!--Titre de
+                        l'oeuvre--></h1>
+                    </section>
+
+                    <section class="description-artwork">
+                        <article>
+                            <p>{{ description.label }}<!-- Description de
+                            l'oeuvre--></p>
+                        </article>
+                    </section>
+                </div>
+            </div>
+        </main>
+
+        <footer>
+            <div id="btn-footer" class="row">
+                <div class="col-md-6">
+                    <div class="btn-group" role="group" aria-label="navigation">
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="#">Description</a>
+                        </button>
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="#">Retour carte</a>
+                        </button>
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="quiz.html">Quiz</a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div><!-- wrapper -->
+{% endblock %}

@@ -60,7 +60,7 @@ class AddMarkAddType extends AbstractType
                 new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
-        $builder->add('description', TextareaType::class, [
+        $builder->add('descriptions', TextareaType::class, [
 				'label' => 'Description ',
 				'constraints' => [
 					new NotBlank(),
