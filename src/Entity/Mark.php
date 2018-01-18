@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -38,14 +39,14 @@ class Mark
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark")
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
      */
     private $medias;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\OneToMany(targetEntity="App\Entity\Description", mappedBy="mark", cascade ={"persist"})
      */
-    private $description;
+    private $descriptions;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Route", mappedBy="marks")
@@ -53,7 +54,7 @@ class Mark
     private $routes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="mark")
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="mark", cascade={"persist"})
      */
     private $questions;
 
@@ -62,6 +63,13 @@ class Mark
      */
     private $museum;
 
+    /**
+     * Mark constructor.
+     */
+    public function __construct()
+    {
+        $this->questions = new ArrayCollection();
+    }
 
 
 
@@ -164,22 +172,6 @@ class Mark
     /**
      * @return mixed
      */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getRoutes()
     {
         return $this->routes;
@@ -224,6 +216,24 @@ class Mark
     {
         $this->museum = $museum;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * @param mixed $descriptions
+     */
+    public function setDescriptions($descriptions): void
+    {
+        $this->descriptions = $descriptions;
+    }
+
+
 
 
 

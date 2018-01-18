@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Museum;
-use App\Form\MapAddType;
+use App\Form\AddMapType;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,8 +25,10 @@ class MuseumController extends Controller
     public function addMap(Request $request)
     {
         $idMuseum = 1;
-        $form = $this->createForm(MapAddType::class);
+        $form = $this->createForm(AddMapType::class);
         $form->handleRequest($request);
+
+        //Penser à faire le cas ou aucun musée en BDD car setMap  sur null impossible
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
 
         if($form->isSubmitted() && $form->isValid()) {

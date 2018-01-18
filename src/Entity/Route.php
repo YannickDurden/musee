@@ -27,10 +27,6 @@ class Route
      */
     private $duration;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="routes")
@@ -105,22 +101,6 @@ class Route
     public function setDuration($duration): void
     {
         $this->duration = $duration;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getCategory()
-    {
-        return $this->category;
-    }
-
-    /**
-     * @param mixed $category
-     */
-    public function setCategory($category): void
-    {
-        $this->category = $category;
     }
 
     /**

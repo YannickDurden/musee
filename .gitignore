@@ -1,6 +1,5 @@
 composer.lock
 symfony.lock
-/bin/
 .idea/*
 ###> symfony/framework-bundle ###
 .env

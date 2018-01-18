@@ -5,9 +5,9 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
+ * @ORM\Entity(repositoryClass="App\Repository\DescriptionRepository")
  */
-class Question
+class Description
 {
     /**
      * @ORM\Id
@@ -17,26 +17,19 @@ class Question
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text")
      */
     private $label;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=20)
      */
     private $category;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="questions")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="descriptions")
      */
     private $mark;
-
-    /**
-     *@ORM\Column(type="string")
-     */
-    private $answers;
-
-
 
     /**
      * @return mixed
@@ -101,23 +94,6 @@ class Question
     {
         $this->mark = $mark;
     }
-
-    /**
-     * @return mixed
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
-
-    /**
-     * @param mixed $answers
-     */
-    public function setAnswers($answers): void
-    {
-        $this->answers = $answers;
-    }
-
 
 
 

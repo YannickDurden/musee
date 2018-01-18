@@ -8,14 +8,14 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180116134302 extends AbstractMigration
+class Version20180117210732 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE museum ADD map VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE question DROP responses');
     }
 
     public function down(Schema $schema)
@@ -23,6 +23,6 @@ class Version20180116134302 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE museum DROP map');
+        $this->addSql('ALTER TABLE question ADD responses LONGTEXT NOT NULL COLLATE utf8_unicode_ci');
     }
 }
