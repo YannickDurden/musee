@@ -5,6 +5,8 @@ namespace App\Controller;
 use App\Entity\Museum;
 use App\Form\AddRouteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,7 +34,7 @@ class RouteController extends Controller
 
             return new Response("Insertion faite");
         }
-        return $this->render('Back-office/Route/add.html.twig', [
+        return $this->render('Back-office/route/add.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
         ]);
@@ -40,10 +42,11 @@ class RouteController extends Controller
 
 
     /**
-     * @route("/route/edit/{id}", name="edit_route")
+     * @route("/route/edit/{id}", defaults={"id"=1}, name="edit_route")
      */
     public function edit(Request $request, $id)
     {
+
         $idMuseum = 1;
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
         $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
@@ -61,9 +64,40 @@ class RouteController extends Controller
 
             return new Response("Modif faite");
         }
-        return $this->render('Back-Office/Route/add.html.twig', [
+        return $this->render('Back-Office/route/add.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
+        ]);
+    }
+
+    /**
+     * @route("/route/list", name="list_route")
+     */
+    public function list(Request $request)
+    {
+
+        $idMuseum = 1;
+        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $idMuseum]);
+        //Conversion du tableau d'objet en tableau associatif id => nom
+        $arrayRoutes = [];
+        foreach ($allRoutes as $currentRoute)
+        {
+            $arrayRoutes[$currentRoute->getName()] = $currentRoute->getId();
+        }
+        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
+            'choices' => $arrayRoutes
+        ]);
+        $formBuilder->add('Modifier', SubmitType::class);
+        $form = $formBuilder->getForm();
+        $form->handlerequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $data = $form->getData();
+            return $this->redirectToRoute('edit_route', ['id' => $data['route']]);
+        }
+        return $this->render('Back-Office/route/list.html.twig', [
+            'formList' => $form->createView(),
         ]);
     }
 }

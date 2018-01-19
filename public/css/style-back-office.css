@@ -1,0 +1,10 @@
+#content {
+    min-height: 100vh;
+}
+
+a:hover,
+a:focus,
+a:active {
+    background-color: #5eb5e0;
+    border-radius: 10px;
+}

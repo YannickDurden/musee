@@ -37,16 +37,17 @@ class AddMarkController extends  Controller
             $markQuestions = $markSave->getQuestions();
             $markDescriptions = $markSave->getDescriptions();
 
-            foreach($markQuestions as $currentQuestion)
-            {
-                $jsonAnswer = json_encode($currentQuestion->getAnswers());
-                $currentQuestion->setAnswers($jsonAnswer);
-            }
             $file =$markSave->getImage();
             // Générer le nom de fichier
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             // Déplacer le fichier temporaire vers le dossier uploads/
             $file->move($this->getParameter('uploads_directory'), $fileName);
+
+            foreach($markQuestions as $currentQuestion)
+            {
+                $jsonAnswer = json_encode($currentQuestion->getAnswers());
+                $currentQuestion->setAnswers($jsonAnswer);
+            }
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($markSave);

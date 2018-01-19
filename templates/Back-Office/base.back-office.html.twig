@@ -5,34 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-back-office.css">
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}{% endblock %}
 
 </head>
 <body>
     <div class="container-fluid bg-light">
-        <div class="row" style="min-height: 100vh">
+        <div class="row" id="content">
             <div class="col col-2 bg-primary">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <h4><a class="nav-link active text-light" href="#">Carte</a></h4>
+                        <h4><a class="nav-link active text-light" href="{{ path('add_map')}}">Carte</a></h4>
                     </li>
                     <li class="nav-item">
-                        <h4 class="mb-0"><a class="nav-link text-light" href="#">Repère</a></h4>
+                        <h4 class="mb-0"><a class="nav-link text-light" href="{{ path('AddMark_add') }}">Repère</a></h4>
                         <nav class="nav flex-column pl-3">
-                            <a class="nav-link text-light" href="#">Ajouter</a>
-                            <a class="nav-link text-light" href="#">Modifier</a>
+                            <a class="nav-link text-light" href="{{ path('AddMark_add') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('AddMark_add') }}">Modifier</a>
                         </nav>
                     </li>
                     <li class="nav-item">
-                        <h4 class="mb-0"><a class="nav-link text-light" href="#">Parcours</a></h4>
+                        <h4 class="mb-0"><a class="nav-link text-light" href="{{ path('add_route') }}">Parcours</a></h4>
                         <nav class="nav flex-column pl-3">
-                            <a class="nav-link text-light" href="#">Ajouter</a>
-                            <a class="nav-link text-light" href="#">Modifier</a>
+                            <a class="nav-link text-light" href="{{ path('add_route') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('list_route') }}">Modifier</a>
                         </nav>
                     </li>
                     <li class="nav-item">
-                        <h4 class="mb-0"><a class="nav-link text-light" href="#">Administration</a></h4>
+                        <h4><a class="nav-link text-light" href="#">Administration</a></h4>
                     </li>
                 </ul>
             </div>
