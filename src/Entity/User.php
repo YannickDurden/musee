@@ -250,7 +250,7 @@ class User implements UserInterface, \Serializable
 
     public function getRoles()
     {
-        return \unserialize($this->roles);
+        return $this->role;
     }
 
     public function eraseCredentials()

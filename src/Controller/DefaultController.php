@@ -13,6 +13,14 @@ class DefaultController extends Controller
      */
     public function home()
     {
-        return $this->render('home.html.twig');
+        return new Response("Bienvenue sur le panel admin");
+    }
+
+    /**
+     * @Route("/admin/home", name="admin_home")
+     */
+    public function adminHome()
+    {
+        return new Response("Bienvenue sur le panel admin");
     }
 }

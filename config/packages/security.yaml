@@ -3,22 +3,24 @@ security:
     providers:
         in_memory:
           memory:
-            users:
-                visitor:
-                    password: visitor
-                    roles: 'ROLE_USER'
-                admin:
-                    password: password
-                    roles: 'ROLE_ADMIN'
+        our_db_provider:
+          entity:
+            class: App\Entity\User
+            property: username
     encoders:
-            Symfony\Component\Security\Core\User\User: plaintext
+      App\Entity\User:
+                  algorithm: bcrypt
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
           anonymous: ~
-          http_basic: ~
+          provider: our_db_provider
+          form_login:
+            login_path: admin_login
+            check_path: admin_login
+            default_target_path: admin_home
     access_control:
       - { path: ^/admin, roles: ROLE_ADMIN }
 
