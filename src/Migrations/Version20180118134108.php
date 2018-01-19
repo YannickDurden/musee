@@ -8,7 +8,7 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180117155405 extends AbstractMigration
+class Version20180118134108 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
@@ -20,7 +20,7 @@ class Version20180117155405 extends AbstractMigration
         $this->addSql('CREATE TABLE mark (id INT AUTO_INCREMENT NOT NULL, museum_id INT DEFAULT NULL, name VARCHAR(100) NOT NULL, coordinate_x NUMERIC(6, 2) NOT NULL, coordinate_y NUMERIC(6, 2) NOT NULL, image VARCHAR(255) NOT NULL, INDEX IDX_6674F2714B52E5B5 (museum_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE media (id INT AUTO_INCREMENT NOT NULL, mark_id INT DEFAULT NULL, name VARCHAR(50) NOT NULL, file VARCHAR(255) NOT NULL, INDEX IDX_6A2CA10C4290F12B (mark_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE museum (id INT AUTO_INCREMENT NOT NULL, name VARCHAR(100) NOT NULL, website VARCHAR(50) NOT NULL, address VARCHAR(100) NOT NULL, phone_number VARCHAR(20) NOT NULL, facebook VARCHAR(50) NOT NULL, twitter VARCHAR(50) NOT NULL, instagram VARCHAR(50) NOT NULL, youtube VARCHAR(50) NOT NULL, map VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('CREATE TABLE question (id INT AUTO_INCREMENT NOT NULL, mark_id INT DEFAULT NULL, label VARCHAR(255) NOT NULL, category VARCHAR(50) NOT NULL, responses LONGTEXT NOT NULL, INDEX IDX_B6F7494E4290F12B (mark_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
+        $this->addSql('CREATE TABLE question (id INT AUTO_INCREMENT NOT NULL, mark_id INT DEFAULT NULL, label VARCHAR(255) NOT NULL, category VARCHAR(50) NOT NULL, answers VARCHAR(255) NOT NULL, INDEX IDX_B6F7494E4290F12B (mark_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE route (id INT AUTO_INCREMENT NOT NULL, museum_id INT DEFAULT NULL, name VARCHAR(100) NOT NULL, duration TIME NOT NULL, INDEX IDX_2C420794B52E5B5 (museum_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE route_mark (route_id INT NOT NULL, mark_id INT NOT NULL, INDEX IDX_CB31F3F434ECB4E6 (route_id), INDEX IDX_CB31F3F44290F12B (mark_id), PRIMARY KEY(route_id, mark_id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE score (id INT AUTO_INCREMENT NOT NULL, user_id INT DEFAULT NULL, route_id INT DEFAULT NULL, value INT NOT NULL, INDEX IDX_32993751A76ED395 (user_id), INDEX IDX_3299375134ECB4E6 (route_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');

@@ -1,0 +1,76 @@
+{% extends 'front-base.html.twig' %}
+
+{% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/end_route.css">{% endblock %}
+
+{% block body %}
+    <section class="picture-museum">
+        <div class="section-route container-fluid">
+            <div class="row">
+                <div id="museum-map" class="col-12 col-md-6">
+                    <img src="map.jpg" class="img-fluid" alt="">
+                </div>
+
+                <div class="museum-wrapper col col-md-6 text-center">
+                    <div class="museum-stats">
+                        <div class="score text-center">
+                            <h2 class="h4">Score global</h2>
+                            <p>80/100</p>
+                        </div>
+
+                        <div class="progression text-center">
+                            <h2 class="h4">Progression</h2>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     role="progressbar"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: 80%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="return-btn">
+                        <!-- START SCRIPT MODAL -->
+                        <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter">
+                            J'ai terminé mon parcours.
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1"
+                             role="dialog">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title"
+                                            id="popup-quiz">J'ai terminé mon parcours</h5>
+                                        <button type="button" class="close"
+                                                data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Etes-vous sûre d'avoir terminé ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button"
+                                                class="btn btn-primary"
+                                                data-dismiss="modal">
+                                            Oui
+                                        </button>
+                                        <button type="button"
+                                                class="btn btn-danger">
+                                            Non
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END SCRIPT MODAL -->
+                    </div><!-- class return-btn -->
+                </div><!-- museum-wrapper-->
+            </div>
+        </div>
+    </section>
+{% endblock %}

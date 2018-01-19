@@ -1,0 +1,52 @@
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Page select parcours */
+
+/* CONTAINER */
+
+.form-route {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+}
+
+.link-route {
+    text-decoration: none;
+    color: white;
+}
+
+.route-btn {
+    margin-top: 3%;
+}
+
+/* mise en forme à la vue tablette en paysage */
+
+@media screen and (min-width: 760px) { 
+    #museum-img {
+        width: 100%;
+        height: 50%; 
+    }
+
+    .section-route {
+        margin-top: 15%;
+    }
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 15px;
+    }
+}
