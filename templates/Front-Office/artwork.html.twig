@@ -1,18 +1,21 @@
-{% extends 'front-base.twig' %}
+{% extends 'front-base.html.twig' %}
 
+{% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/artwork.css">{% endblock %}
 {% block body %}
+
     <div class="wrapper">
         <main>
             <div class="row">
                 <section class="map">
                     <div class="col-md-6">
                         <img class="img-map"
-                             src="" alt="map-museum"><!-- Carte du musée-->
+                             src="{{ app.request.basepath }}/uploads/{{ map }}"
+                             alt="map-museum"><!-- Carte du musée-->
                     </div>
                 </section>
                 <div class="col-md-6">
                     <section class="picture-artwork">
-                        <img class="w-100" src="{{ currentMark.image }}"
+                        <img class="w-100" src="{{app.request.basepath}}/uploads/809d741d948ff84be27b289c95c8745e.jpeg"
                              alt="le-penseur">
                         <h1 class="text-center">{{ currentMark.name }}<!--Titre de
                         l'oeuvre--></h1>
@@ -39,7 +42,7 @@
                             <a href="#">Retour carte</a>
                         </button>
                         <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="quiz.html">Quiz</a>
+                            <a href="{{ path("quiz") }}">Quiz</a>
                         </button>
                     </div>
                 </div>

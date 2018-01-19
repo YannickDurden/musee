@@ -11,25 +11,22 @@ namespace App\Controller;
 
 use App\Entity\Description;
 use App\Entity\Mark;
+use App\Entity\Museum;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-class ArtworkController extends Controller
+class MarkController extends Controller
 {
-
-    /*public function displayArtwork()
-    {
-        return $this->render('Front-Office/artwork.html.twig');
-    }*/
 
     /**
      * @Route("/artwork/{id}", name="artwork")
      */
-    public function displayTitle($id)
+    public function displayMark($id)
     {
         //la catégorie est passée en <dur>
         $category = "adulte";
+
 
         //récupération en base de l'oeuvre via l'entité Mark
         $repository = $this->getDoctrine()->getRepository(Mark::class);
@@ -42,9 +39,16 @@ class ArtworkController extends Controller
             'category' => $category
             ]);
 
+        //récupération en base de la carte du musée
+
+        $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
+        $map = $mapRespository->find(1);
+
+
         return $this->render('Front-Office/artwork.html.twig',[
             'currentMark' => $currentMark,
-            'description' => $description[0], //description est un tableau, index spécifié
+            'description' => $description[0],
+            'map' => $map->getMap()//On recupère seulement la carte
         ]);
     }
 }
