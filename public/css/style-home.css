@@ -1,0 +1,66 @@
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* HOME */
+
+/* CONTAINER */
+
+/* mise en forme div texte et input */
+.form-home {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   margin-top: 5%;
+}
+
+.form-home input {
+    background-color: #d1d1d1;
+}
+
+.form-home a {
+    text-decoration: none;
+    color: white;
+}
+
+.text-home{
+    padding: 15px;
+}
+
+/* marges pour le texte vue smartphone */
+@media screen and (max-width: 720px) { 
+    .text-home {
+        margin-top: 5%;
+    }
+}
+
+/* mise en forme à la vue tablette en paysage */
+@media screen and (min-width: 760px) {
+    #museum-img {
+        width: 100%;
+        height: 50%; 
+    }
+
+    .section-home {
+        margin-top: 15%;
+    }
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 15px;
+    }
+
+}
+
+

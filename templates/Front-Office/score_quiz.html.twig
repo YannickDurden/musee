@@ -1,0 +1,43 @@
+{% extends 'front-base.html.twig' %}
+{% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/score_quiz.css">{% endblock %}
+
+{% block body %}
+<main>
+    <section class="picture-museum">
+        <div class="section-route container-fluid">
+            <div class="row">
+
+                <div id="museum-map" class="col-12 col-md-6">
+                    <img src="{{ app.request.basepath }}/uploads/{{ map }}" class="img-fluid" alt="">
+                </div>
+
+                <div class="museum-wrapper col col-md-6 text-center">
+                    <div class="museum-stats">
+                        <div class="score text-center">
+                            <h2 class="h4">Score</h2>
+                            <p>25/100</p>
+                        </div>
+
+                        <div class="progression text-center">
+                            <h2 class="h4">Progression</h2>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                     role="progressbar"
+                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
+                                     style="width: 25%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="return-btn">
+                        <button type="button" class="btn btn-primary btn-lg">
+                            <a href="#">Oeuvre suivante</a>
+                        </button>
+                    </div>
+                </div><!-- museum-wrapper-->
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}
