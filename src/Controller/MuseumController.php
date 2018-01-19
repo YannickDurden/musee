@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Museum;
 use App\Form\AddMapType;
+use App\Form\UserLogType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,4 +58,5 @@ class MuseumController extends Controller
             'museum' => $museum
         ]);
     }
+
 }
