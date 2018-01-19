@@ -1,0 +1,80 @@
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Debut parcours */
+
+/* CONTAINER */
+
+#museum-map {
+    width: 100vw;
+    height: 50vh;
+}
+
+.return-btn, .score, .progression {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 15px;
+
+}
+
+.progression h2 {
+    margin-bottom: 1rem;
+}
+
+.progress {
+    background-color: lightgray;
+}
+
+.return-btn a{
+    text-decoration: none;
+    color: white;
+}
+
+@media screen and (max-width: 760px) {
+    .museum-stats {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .museum-wrapper {
+        display: flex;
+        flex-direction: column;
+        margin-top: 20%;
+    }
+
+    .progress {
+        width: 50vw;
+    }
+}
+
+/* mise en forme à la vue tablette en paysage */
+
+@media screen and (min-width: 760px) {
+    #museum-img {
+        width: 100%;
+        height: 50%;
+    }
+
+    .section-route {
+        margin-top: 15%
+    }
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 15px;
+    }
+}
