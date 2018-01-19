@@ -46,18 +46,16 @@ class RouteController extends Controller
     {
         $idMuseum = 1;
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
-        $form = $this->createForm(AddRouteType::class);
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
+        $form = $this->createForm(AddRouteType::class, $currentRoute);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $repository = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
-            $currentRoute = $repository->find($id);
             $object = $form->getData();
             $currentRoute->setName($object->getName());
             $currentRoute->setDuration($object->getDuration());
-            $currentRoute->setCategory($object->getCategory());
             $currentRoute->setMarks($object->getMarks());
             $em->flush();
 
