@@ -8,14 +8,16 @@ use Doctrine\DBAL\Schema\Schema;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-class Version20180117210732 extends AbstractMigration
+class Version20180119095507 extends AbstractMigration
 {
     public function up(Schema $schema)
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE question DROP responses');
+        $this->addSql('ALTER TABLE user ADD is_active TINYINT(1) NOT NULL');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649F85E0677 ON user (username)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_8D93D649E7927C74 ON user (email)');
     }
 
     public function down(Schema $schema)
@@ -23,6 +25,8 @@ class Version20180117210732 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('ALTER TABLE question ADD responses LONGTEXT NOT NULL COLLATE utf8_unicode_ci');
+        $this->addSql('DROP INDEX UNIQ_8D93D649F85E0677 ON user');
+        $this->addSql('DROP INDEX UNIQ_8D93D649E7927C74 ON user');
+        $this->addSql('ALTER TABLE user DROP is_active');
     }
 }

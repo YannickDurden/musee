@@ -34,7 +34,14 @@ class AddMarkController extends  Controller
         if ($form->isSubmitted() && $form->isValid()) {
 
             $markSave = $form->getData();
+            $markQuestions = $markSave->getQuestions();
+            $markDescriptions = $markSave->getDescriptions();
 
+            foreach($markQuestions as $currentQuestion)
+            {
+                $jsonAnswer = json_encode($currentQuestion->getAnswers());
+                $currentQuestion->setAnswers($jsonAnswer);
+            }
             $file =$markSave->getImage();
             // Générer le nom de fichier
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
@@ -46,12 +53,14 @@ class AddMarkController extends  Controller
             $em->flush();
 
 
-            $markQuestions = $markSave->getQuestions();
-            $markDescriptions = $markSave->getDescriptions();
+
+
             $lastId = $this->getDoctrine()->getRepository(Mark::class)->findBy([],['id'=>'desc'],1);
 
             foreach($markQuestions as $currentQuestion)
             {
+                $jsonAnswer = json_encode($currentQuestion->getAnswers());
+                $currentQuestion->setAnswers($jsonAnswer);
                 $currentQuestion->setMark($lastId[0]);
                 $em = $this->getDoctrine()->getManager();
                 $em->flush();
