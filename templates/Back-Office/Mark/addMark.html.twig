@@ -7,11 +7,39 @@
     {{ form_start(formAdd) }}
     {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
 
+    <div>
+        {{ form_label(formAdd.name, "Nom de l'oeuvre") }}
+        {{ form_errors(formAdd.name) }}
+        {{ form_widget(formAdd.name) }}
+    </div>
+    <div>
+        {{ form_label(formAdd.coordinateX, "Coordonnée X") }}
+        {{ form_errors(formAdd.coordinateX) }}
+        {{ form_widget(formAdd.coordinateX) }}
+    </div>
+    <div>
+        {{ form_label(formAdd.coordinateY, "Coordonnée Y") }}
+        {{ form_errors(formAdd.coordinateY) }}
+        {{ form_widget(formAdd.coordinateY) }}
+    </div>
+    <div>
+        {{ form_label(formAdd.image, "Image illustrative de l'oeuvre") }}
+        {{ form_errors(formAdd.image) }}
+        {{ form_widget(formAdd.image) }}
+    </div>
+    {{ form_label(formAdd.descriptions, "Saisie des descriptions de l'oeuvre") }}
+    <div class="p-4">
+        {{ form_errors(formAdd.descriptions) }}
+        {{ form_widget(formAdd.descriptions) }}
+        <a href="#" id="add_description" class="btn btn-success mt-3">Ajouter une description</a>
+    </div>
+    {{ form_label(formAdd.descriptions, "Saisie des questions sur l'oeuvre") }}
     <div class="p-4">
         {{ form_errors(formAdd.questions) }}
         {{ form_widget(formAdd.questions) }}
-        <a href="#" id="add_question" class="btn btn-primary mt-3">Ajouter une question</a>
+        <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
     </div>
+
     {{ form_end(formAdd) }}
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script type="text/javascript">
@@ -75,27 +103,34 @@
 
 
             //Gestion des descriptions
-            /*
+
             var $descriptionContainer = $('div#add_mark_add_descriptions');
+            var countDescription = $descriptionContainer.find(':input').length;
 
+
+            $('#add_description').click(function(e) {
                 addDescription($descriptionContainer);
-                addDescription($descriptionContainer);
+
+                e.preventDefault();
+                return false;
+            });
 
 
-            function addDescription($descriptionContainer)
+            function addDescription($container)
             {
-                var template = $descriptionContainer.attr('data-prototype')
-                    .replace(/__name__label__/g, 'Descritpion')
-                    .replace(/__name__/g, '')
+                var template = $container.attr('data-prototype')
+                    .replace(/__name__label__/g, 'Description' + (countDescription+1))
+                    .replace(/__name__/g, countDescription)
                 ;
-
 
                 var $prototype = $(template);
 
+                addDeleteLink($prototype);
+
                 $descriptionContainer.append($prototype);
 
+                countDescription++;
             }
-            */
         });
     </script>
           

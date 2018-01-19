@@ -63,19 +63,28 @@ class AddMarkAddType extends AbstractType
                 new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
+      
+        $builder->add('descriptions', CollectionType::class, [
+            'entry_type'   => AddDescriptionType::class,
+            'allow_add'    => true,
+            'allow_delete' => true
+        ]);
+        /*$builder->add('medias', CollectionType::class, [
+            'entry_type'   => AddMediaType::class,
+            'allow_add'    => true,
+            'allow_delete' => true
+        ]); */
 
         $builder->add('questions', CollectionType::class, [
             'entry_type'   => AddQuestionType::class,
             'allow_add'    => true,
             'allow_delete' => true
         ]);
-        $builder->add('descriptions', EntityType::class, [
-            'class' => Description::class,
-            'choice_label' => 'label',
-            'multiple'=> true,
-        ]);
         
-       $builder->add('save', SubmitType::class, ['label' => 'Ajouter']);
+       $builder->add('save', SubmitType::class, [
+           'label' => 'Ajouter',
+           'attr' => ['class' => 'btn btn-primary'],
+       ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)

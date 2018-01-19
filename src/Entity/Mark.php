@@ -39,7 +39,7 @@ class Mark
 
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark")
+     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
      */
     private $medias;
 

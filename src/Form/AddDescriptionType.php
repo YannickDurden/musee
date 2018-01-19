@@ -19,10 +19,11 @@ class AddDescriptionType extends AbstractType
         $builder->add('label', TextType::class, [
             'label' => 'Description : ',
             'constraints' => [
-                new NotBlank(),
+                new notBlank()
             ]
         ]);
         $builder->add('category', ChoiceType::class, [
+            'label' => 'Categorie de la description :',
             'choices' => [
                 'Choisir la categorie' => null,
                 'Adulte' => 'adulte',
