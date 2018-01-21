@@ -20,7 +20,7 @@ class RouteController extends Controller
     public function newRoute(Request $request)
     {
         $idMuseum = 1;
-        $newRoute = new \APP\Entity\Route();
+        $newRoute = new \App\Entity\Route();
         $form = $this->generateCreateForm($newRoute);
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
 
@@ -39,7 +39,7 @@ class RouteController extends Controller
     public function createRoute(Request $request, $id= null)
     {
 
-        $newRoute = new \APP\Entity\Route();
+        $newRoute = new \App\Entity\Route();
         $idMuseum = 1;
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
         $form = $this->generateCreateForm($newRoute);
@@ -59,41 +59,6 @@ class RouteController extends Controller
         ]);
     }
 
-
-    /*
-     * @route("/route/edit", name="edit_route", methods="GET")
-
-    public function editGet(Request $request)
-    {
-
-        $idMuseum = 1;
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
-
-        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $idMuseum]);
-        //Conversion du tableau d'objet en tableau associatif id => nom
-        $arrayRoutes = [];
-        foreach ($allRoutes as $route)
-        {
-            $arrayRoutes[$route->getName()] = $route->getId();
-        }
-        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
-            'choices' => $arrayRoutes
-        ]);
-        $formBuilder->add('Modifier', SubmitType::class);
-        $form = $formBuilder->getForm();
-        $form->handlerequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $data = $form->getData();
-            return $this->redirectToRoute('edit_route_POST');
-        }
-        return $this->render('Back-Office/route/update.html.twig', [
-            'formList' => $form->createView(),
-            'museum' => $museum
-        ]);
-    }
-    */
     /**
      * @route("/route/edit/{id}", defaults={"id"=1}, name="edit_route")
      */
@@ -134,8 +99,7 @@ class RouteController extends Controller
             $currentRoute->setDuration($object->getDuration());
             $currentRoute->setMarks($object->getMarks());
             $em->flush();
-
-            return new Response("Modif faite");
+            return $this->render('Back-Office/modif-success.html.twig');
         }
 
         return $this->render('Back-Office/route/update.html.twig', [
@@ -146,33 +110,6 @@ class RouteController extends Controller
 
 
     }
-
-
-/*    public function edit(Request $request, $id)
-    {
-
-        $idMuseum = 1;
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
-        $form = $this->createForm(AddRouteType::class, $currentRoute);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            $object = $form->getData();
-            $currentRoute->setName($object->getName());
-            $currentRoute->setDuration($object->getDuration());
-            $currentRoute->setMarks($object->getMarks());
-            $em->flush();
-
-            return new Response("Modif faite");
-        }
-        return $this->render('Back-Office/route/add.html.twig', [
-            'formAdd' => $form->createView(),
-            'museum' => $museum
-        ]);
-    }*/
 
 
     /**

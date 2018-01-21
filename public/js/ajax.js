@@ -12,7 +12,9 @@ $(function() {
     })
     $(document).on("click", "#add_route_save", function(e){
         e.preventDefault();
-        $.fn.serializeObject = function()
+        var modifSuccess = "<div class=\"bg-success\">Votre modification à bien été enregistrée";
+        $('#selected_route').html(modifSuccess);
+        /*$.fn.serializeObject = function()
         {
             var o = {};
             var a = this.serializeArray();
@@ -36,7 +38,7 @@ $(function() {
             type: 'POST',
             dataType: 'json',
             data: {data: data}
-        });
+        });*/
 
     });
 

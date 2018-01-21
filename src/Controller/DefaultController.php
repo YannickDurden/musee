@@ -25,7 +25,7 @@ class DefaultController extends Controller
      */
     public function adminHome()
     {
-        return new Response("Bienvenue sur le panel admin");
+        return $this->render('Back-Office/home-admin.html.twig');
     }
 
     /* FONCTIONS FRONT OFFICE */
