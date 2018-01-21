@@ -7,7 +7,7 @@
 {% block body %}
 
     {#{{ form(formAdd, {'attr': {'novalidate': 'novalidate'}}) }}#}
-    {{ form_start(formAdd) }}
+    {{ form_start(formAdd, {'attr': {'id': 'add_route_form'}}) }}
 
     <h4>Ajouter un parcours</h4>
 
@@ -17,26 +17,28 @@
             <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="map du musée" height="300" width="400">
         </figure>
     </div>
+    <div class="col col-9">
         <div class="form-group">
-            {{ form_label(formAdd.name, "Nom du parcours") }}
-            {{ form_errors(formAdd.name) }}
-            {{ form_widget(formAdd.name, {'attr': {'placeholder': 'Entrer le nom du parcours', 'class': 'form-control'}}) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(formAdd.duration, "Durée estimée du parcours") }}
-            {{ form_errors(formAdd.duration) }}
-            {{ form_widget(formAdd.duration) }}
-        </div>
-        <div class="form-group">
-            {{ form_label(formAdd.marks) }}
-            {{ form_errors(formAdd.marks) }}
-            <div class="form-check">
+            <div class="mb-1">
+                <h5>{{ form_label(formAdd.name, "Nom du parcours") }}</h5>
+                {{ form_errors(formAdd.name) }}
+                {{ form_widget(formAdd.name, {'attr': {'placeholder': 'Entrer le nom du parcours', 'class': 'form-control col-6'}}) }}
+            </div>
+            <div class="mb-1">
+                <h5>{{ form_label(formAdd.duration, "Durée estimée du parcours") }}</h5>
+                {{ form_errors(formAdd.duration) }}
+                {{ form_widget(formAdd.duration) }}
+            </div>
+            <div class="mb-1">
+                <h5>{{ form_label(formAdd.marks, "Selectionner les repères à ajouter") }}</h5>
+                {{ form_errors(formAdd.marks) }}
                 {{ form_widget(formAdd.marks) }}
             </div>
+            <div class="d-flex justify-content-end">
+                {{ form_row(formAdd.save, {'attr': {'class': 'btn btn-primary'}}) }}
+            </div>
         </div>
-        <div class="d-flex justify-content-end">
-            {{ form_row(formAdd.save, {'attr': {'class': 'btn btn-primary'}}) }}
-        </div>
+    </div>
 
     {{ form_end(formAdd) }}
 

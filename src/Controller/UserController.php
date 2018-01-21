@@ -20,7 +20,7 @@ class UserController extends Controller
     public function addUserTest()
     {
         // Les noms d'utilisateurs à créer
-        $listNames = array('Visitor1', 'Visitor2', 'Visitor3');
+        $listNames = array('Admin1', 'Admin2', 'Admin3');
         $em = $this->getDoctrine()->getManager();
 
         foreach ($listNames as $name) {
@@ -35,7 +35,7 @@ class UserController extends Controller
             $passHash = password_hash($name, PASSWORD_BCRYPT);
             $user->setPassword($passHash);
 
-            $user->setRole(array('ROLE_USER'));
+            $user->setRole(array('ROLE_ADMIN'));
 
             $em->persist($user);
         }
