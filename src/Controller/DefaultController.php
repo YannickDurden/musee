@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\UserRegisterType;
 use App\Form\UserLogType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,7 +26,6 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum", name="my_museum")
      */
-
     public function myMuseumHome(SessionInterface $session, Request $request)
     {
         $form = $this->createForm(UserLogType::class);
@@ -36,46 +36,70 @@ class DefaultController extends Controller
             $session->set('firstname', $user->getFirstName());
             return $this->redirectToRoute("my_museum_session");
         }
-        return $this->render('front-office/home-front.html.twig', [
+        return $this->render('Front-Office/home-front.html.twig', [
             'formFirstname' => $form->createView(),
         ]);
 
     }
 
-
     /**
      * @Route("/mymuseum/start", name="my_museum_session")
      */
-
     public function myMuseumSession(SessionInterface $session)
     {
-        $this->render('front-office/select-route.html.twig');
+        return $this->render('Front-Office/select-route.html.twig');
     }
 
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
-
     public function beginRoute()
     {
-        $this->render('front-office/begin-route.html.twig');
+        return $this->render('Front-Office/begin-route.html.twig');
     }
 
     /**
      * @Route("/mymuseum/end-route", name="end_route")
      */
-
     public function endRoute()
     {
-        $this->render('front-office/end-route.html.twig');
+        return $this->render('Front-Office/end-route.html.twig');
     }
 
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
-
-    public function newsletter()
+    public function newsletter(Request $request, \Swift_Mailer $mailer)
     {
-        $this->render('front-office/newsletter.html.twig');
+        $newUser = $this->createForm(UserRegisterType::class);
+
+        $newUser->handleRequest($request);
+
+        if($newUser->isSubmitted() && $newUser->isValid())
+        {
+           $register = $newUser->getData();
+           $mail = $register->getEmail();
+
+           $em = $this->getDoctrine()->getManager();
+           $em->persist($register);
+           $em->flush();
+
+           $message = (new \Swift_Message('MyMuseum'))
+               ->setFrom('mymuseumwf3@gmail.com')
+               ->setTo($mail)
+               ->setBody(
+                   $this->renderView('Front-Office/email.html.twig'),
+                   'text/html'
+               );
+
+           $mailer->send($message);
+
+           return $this->redirectToRoute('my_museum');
+        }
+
+        return $this->render('Front-Office/newsletter.html.twig',[
+            'formRegister' => $newUser->createView(),
+        ]);
+
     }
 }
