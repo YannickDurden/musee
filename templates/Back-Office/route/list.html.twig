@@ -1,21 +1,2 @@
 {% extends '/Back-Office/base.back-office.html.twig' %}
 
-{% block body %}
-    {{ form_start(formList) }}
-
-    <h4 class="mb-5">Selection du parcours à modifier</h4>
-    <div class="col col-9">
-        <div class="form-group">
-            <div class="mb-1">
-                <h5>{{ form_label(formList.route, "Nom du parcours") }}</h5>
-                {{ form_errors(formList.route) }}
-                {{ form_widget(formList.route, {'attr': {'placeholder': 'Entrer le nom du parcours', 'class': 'form-control col-6'}}) }}
-            </div>
-            <div class="col col-9 d-flex justify-content-end">
-                {{ form_row(formList.Modifier, {'attr': {'class': 'btn btn-primary'}}) }}
-            </div>
-        </div>
-    </div>
-
-    {{ form_end(formList) }}
-{% endblock %}
