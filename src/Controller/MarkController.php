@@ -20,7 +20,7 @@ class MarkController extends Controller
 {
 
     /**
-     * @Route("/artwork/{id}", name="artwork")
+     * @Route("/mymuseum/artwork/{id}", name="artwork")
      */
     public function displayMark($id)
     {

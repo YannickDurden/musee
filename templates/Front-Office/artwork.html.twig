@@ -4,16 +4,29 @@
 {% block body %}
 
     <div class="wrapper">
-        <main>
+        <main class="container-fluid">
             <div class="row">
-                <section class="map">
-                    <div class="col-md-6">
-                        <img class="img-map"
+                <div id="map" class="col-md-6">
+                    <section class="map">
+                        <img class="img-map img-fluid"
                              src="{{ app.request.basepath }}/uploads/{{ map }}"
                              alt="map-museum"><!-- Carte du musée-->
-                    </div>
-                </section>
+                    </section>
+                </div>
+
                 <div class="col-md-6">
+                    <div id="btn-tablet" class="btn-group" role="group"
+                         aria-label="navigation">
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="#">Description</a>
+                        </button>
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="#">Retour carte</a>
+                        </button>
+                        <button type="button" class="btn btn-group-lg btn-primary">
+                            <a href="{{ path("quiz") }}">Quiz</a>
+                        </button>
+                    </div>
                     <section class="picture-artwork">
                         <img class="w-100" src="{{app.request.basepath}}/uploads/809d741d948ff84be27b289c95c8745e.jpeg"
                              alt="le-penseur">
@@ -27,26 +40,24 @@
                             l'oeuvre--></p>
                         </article>
                     </section>
-                </div>
-            </div>
-        </main>
 
-        <footer>
-            <div id="btn-footer" class="row">
-                <div class="col-md-6">
-                    <div class="btn-group" role="group" aria-label="navigation">
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="#">Description</a>
-                        </button>
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="#">Retour carte</a>
-                        </button>
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="{{ path("quiz") }}">Quiz</a>
-                        </button>
+                    <div id="btn-footer" class="row">
+                        <div class="col-md-6">
+                            <div class="btn-group" role="group" aria-label="navigation">
+                                <button type="button" class="btn btn-group-lg btn-primary">
+                                    <a href="#">Description</a>
+                                </button>
+                                <button type="button" class="btn btn-group-lg btn-primary">
+                                    <a href="#">Retour carte</a>
+                                </button>
+                                <button type="button" class="btn btn-group-lg btn-primary">
+                                    <a href="{{ path("quiz") }}">Quiz</a>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </footer>
+        </main>
     </div><!-- wrapper -->
 {% endblock %}
