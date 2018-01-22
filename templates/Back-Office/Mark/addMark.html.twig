@@ -1,46 +1,118 @@
 {% extends "base.html.twig" %}
-
-
-
+{% form_theme formAdd 'bootstrap_4_layout.html.twig' %}
 {% block body %}
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <div class="container-fluid">
+           <div class="row">  
 
-    {{ form_start(formAdd) }}
-    {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
+                    <div class="col-2 bg-primary pt-5"> 
+                            
+                            <ul class="nav">
+                                    <h4 class="text-white">MyMuseum</h4>
+                                    <li class="nav-item">
+                                        <a class="nav-link active text-white" href="#">Carte</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#">Repère</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#">Parcours</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-white" href="#">Administration</a>
+                                    </li>
+                            </ul>
+                
+                    </div> 
+                    <div class="col-2">
+                    </div>
+                    <div class="col-6 justify-content-center">                            
+                                                
+                                                <style>
+                                                        .nav
+                                                        {
+                                                           display:flex;
+                                                           flex-direction:column;
+                                                        }
+                                                        #contenu 
+                                                        { 
+                                                            position: relative;
+                                                            width:1034.5px;
+                                                            height:667px;
+                                                            overflow: hidden; 
+                                                            background-image:url("{{ asset('build/Plan Muse.jpg')}}");
+                                                        } 
+                                                        .pointeur
+                                                        {
+                                                            position: absolute;
+                                                            background-image:url("{{ asset('build/p2-m1.png')}}");
+                                                            
+                                                        }
+                                                </style>
+                                                <script type="text/javascript">
+                                                        var conteneur=document.getElementById("contenu");
+                                                        var count=0;
+                                                        function addMapMarker(event)
+                                                        {
+                                                        var x = event.clientX;
+                                                        var y = event.clientY; 
+                                                        document.getElementById('add_mark_add_coordinateX').value=x;
+                                                        document.getElementById('add_mark_add_coordinateY').value=y;
+                                                        count ++;
+                                                        var PosX= (x-353);
+                                                        var PosY= (y-75);
+                                                        var pointeurs =document.getElementById("contenu");
+                                                        var p = document.createElement("div");
+                                                        p.setAttribute("class","pointeur");
+                                                        p.setAttribute("id","pointeur_"+count);
+                                                        p.style.width= 47 + "px";
+                                                        p.style.height=75 + "px";
+                                                        p.style.color="red";
+                                                        p.style.left=PosX + 'px';
+                                                        p.style.top=PosY + 'px';
+                                                        pointeurs.appendChild(p);
+                                                        } 
 
-    <div>
-        {{ form_label(formAdd.name, "Nom de l'oeuvre") }}
-        {{ form_errors(formAdd.name) }}
-        {{ form_widget(formAdd.name) }}
-    </div>
-    <div>
-        {{ form_label(formAdd.coordinateX, "Coordonnée X") }}
-        {{ form_errors(formAdd.coordinateX) }}
-        {{ form_widget(formAdd.coordinateX) }}
-    </div>
-    <div>
-        {{ form_label(formAdd.coordinateY, "Coordonnée Y") }}
-        {{ form_errors(formAdd.coordinateY) }}
-        {{ form_widget(formAdd.coordinateY) }}
-    </div>
-    <div>
-        {{ form_label(formAdd.image, "Image illustrative de l'oeuvre") }}
-        {{ form_errors(formAdd.image) }}
-        {{ form_widget(formAdd.image) }}
-    </div>
-    {{ form_label(formAdd.descriptions, "Saisie des descriptions de l'oeuvre") }}
-    <div class="p-4">
-        {{ form_errors(formAdd.descriptions) }}
-        {{ form_widget(formAdd.descriptions) }}
-        <a href="#" id="add_description" class="btn btn-success mt-3">Ajouter une description</a>
-    </div>
-    {{ form_label(formAdd.descriptions, "Saisie des questions sur l'oeuvre") }}
-    <div class="p-4">
-        {{ form_errors(formAdd.questions) }}
-        {{ form_widget(formAdd.questions) }}
-        <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
-    </div>
+                                                </script>
 
-    {{ form_end(formAdd) }}
+                                                <div class="card w-100 pt-0">
+                                                        <div id="contenu" onclick="addMapMarker(event);">
+                                                        </div>
+                                                </div>  
+
+
+                                                <div class="well">
+                                                        {{ form_start(formAdd) }}
+                                                        {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
+                                                        <div class="form-group">
+                                                            {{ form_label(formAdd.name, "Nom de l'oeuvre") }}
+                                                            {{ form_errors(formAdd.name) }}
+                                                            {{ form_widget(formAdd.name) }}
+                                                        </div>
+                                                        <div>
+                                                            {{ form_label(formAdd.image, "Image illustrative de l'oeuvre") }}
+                                                            {{ form_errors(formAdd.image) }}
+                                                            {{ form_widget(formAdd.image) }}
+                                                        </div>
+                                                        {{ form_label(formAdd.descriptions, "Saisie des descriptions de l'oeuvre") }}
+                                                        <div class="p-4">
+                                                            {{ form_errors(formAdd.descriptions) }}
+                                                            {{ form_widget(formAdd.descriptions) }}
+                                                            <a href="#" id="add_description" class="btn btn-success mt-3">Ajouter une description</a>
+                                                        </div>
+                                                        {{ form_label(formAdd.descriptions, "Saisie des questions sur l'oeuvre") }}
+                                                        <div class="p-4">
+                                                            {{ form_errors(formAdd.questions) }}
+                                                            {{ form_widget(formAdd.questions) }}
+                                                            <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
+                                                        </div>
+                                                        {{ form_end(formAdd) }}
+                                                </div>        
+
+                                                   
+                    </div> 
+            </div> 
+    </div>                                 
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script type="text/javascript">
         $(document).ready(function() {
@@ -132,6 +204,5 @@
                 countDescription++;
             }
         });
-    </script>
-          
+    </script>        
 {% endblock %}
