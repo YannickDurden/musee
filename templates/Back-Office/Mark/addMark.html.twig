@@ -3,6 +3,8 @@
 {% block body %}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
     <div class="container-fluid">
+
+
            <div class="row">  
 
                     <div class="col-2 bg-primary pt-5"> 
@@ -23,11 +25,15 @@
                                     </li>
                             </ul>
                 
-                    </div> 
+                    </div>
+
                     <div class="col-2">
                     </div>
-                    <div class="col-6 justify-content-center">                            
-                                                
+
+                    <div class="col-6 justify-content-center">
+
+                                                {%  for m in  map  %}
+
                                                 <style>
                                                         .nav
                                                         {
@@ -40,18 +46,24 @@
                                                             width:1034.5px;
                                                             height:667px;
                                                             overflow: hidden; 
-                                                            background-image:url("{{ asset('build/Plan Muse.jpg')}}");
+                                                            background-image:url("{{ app.request.basepath }}/uploads/{{ m.map }}");
                                                         } 
                                                         .pointeur
                                                         {
                                                             position: absolute;
-                                                            background-image:url("{{ asset('build/p2-m1.png')}}");
-                                                            
+                                                            background-image:url("{{ app.request.basepath }}/uploads/p2-m1.png");
+
                                                         }
+
                                                 </style>
+
+                                                {% endfor %}
+
                                                 <script type="text/javascript">
+
                                                         var conteneur=document.getElementById("contenu");
                                                         var count=0;
+
                                                         function addMapMarker(event)
                                                         {
                                                         var x = event.clientX;
@@ -59,7 +71,7 @@
                                                         document.getElementById('add_mark_add_coordinateX').value=x;
                                                         document.getElementById('add_mark_add_coordinateY').value=y;
                                                         count ++;
-                                                        var PosX= (x-353);
+                                                        var PosX= (x-426);
                                                         var PosY= (y-75);
                                                         var pointeurs =document.getElementById("contenu");
                                                         var p = document.createElement("div");
@@ -71,7 +83,10 @@
                                                         p.style.left=PosX + 'px';
                                                         p.style.top=PosY + 'px';
                                                         pointeurs.appendChild(p);
-                                                        } 
+                                                        }
+                                                        
+
+
 
                                                 </script>
 
@@ -107,7 +122,11 @@
                                                             <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
                                                         </div>
                                                         {{ form_end(formAdd) }}
-                                                </div>        
+                                                </div>
+
+                                                <div>
+
+                                                </div>
 
                                                    
                     </div> 
