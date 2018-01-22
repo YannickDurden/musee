@@ -1,0 +1,63 @@
+/****** RESET ******/
+body{
+    margin :0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.row,
+.col-md-6,
+.col{
+    margin: 0;
+    padding: 0;
+}
+/* MAP */
+
+.map{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+}
+.map img{
+    width: 500px;
+    height: 500px;
+}
+
+@media screen and (max-width: 768px){
+    .map{
+        display:none;
+    }
+}
+
+/****** QUIZ ******/
+.form-check{
+    margin-bottom: 5%;
+}
+
+.form-check:first-child{
+    margin-top: 10%;
+}
+.form-check:last-child{
+    margin-bottom: 0;
+}
+
+.quiz{
+    text-align: center;
+}
+
+.quiz p{
+    margin: 5%;
+}
+
+.quiz .btn{
+    margin-top: 10%;
+}
+
+/****** MODAL ******/
+
+#btn-modal a{
+    text-decoration: none;
+    color: white;
+}
+

@@ -1,0 +1,55 @@
+{% extends 'Back-Office/base.back-office.html.twig' %}
+
+{% block body %}
+    <h4>Modification des informations du musée</h4>
+    <br>
+    <div class="form-group">
+        {{ form_start(formEdit) }}
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.name, "Nom du musée") }}</h5>
+            {{ form_errors(formEdit.name) }}
+            {{ form_widget(formEdit.name, {'attr': {'placeholder': 'Entrer le nom du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.address, "Adresse du musée") }}</h5>
+            {{ form_errors(formEdit.address) }}
+            {{ form_widget(formEdit.address, {'attr': {'placeholder': 'Entrer l\'adresse du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.website, "Site web du musée") }}</h5>
+            {{ form_errors(formEdit.website) }}
+            {{ form_widget(formEdit.website, {'attr': {'placeholder': 'Entrer le site web du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.facebook, "Facebook du musée") }}</h5>
+            {{ form_errors(formEdit.facebook) }}
+            {{ form_widget(formEdit.facebook, {'attr': {'placeholder': 'Entrer le facebook du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.twitter, "Twitter du musée") }}</h5>
+            {{ form_errors(formEdit.twitter) }}
+            {{ form_widget(formEdit.twitter, {'attr': {'placeholder': 'Entrer le twitter du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.instagram, "instagram du musée") }}</h5>
+            {{ form_errors(formEdit.instagram) }}
+            {{ form_widget(formEdit.instagram, {'attr': {'placeholder': 'Entrer l\'instagram du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.youtube, "Youtube du musée") }}</h5>
+            {{ form_errors(formEdit.youtube) }}
+            {{ form_widget(formEdit.youtube, {'attr': {'placeholder': 'Entrer le youtubeinstagrammusée', 'class': 'form-control col-6'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formEdit.phoneNumber, "Numero du musée") }}</h5>
+            {{ form_errors(formEdit.phoneNumber) }}
+            {{ form_widget(formEdit.phoneNumber, {'attr': {'placeholder': 'Entrer le numero du musée', 'class': 'form-control col-6'}}) }}
+        </div>
+
+
+        <div class="d-flex col col-6 justify-content-end pt-5">
+            {{ form_row(formEdit.Modifier, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+        {{ form_end(formEdit) }}
+    </div>
+{% endblock %}

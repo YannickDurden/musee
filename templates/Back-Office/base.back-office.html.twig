@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-back-office.css">
+    <title>{% block title %}Welcome!{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+
+</head>
+<body>
+    <div class="container-fluid bg-light">
+        <div class="row" id="content">
+            <div class="col col-2 bg-primary">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <h4><a class="nav-link active text-light" href="{{ path('add_map')}}">Carte</a></h4>
+                    </li>
+                    <li class="nav-item">
+                        <h4 class="mb-0"><a class="nav-link text-light" href="{{ path('AddMark_add') }}">Repère</a></h4>
+                        <nav class="nav flex-column pl-3">
+                            <a class="nav-link text-light" href="{{ path('AddMark_add') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('AddMark_add') }}">Modifier</a>
+                        </nav>
+                    </li>
+                    <li class="nav-item">
+                        <h4 class="mb-0"><a class="nav-link text-light" href="{{ path('new_route') }}">Parcours</a></h4>
+                        <nav class="nav flex-column pl-3">
+                            <a class="nav-link text-light" href="{{ path('new_route') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('edit_route') }}">Modifier</a>
+                        </nav>
+                    </li>
+                    <li class="nav-item">
+                        <h4><a class="nav-link text-light" href="{{ path('edit_info') }}">Administration</a></h4>
+                    </li>
+                    <li class="nav-item" id="logout">
+                            <h4><a class="nav-link text-light" href="{{ app.request.basepath }}/logout">Déconnexion</a></h4>
+                    </li>
+                </ul>
+            </div>
+            <div class="col col-9">
+    {% block body %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+    <script src ="{{app.request.basepath}}/js/script.js"></script>
+    {% block javascripts %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,78 @@
+
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+
+/* mise en forme formulaire */
+
+.form-email {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.form-email .form-group {
+    margin-top: 10%;
+}
+
+.form-email .return-btn {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10%;
+}
+
+.form-email .return-btn a{
+    text-decoration: none;
+    color: white;
+}
+
+
+/* mise en forme tablette */
+
+@media screen and (max-width: 760px) {
+    #museum-img {
+        display: none;
+    }
+}
+
+@media screen and (min-width: 760px) { 
+    #museum-img {
+        width: 100%;
+        height: 50%; 
+    }
+
+    .section-email {
+        margin-top: 10%;
+    }
+    .col-md-6 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 15px;
+    }
+}
+
+/* on annule la margin quand 
+on met la tablette en vue paysage */
+
+@media screen and (min-width: 992px) { 
+
+    .section-email {
+        margin-top: 0;
+    }
+
+}
+

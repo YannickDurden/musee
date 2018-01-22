@@ -4,6 +4,10 @@ namespace App\Controller;
 
 use App\Entity\Museum;
 use App\Form\AddMapType;
+use App\Form\EditMuseumType;
+use App\Form\UserLogType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,4 +59,29 @@ class MuseumController extends Controller
             'museum' => $museum
         ]);
     }
+
+    /**
+     * @Route("/museum/info", name="edit_info")
+     */
+    public function editInfo(Request $request)
+    {
+        $idMuseum = 1;
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $form = $this->createForm(EditMuseumType::class, $museum);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($museum);
+            $em->flush();
+
+            return new Response("Modif faite");
+        }
+
+        return $this->render('Back-office/museum/edit-info.html.twig', [
+            'formEdit' => $form->createView()
+        ]);
+    }
+
 }
