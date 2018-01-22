@@ -51,7 +51,7 @@ class AddMarkAddType extends AbstractType
 			]
         );
         $builder->add('coordinateY', NumberType::class, [
-				'label' => 'Coordonnées X ',
+				'label' => 'Coordonnées Y',
 				'constraints' => [
 					new NotBlank(),
 				]

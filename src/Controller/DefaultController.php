@@ -15,4 +15,15 @@ class DefaultController extends Controller
     {
         return $this->render('home.html.twig');
     }
+
+
+     /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+        return $this->render('Back-Office/Mark/Sidebar.html.twig');
+    }
+
+
 }
