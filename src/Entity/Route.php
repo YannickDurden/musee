@@ -18,6 +18,11 @@ class Route
     private $id;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     private $name;
@@ -152,6 +157,23 @@ class Route
     }
 
 
+    /**
+     * Get the value of description
+     */ 
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
+    /**
+     * Set the value of description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
+        return $this;
+    }
 }
