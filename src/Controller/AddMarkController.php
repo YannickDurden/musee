@@ -15,12 +15,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Museum;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+
+
 class AddMarkController extends  Controller
 {
     /**
      * @Route("Mark/AddMark/add", name="AddMark_add")
      */
-    public function add(Request $request)
+    public function add(Request $request, SessionInterface $session)
     {
         $form = $this->createForm(AddMarkAddType::class);
         //recuperer la map
@@ -34,6 +37,7 @@ class AddMarkController extends  Controller
         }
         // Validation du formulaire
         $form->handleRequest($request);
+        $museum = $session->get('museum');
 
         if ($form->isSubmitted() && $form->isValid()) {
 
@@ -59,9 +63,9 @@ class AddMarkController extends  Controller
 
 
             $em = $this->getDoctrine()->getManager();
-            $em->persist($markSave);
+            $markSave->setMuseum($museum);
+            $em->merge($markSave);
             $em->flush();
-
 
             $lastId = $this->getDoctrine()->getRepository(Mark::class)->findBy([],['id'=>'desc'],1);
 

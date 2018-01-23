@@ -5,6 +5,7 @@
     use App\Form\LoginType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\HttpFoundation\Request;
+    use Symfony\Component\HttpFoundation\Session\SessionInterface;
     use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
     use Symfony\Component\Routing\Annotation\Route;
 
