@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Museum;
 use App\Form\AddMapType;
+use App\Form\EditMuseumType;
 use App\Form\UserLogType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -21,18 +22,17 @@ class MuseumController extends Controller
     {
         return $this->render('@Maker/demoPage.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__) ]);
     }
-
+     
     /**
      * @route("/museum/map", name="add_map")
      */
-    public function addMap(Request $request)
+    public function addMap(Request $request, SessionInterface $session)
     {
-        $idMuseum = 1;
         $form = $this->createForm(AddMapType::class);
         $form->handleRequest($request);
 
         //Penser à faire le cas ou aucun musée en BDD car setMap  sur null impossible
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $museum = $session->get('museum');
 
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -56,6 +56,29 @@ class MuseumController extends Controller
         return $this->render('Back-Office/museum/add-map.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
+        ]);
+    }
+
+    /**
+     * @Route("/museum/info", name="edit_info")
+     */
+    public function editInfo(Request $request, SessionInterface $session)
+    {
+        $museum = $session->get('museum');
+        $form = $this->createForm(EditMuseumType::class, $museum);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($museum);
+            $em->flush();
+
+            return new Response("Modif faite");
+        }
+
+        return $this->render('Back-office/museum/edit-info.html.twig', [
+            'formEdit' => $form->createView()
         ]);
     }
 

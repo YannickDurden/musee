@@ -18,6 +18,11 @@ class Route
     private $id;
 
     /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
      * @ORM\Column(type="string", length=100)
      */
     private $name;
@@ -26,6 +31,12 @@ class Route
      * @ORM\Column(type="time")
      */
     private $duration;
+
+    /**
+     *
+     * @ORM\Column(type="text")
+     */
+    private $description;
 
 
     /**
@@ -106,6 +117,22 @@ class Route
     /**
      * @return mixed
      */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
+    }
+
+    /**
+     * @return mixed
+     */
     public function getMuseum()
     {
         return $this->museum;
@@ -152,6 +179,23 @@ class Route
     }
 
 
+    /**
+     * Get the value of description
+     */ 
+    public function getDescription()
+    {
+        return $this->description;
+    }
 
+    /**
+     * Set the value of description
+     *
+     * @return  self
+     */ 
+    public function setDescription($description)
+    {
+        $this->description = $description;
 
+        return $this;
+    }
 }

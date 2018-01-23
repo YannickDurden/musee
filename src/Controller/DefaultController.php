@@ -2,13 +2,22 @@
 
 namespace App\Controller;
 
+use App\Entity\Museum;
 use App\Entity\User;
+use App\Form\AddSelectRouteType;
+use App\Form\AddDescriptionType;
+use App\Form\AddRouteType;
+use App\Form\SelectRouteType;
+use App\Form\UserRegisterType;
 use App\Form\UserLogType;
+use App\Repository\RouteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -23,9 +32,12 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/home", name="admin_home")
      */
-    public function adminHome()
+    public function adminHome(SessionInterface $session)
     {
-        return new Response("Bienvenue sur le panel admin");
+        $user = $this->getUser();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
+        $session->set('museum', $museum);
+        return $this->render('Back-Office/home-admin.html.twig');
     }
 
     /* FONCTIONS FRONT OFFICE */
@@ -33,7 +45,6 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum", name="my_museum")
      */
-
     public function myMuseumHome(SessionInterface $session, Request $request)
     {
         $form = $this->createForm(UserLogType::class);
@@ -44,46 +55,111 @@ class DefaultController extends Controller
             $session->set('firstname', $user->getFirstName());
             return $this->redirectToRoute("my_museum_session");
         }
-        return $this->render('front-office/home-front.html.twig', [
+        return $this->render('Front-Office/home-front.html.twig', [
             'formFirstname' => $form->createView(),
         ]);
 
     }
 
-
     /**
      * @Route("/mymuseum/start", name="my_museum_session")
      */
-
-    public function myMuseumSession(SessionInterface $session)
+    public function myMuseumSession(SessionInterface $session, Request $request)
     {
-        $this->render('front-office/select-route.html.twig');
-    }
+        $form = $this->createForm(AddSelectRouteType::class);
+        $form->handleRequest($request);
 
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            return $this->render('Front-Office/select-route.html.twig', [
+                'formSelectRoute' => $form->createView()
+            ]);
+        }
+
+        return $this->render('Front-Office/select-route.html.twig', [
+            'formSelectRoute' => $form->createView(),
+        ]);
+    }
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
-
     public function beginRoute()
     {
-        $this->render('front-office/begin-route.html.twig');
+        return $this->render('Front-Office/begin-route.html.twig');
     }
 
+
     /**
-     * @Route("/mymuseum/end-route", name="end_route")
+     * @Route("/mymuseum/end-results", name="end_results")
      */
 
-    public function endRoute()
+    public function results(SessionInterface $session)
     {
-        $this->render('front-office/end-route.html.twig');
+        /*$session->getMetadataBag()->getLastUsed();
+        $dateTime = $session->getMetadataBag()->getLifetime();
+        $session->get('dateTime', $dateTime);*/
+        return $this->render('Front-Office/end-results.html.twig');
     }
 
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
-
-    public function newsletter()
+    public function newsletter(Request $request, \Swift_Mailer $mailer)
     {
-        $this->render('front-office/newsletter.html.twig');
+        $newUser = $this->createForm(UserRegisterType::class);
+
+        $newUser->handleRequest($request);
+
+        if ($newUser->isSubmitted() && $newUser->isValid()) {
+            $register = $newUser->getData();
+            $mail = $register->getEmail();
+
+            $em = $this->getDoctrine()->getManager();
+            $register->setRole(['ROLE_USER']);
+            $em->persist($register);
+            $em->flush();
+
+            $message = (new \Swift_Message('MyMuseum'))
+                ->setFrom('mymuseumwf3@gmail.com')
+                ->setTo($mail)
+                ->setBody(
+                    $this->renderView('Front-Office/email.html.twig'),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            return $this->redirectToRoute('my_museum');
+        }
+
+        return $this->render('Front-Office/newsletter.html.twig', [
+            'formRegister' => $newUser->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
+     */
+
+    public function ajaxDescription($action, $param)
+    {
+        /**
+         * retourne la description d'un parcours
+         */
+        if($action == 'getdescription' && $param) {
+
+            $getInfo = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
+            $info = $getInfo->find(intval($param));
+            $description = $info->getDescription();
+            $duration = $info->getDuration();
+
+
+        }
+        return $this->render('Front-Office/ajax.html.twig', [
+            'description' => $description,
+            'duration' => $duration,
+        ]);
+
     }
 }

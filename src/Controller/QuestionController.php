@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
 class QuestionController extends Controller
 {
     /**
-     * @Route("/quiz", name="quiz")
+     * @Route("/mymuseum/quiz", name="quiz")
      * Affiche la vue du questionnaire
      */
     public function question()
@@ -48,7 +48,7 @@ class QuestionController extends Controller
     }
 
     /**
-     * @Route("/score-quiz", name="score_quiz")
+     * @Route("/mymuseum/score-quiz", name="score_quiz")
      * Affiche le score après le questionnaire de l'oeuvre vue
      */
     public function scoreQuiz()

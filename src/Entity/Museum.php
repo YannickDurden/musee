@@ -68,6 +68,12 @@ class Museum
     private $map;
 
     /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User")
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    private $admin;
+
+    /**
      * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="marks")
      */
     private $marks;
@@ -256,6 +262,23 @@ class Museum
     {
         $this->map = $map;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin): void
+    {
+        $this->admin = $admin;
+    }
+
 
 
 

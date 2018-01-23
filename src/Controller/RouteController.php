@@ -5,67 +5,97 @@ namespace App\Controller;
 use App\Entity\Museum;
 use App\Form\AddRouteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RouteController extends Controller
 {
     /**
-     * @route("/route/add", name="add_route")
+     * @route("/route/add", name="new_route", methods="GET")
      */
-    public function add(Request $request)
+    public function newRoute(Request $request, SessionInterface $session)
     {
+        $newRoute = new \App\Entity\Route();
+        $form = $this->generateCreateForm($newRoute);
+        $museum = $session->get('museum');
 
-        $idMuseum = 1;
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
-        $form = $this->createForm(AddRouteType::class);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-
-            $route = $form->getData();
-            $em->persist($route);
-            $em->flush();
-
-            return new Response("Insertion faite");
-        }
-        return $this->render('Back-office/Route/add.html.twig', [
+        return $this->render('Back-office/route/add.html.twig', [
             'formAdd' => $form->createView(),
+            'newRoute' => $newRoute,
             'museum' => $museum
         ]);
     }
 
 
     /**
-     * @route("/route/edit/{id}", name="edit_route")
+     * @route("/route/add", name="create_route", methods="POST")
      */
-    public function edit(Request $request, $id)
+    public function createRoute(Request $request, SessionInterface $session, $id= null)
     {
-        $idMuseum = 1;
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
-        $form = $this->createForm(AddRouteType::class);
+
+        $newRoute = new \App\Entity\Route();
+        $museum = $session->get('museum');
+        $form = $this->generateCreateForm($newRoute);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
+        if ($form->isSubmitted() && $form->isValid())
         {
             $em = $this->getDoctrine()->getManager();
-            $repository = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
-            $currentRoute = $repository->find($id);
-            $object = $form->getData();
-            $currentRoute->setName($object->getName());
-            $currentRoute->setDuration($object->getDuration());
-            $currentRoute->setCategory($object->getCategory());
-            $currentRoute->setMarks($object->getMarks());
+            $newRoute->setMuseum($museum);
+            $em->merge($newRoute);
             $em->flush();
 
-            return new Response("Modif faite");
+            return new Response("Insertion faite");
         }
-        return $this->render('Back-Office/Route/add.html.twig', [
+        return $this->render('Back-office/route/add.html.twig', [
             'formAdd' => $form->createView(),
             'museum' => $museum
         ]);
     }
+
+    private function generateCreateForm(\APP\Entity\Route $newRoute)
+    {
+        $form = $this->createForm(AddRouteType::class, $newRoute, [
+            'action' => $this->generateUrl('create_route'),
+            'method' => 'POST'
+        ]);
+        return $form;
+    }
+
+
+    /**
+     * @route("/route/edit", name="edit_route")
+     */
+    public function editAjax(Request $request, SessionInterface $session)
+    {
+        $museum = $session->get('museum');
+        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
+        //Conversion du tableau d'objet en tableau associatif id => nom
+        $arrayRoutes = [];
+        foreach ($allRoutes as $route)
+        {
+            $arrayRoutes[$route->getName()] = $route->getId();
+        }
+        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
+            'choices' => $arrayRoutes
+        ]);
+        $form2 = $formBuilder->getForm();
+        $form2->handlerequest($request);
+
+        return $this->render('Back-Office/route/update2.html.twig', [
+
+            'formList' => $form2->createView(),
+            'museum' => $museum
+        ]);
+
+
+    }
+
+
 }

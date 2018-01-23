@@ -5,6 +5,7 @@
     use App\Entity\Route;
     use App\Entity\Task;
     use App\Repository\MarkRepository;
+    use App\Repository\RouteRepository;
     use Doctrine\ORM\Mapping\Entity;
     use Symfony\Bridge\Doctrine\Form\Type\EntityType;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -48,7 +49,7 @@
                 'multiple' => true
 
             ]);
-            $builder->add('save', SubmitType::class, ['label' => 'Ajouter le parcours']);
+            $builder->add('save', SubmitType::class, ['attr' => ['class' =>'btn btn-primary']]);
 
         }
 
