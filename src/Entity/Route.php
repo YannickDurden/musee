@@ -15,13 +15,7 @@ class Route
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="text")
-     */
-    private $description;
-
+    private $id;git 
     /**
      * @ORM\Column(type="string", length=100)
      */
@@ -176,26 +170,5 @@ class Route
     public function setScores($scores): void
     {
         $this->scores = $scores;
-    }
-
-
-    /**
-     * Get the value of description
-     */ 
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set the value of description
-     *
-     * @return  self
-     */ 
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
     }
 }
