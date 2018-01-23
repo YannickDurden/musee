@@ -1,12 +1,11 @@
-##MyMuseum
+
+#MyMuseum
    
-  MyMuseum is an application for museums to allow visitors to have an interactive visit
-  . Choose a course, a category (adult or child) and let you guide while answering a 
-  quiz increase your knowledge
+MyMuseum is an application for museums to allow visitors and have an interactive visit . Choose a course, a category (adult or child) and let you guide. When you click on an point on the map (an art), you will have some informations about the art and a quiz to increase your knowledges.
    
    ## Getting Started
    
-   These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+These instructions will get you an operational version of the project and running on your local machine for development and testing purposes. Let see deployment for notes on how to deploy the project on a live system.
    
    ### Prerequisites
    

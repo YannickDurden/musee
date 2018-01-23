@@ -15,20 +15,19 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div id="btn-tablet" class="btn-group" role="group"
-                         aria-label="navigation">
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="#">Description</a>
-                        </button>
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="#">Retour carte</a>
-                        </button>
-                        <button type="button" class="btn btn-group-lg btn-primary">
-                            <a href="{{ path("quiz") }}">Quiz</a>
-                        </button>
-                    </div>
+                    <ul id="btn-tablet" class="nav nav-tabs nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Retour carte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("quiz") }}">Quiz</a>
+                        </li>
+                    </ul>
                     <section class="picture-artwork">
-                        <img class="w-100" src="{{app.request.basepath}}/uploads/809d741d948ff84be27b289c95c8745e.jpeg"
+                        <img class="img-artwork w-100" src="{{app.request.basepath}}/uploads/809d741d948ff84be27b289c95c8745e.jpeg"
                              alt="le-penseur">
                         <h1 class="text-center">{{ currentMark.name }}<!--Titre de
                         l'oeuvre--></h1>
@@ -43,17 +42,17 @@
 
                     <div id="btn-footer" class="row">
                         <div class="col-md-6">
-                            <div class="btn-group" role="group" aria-label="navigation">
-                                <button type="button" class="btn btn-group-lg btn-primary">
-                                    <a href="#">Description</a>
-                                </button>
-                                <button type="button" class="btn btn-group-lg btn-primary">
-                                    <a href="#">Retour carte</a>
-                                </button>
-                                <button type="button" class="btn btn-group-lg btn-primary">
-                                    <a href="{{ path("quiz") }}">Quiz</a>
-                                </button>
-                            </div>
+                            <ul class="fixed-bottom nav nav-tabs nav-fill">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">Description</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Retour carte</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path("quiz") }}">Quiz</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                 </div>

@@ -25,17 +25,6 @@ class UserRegisterType extends AbstractType
 {
         public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('role', TextType::class, [
-            'constraints' => [
-                new Length(['min' => 5]),
-            ],
-            'label'=> 'Type de compte',
-            'data'=> 'visiteur',
-
-        ]);
-
-        //**************************************
-
         $builder->add('firstname', TextType::class, [
             'constraints' => [
                 new NotBlank(),

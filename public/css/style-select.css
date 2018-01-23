@@ -50,3 +50,9 @@ body {
         padding: 15px;
     }
 }
+
+#btn-start{
+    font-size: 30px;
+    border-radius: 0;
+
+}
