@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Museum;
 use App\Entity\User;
 use App\Form\UserLogType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -23,8 +24,11 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/home", name="admin_home")
      */
-    public function adminHome()
+    public function adminHome(SessionInterface $session)
     {
+        $user = $this->getUser();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
+        $session->set('museum', $museum);
         return $this->render('Back-Office/home-admin.html.twig');
     }
 

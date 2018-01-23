@@ -68,6 +68,7 @@ class User implements UserInterface, \Serializable
      */
     private $answers;
 
+
     /**
      * User constructor.
      */

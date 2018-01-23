@@ -4,47 +4,31 @@ $(function() {
 
         var id = $('#form_route').val()
         $.ajax({
-            url: 'http://localhost:8000/route/edit/'+id,
+            url: 'http://localhost:8000/ajax/edit-route',
+            type: 'POST',
+            data: {id : id}
         })
             .done(function( response ) {
                 $('#selected_route').html(response);
             });
-    })
-    $(document).on("click", "#add_route_save", function(e){
-        e.preventDefault();
-        var modifSuccess = "<div class=\"bg-success\">Votre modification à bien été enregistrée";
-        $('#selected_route').html(modifSuccess);
-        /*$.fn.serializeObject = function()
-        {
-            var o = {};
-            var a = this.serializeArray();
-            $.each(a, function() {
-                if (o[this.name] !== undefined) {
-                    if (!o[this.name].push) {
-                        o[this.name] = [o[this.name]];
-                    }
-                    o[this.name].push(this.value || '');
-                } else {
-                    o[this.name] = this.value || '';
-                }
-            });
-            return o;
-        };
-        // get the properties and values from the form
-        var data = $("#add_route_form").serializeObject();
-        var id = $('#form_route').val()
-        $.ajax({
-            url: 'http://localhost:8000/route/add',
-            type: 'POST',
-            dataType: 'json',
-            data: {data: data}
-        });*/
-
     });
 
+    $(document).on("click", "#add_route_save", function(e){
+        e.preventDefault();
+        var data = $("#add_route_form").serialize();
+        var id = $('#form_route').val()
+        var request = $.ajax({
+            url: 'http://localhost:8000/ajax/route/add',
+            type: 'POST',
+            dataType: "json",
+            data: {form: data, id: id }
+        });
+        var modifSuccess =
+            "    <div class=\"alert alert-success\" role=\"alert\">\n" +
+            "        <h4 class=\"alert-heading\">Modifications enregistrées</h4>\n" +
+            "        <p class=\"mb-5\">Vos modifications ont bien été enregistrées</p>\n" +
+            "    </div>";
+        $('#selected_route').html(modifSuccess);
 
-
-
-
-
+    });
 });

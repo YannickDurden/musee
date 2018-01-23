@@ -26,14 +26,13 @@ class MuseumController extends Controller
     /**
      * @route("/museum/map", name="add_map")
      */
-    public function addMap(Request $request)
+    public function addMap(Request $request, SessionInterface $session)
     {
-        $idMuseum = 1;
         $form = $this->createForm(AddMapType::class);
         $form->handleRequest($request);
 
         //Penser à faire le cas ou aucun musée en BDD car setMap  sur null impossible
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $museum = $session->get('museum');
 
         if($form->isSubmitted() && $form->isValid()) {
             $em = $this->getDoctrine()->getManager();
@@ -63,10 +62,9 @@ class MuseumController extends Controller
     /**
      * @Route("/museum/info", name="edit_info")
      */
-    public function editInfo(Request $request)
+    public function editInfo(Request $request, SessionInterface $session)
     {
-        $idMuseum = 1;
-        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $museum = $session->get('museum');
         $form = $this->createForm(EditMuseumType::class, $museum);
         $form->handleRequest($request);
 
