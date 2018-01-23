@@ -4,16 +4,20 @@ namespace App\Controller;
 
 use App\Entity\Museum;
 use App\Entity\User;
+use App\Form\AddSelectRouteType;
 use App\Form\AddDescriptionType;
 use App\Form\AddRouteType;
 use App\Form\SelectRouteType;
 use App\Form\UserRegisterType;
 use App\Form\UserLogType;
+use App\Repository\RouteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
@@ -62,22 +66,21 @@ class DefaultController extends Controller
      */
     public function myMuseumSession(SessionInterface $session, Request $request)
     {
-        $form = $this->createForm(SelectRouteType::class);
+        $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentRoute = $form->getData();
+
+        if($form->isSubmitted() && $form->isValid())
+        {
             return $this->render('Front-Office/select-route.html.twig', [
-                'formRoute' => $form->createView(),
-                'description' => $currentRoute['route']->getDescription(),
+                'formSelectRoute' => $form->createView()
             ]);
         }
 
         return $this->render('Front-Office/select-route.html.twig', [
-            'formRoute' => $form->createView(),
+            'formSelectRoute' => $form->createView(),
         ]);
     }
-
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
@@ -86,12 +89,17 @@ class DefaultController extends Controller
         return $this->render('Front-Office/begin-route.html.twig');
     }
 
+
     /**
-     * @Route("/mymuseum/end-route", name="end_route")
+     * @Route("/mymuseum/end-results", name="end_results")
      */
-    public function endRoute()
+
+    public function results(SessionInterface $session)
     {
-        return $this->render('Front-Office/end-route.html.twig');
+        /*$session->getMetadataBag()->getLastUsed();
+        $dateTime = $session->getMetadataBag()->getLifetime();
+        $session->get('dateTime', $dateTime);*/
+        return $this->render('Front-Office/end-results.html.twig');
     }
 
     /**
@@ -130,14 +138,28 @@ class DefaultController extends Controller
         ]);
     }
 
-
-     /**
-     * @Route("/test", name="test")
+    /**
+     * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */
-    public function test()
+
+    public function ajaxDescription($action, $param)
     {
-        return $this->render('Back-Office/Mark/Sidebar.html.twig');
+        /**
+         * retourne la description d'un parcours
+         */
+        if($action == 'getdescription' && $param) {
+
+            $getInfo = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
+            $info = $getInfo->find(intval($param));
+            $description = $info->getDescription();
+            $duration = $info->getDuration();
+
+
+        }
+        return $this->render('Front-Office/ajax.html.twig', [
+            'description' => $description,
+            'duration' => $duration,
+        ]);
+
     }
-
-
 }
