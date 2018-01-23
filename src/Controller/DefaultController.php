@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Museum;
 use App\Entity\User;
 use App\Form\AddDescriptionType;
 use App\Form\AddRouteType;
@@ -21,7 +22,18 @@ class DefaultController extends Controller
      */
     public function home()
     {
-        return $this->render('home.html.twig');
+        return new Response("Bienvenue sur le panel admin");
+    }
+
+    /**
+     * @Route("/admin/home", name="admin_home")
+     */
+    public function adminHome(SessionInterface $session)
+    {
+        $user = $this->getUser();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
+        $session->set('museum', $museum);
+        return $this->render('Back-Office/home-admin.html.twig');
     }
 
     /* FONCTIONS FRONT OFFICE */
@@ -117,4 +129,15 @@ class DefaultController extends Controller
             'formRegister' => $newUser->createView(),
         ]);
     }
+
+
+     /**
+     * @Route("/test", name="test")
+     */
+    public function test()
+    {
+        return $this->render('Back-Office/Mark/Sidebar.html.twig');
+    }
+
+
 }

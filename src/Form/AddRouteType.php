@@ -49,7 +49,7 @@
                 'multiple' => true
 
             ]);
-            $builder->add('save', SubmitType::class, ['label' => 'Ajouter le parcours']);
+            $builder->add('save', SubmitType::class, ['attr' => ['class' =>'btn btn-primary']]);
 
         }
 

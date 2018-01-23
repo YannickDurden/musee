@@ -1,0 +1,9 @@
+{% extends 'Back-Office/base.back-office.html.twig' %}
+
+{% block body %}
+    <div class="alert alert-success" role="alert">
+        <h4 class="alert-heading">Modifications enregistrées</h4>
+        <p class="mb-5">Vos modifications ont bien été enregistrées</p>
+        <a class = "p-2" href="{{ path('edit_route') }}">Retour sur la page d'édition</a>
+    </div>
+{% endblock%}

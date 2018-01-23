@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
      * @ORM\Id
@@ -15,6 +17,11 @@ class User
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    private $username;
 
     /**
      * @ORM\Column(type="string", name="first_name", length=50)
@@ -27,7 +34,17 @@ class User
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @ORM\Column(type="string", length=50, unique=true)
      */
     private $email;
 
@@ -37,7 +54,7 @@ class User
     private $newsletter;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="array")
      */
     private $role;
 
@@ -50,6 +67,16 @@ class User
      * @ORM\OneToMany(targetEntity="App\Entity\Answer",mappedBy="user")
      */
     private $answers;
+
+
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->role = new ArrayCollection();
+    }
 
 
     /**
@@ -66,6 +93,22 @@ class User
     public function setId($id): void
     {
         $this->id = $id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
     }
 
     /**
@@ -103,6 +146,39 @@ class User
     /**
      * @return mixed
      */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param mixed $password
+     */
+    public function setPassword($password): void
+    {
+        $this->password = $password;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getisActive()
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param mixed $isActive
+     */
+    public function setIsActive($isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+
+    /**
+     * @return mixed
+     */
     public function getEmail()
     {
         return $this->email;
@@ -132,13 +208,6 @@ class User
         $this->newsletter = $newsletter;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
 
     /**
      * @param mixed $role
@@ -180,7 +249,39 @@ class User
         $this->answers = $answers;
     }
 
+    public function getRoles()
+    {
+        return $this->role;
+    }
 
+    public function eraseCredentials()
+    {
+    }
+
+    /** @see \Serializable::serialize() */
+    public function serialize()
+    {
+        return serialize([
+            $this->id,
+            $this->username,
+            $this->password,
+        ]);
+    }
+
+    /** @see \Serializable::unserialize() */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->username,
+            $this->password,
+            ) = unserialize($serialized);
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
 
 
 }
