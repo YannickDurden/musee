@@ -4,7 +4,7 @@ $(function(){
 
         var param = $('.select-route').val();
         $.ajax({
-            url:'http://localhost:8000/mymuseum/admin-ajax/getdescription/' + param,
+            url:'http://localhost:8000/mymuseum/ajax/getdescription/' + param,
             type: 'GET',
         }).done(function(response){
             $('.border-desc').html(response).show("slow");

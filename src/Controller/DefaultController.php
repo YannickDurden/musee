@@ -139,7 +139,7 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
+     * @Route("/mymuseum/ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */
 
     public function ajaxDescription($action, $param)
