@@ -7,7 +7,8 @@ body{
 
 .row,
 .col-md-6,
-.col{
+.col,
+.container-fluid{
     margin: 0;
     padding: 0;
 }
@@ -19,17 +20,29 @@ header li{
 }
 
 /****** MAIN ******/
+
+/* MENU TABLETTE */
+@media screen and (max-width: 768px ){
+    #btn-tablet{
+        display: none;
+    }
+}
+
+#btn-tablet a{
+    font-size: 1.25em;
+}
+
 /* MAP */
 
-.map{
+#map{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-self: center;
 }
 .map img{
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    height: 100%;
 }
 
 @media screen and (max-width: 768px){
@@ -38,55 +51,33 @@ header li{
     }
 }
 
+@media screen and (min-width: 768px){
+    .map{
+        display:flex;
+    }
+}
+
 /* TITLE ARTWORK*/
 .picture-artwork h1{
     margin: 0;
 }
+
 /* DESCRIPTION ARTWORK*/
 article p{
     padding: 5%;
     margin: 0;
 }
 
-
 /****** FOOTER ******/
 /* BTN */
-#btn-footer .btn-group{
-    display: flex;
+#btn-footer a{
+    font-size: 1.25em;
+    background-color: white;
 }
 
 @media screen and (min-width: 768px ){
     #btn-footer{
-        justify-content: flex-end;
+        display: none;
     }
 }
 
-#btn-footer .btn{
-    border: 1px solid white;
-    width: 100%;
-}
-
-#btn-footer .btn:last-child{
-    border-right: none;
-}
-
-/*LINK BTN*/
-#btn-footer a{
-    text-decoration: none;
-    text-align: center;
-    color: white;
-}
-
-
-/*****/
-@media screen and (min-width: 768px) {
-    .wrapper{
-        display: table;
-    }
-    main{
-        display: table-footer-group;
-    }
-    footer{
-        display: table-header-group;
-    }
-}

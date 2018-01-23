@@ -75,4 +75,10 @@ on met la tablette en vue paysage */
     }
 
 }
+/*** input rôle en attendant un FIX ***/
+
+.role{
+    display: none;
+}
+/**************************************/
 

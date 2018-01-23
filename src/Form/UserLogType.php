@@ -27,7 +27,6 @@ class UserLogType extends AbstractType
             'label' => 'Je démarre ma visite',
             'attr' => ['class' => 'btn btn-primary'],
         ]);
-
     }
 
     public function configureOptions(OptionsResolver $resolver)

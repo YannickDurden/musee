@@ -20,13 +20,12 @@ class MarkController extends Controller
 {
 
     /**
-     * @Route("/artwork/{id}", name="artwork")
+     * @Route("/mymuseum/artwork/{id}", name="artwork")
      */
     public function displayMark($id)
     {
         //la catégorie est passée en <dur>
         $category = "adulte";
-
 
         //récupération en base de l'oeuvre via l'entité Mark
         $repository = $this->getDoctrine()->getRepository(Mark::class);
@@ -40,10 +39,8 @@ class MarkController extends Controller
             ]);
 
         //récupération en base de la carte du musée
-
         $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
         $map = $mapRespository->find(1);
-
 
         return $this->render('Front-Office/artwork.html.twig',[
             'currentMark' => $currentMark,

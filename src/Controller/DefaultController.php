@@ -5,6 +5,10 @@ namespace App\Controller;
 use App\Entity\Museum;
 use App\Entity\User;
 use App\Form\AddSelectRouteType;
+use App\Form\AddDescriptionType;
+use App\Form\AddRouteType;
+use App\Form\SelectRouteType;
+use App\Form\UserRegisterType;
 use App\Form\UserLogType;
 use App\Repository\RouteRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -22,7 +26,18 @@ class DefaultController extends Controller
      */
     public function home()
     {
-        return $this->render('home.html.twig');
+        return new Response("Bienvenue sur le panel admin");
+    }
+
+    /**
+     * @Route("/admin/home", name="admin_home")
+     */
+    public function adminHome(SessionInterface $session)
+    {
+        $user = $this->getUser();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
+        $session->set('museum', $museum);
+        return $this->render('Back-Office/home-admin.html.twig');
     }
 
     /* FONCTIONS FRONT OFFICE */
@@ -30,7 +45,6 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum", name="my_museum")
      */
-
     public function myMuseumHome(SessionInterface $session, Request $request)
     {
         $form = $this->createForm(UserLogType::class);
@@ -47,11 +61,9 @@ class DefaultController extends Controller
 
     }
 
-
     /**
      * @Route("/mymuseum/start", name="my_museum_session")
      */
-
     public function myMuseumSession(SessionInterface $session, Request $request)
     {
         $form = $this->createForm(AddSelectRouteType::class);
@@ -60,7 +72,6 @@ class DefaultController extends Controller
 
         if($form->isSubmitted() && $form->isValid())
         {
-
             return $this->render('Front-Office/select-route.html.twig', [
                 'formSelectRoute' => $form->createView()
             ]);
@@ -73,13 +84,11 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
-
     public function beginRoute()
     {
-
-
         return $this->render('Front-Office/begin-route.html.twig');
     }
+
 
     /**
      * @Route("/mymuseum/end-results", name="end_results")
@@ -96,10 +105,37 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
-
-    public function newsletter()
+    public function newsletter(Request $request, \Swift_Mailer $mailer)
     {
-        return $this->render('Front-Office/newsletter.html.twig');
+        $newUser = $this->createForm(UserRegisterType::class);
+
+        $newUser->handleRequest($request);
+
+        if ($newUser->isSubmitted() && $newUser->isValid()) {
+            $register = $newUser->getData();
+            $mail = $register->getEmail();
+
+            $em = $this->getDoctrine()->getManager();
+            $register->setRole(['ROLE_USER']);
+            $em->persist($register);
+            $em->flush();
+
+            $message = (new \Swift_Message('MyMuseum'))
+                ->setFrom('mymuseumwf3@gmail.com')
+                ->setTo($mail)
+                ->setBody(
+                    $this->renderView('Front-Office/email.html.twig'),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+
+            return $this->redirectToRoute('my_museum');
+        }
+
+        return $this->render('Front-Office/newsletter.html.twig', [
+            'formRegister' => $newUser->createView(),
+        ]);
     }
 
     /**
