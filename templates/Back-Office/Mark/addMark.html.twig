@@ -54,6 +54,10 @@
                                                             background-image:url("{{ app.request.basepath }}/uploads/p2-m1.png");
 
                                                         }
+                                                        .well
+                                                        {
+                                                            visibility :"hidden";
+                                                        }
 
                                                 </style>
 
@@ -66,29 +70,28 @@
 
                                                         function addMapMarker(event)
                                                         {
-                                                        var x = event.clientX;
-                                                        var y = event.clientY; 
-                                                        document.getElementById('add_mark_add_coordinateX').value=x;
-                                                        document.getElementById('add_mark_add_coordinateY').value=y;
-                                                        count ++;
-                                                        var PosX= (x-426);
-                                                        var PosY= (y-75);
-                                                        var pointeurs =document.getElementById("contenu");
-                                                        var p = document.createElement("div");
-                                                        p.setAttribute("class","pointeur");
-                                                        p.setAttribute("id","pointeur_"+count);
-                                                        p.style.width= 47 + "px";
-                                                        p.style.height=75 + "px";
-                                                        p.style.color="red";
-                                                        p.style.left=PosX + 'px';
-                                                        p.style.top=PosY + 'px';
-                                                        pointeurs.appendChild(p);
+                                                                var x=event.offsetX;
+                                                                var y=event.offsetY;
+                                                                var PosX= (x-23);
+                                                                var PosY= (y-75);
+                                                                document.getElementById('add_mark_add_coordinateX').value=PosX;
+                                                                document.getElementById('add_mark_add_coordinateY').value=PosY;
+                                                                count ++;
+                                                                var pointeurs =document.getElementById("contenu");
+                                                                var p = document.createElement("div");
+                                                                p.setAttribute("class","pointeur");
+                                                                p.setAttribute("id","pointeur_"+count);
+                                                                p.style.width= 47 + "px";
+                                                                p.style.height=75 + "px";
+                                                                p.style.color="red";
+                                                                p.style.left=PosX + 'px';
+                                                                p.style.top=PosY + 'px';
+                                                                pointeurs.appendChild(p);
+
                                                         }
-                                                        
-
-
-
+                                                    
                                                 </script>
+
 
                                                 <div class="card w-100 pt-0">
                                                         <div id="contenu" onclick="addMapMarker(event);">
@@ -96,37 +99,38 @@
                                                 </div>  
 
 
+
                                                 <div class="well">
-                                                        {{ form_start(formAdd) }}
-                                                        {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
-                                                        <div class="form-group">
-                                                            {{ form_label(formAdd.name, "Nom de l'oeuvre") }}
-                                                            {{ form_errors(formAdd.name) }}
-                                                            {{ form_widget(formAdd.name) }}
-                                                        </div>
-                                                        <div>
-                                                            {{ form_label(formAdd.image, "Image illustrative de l'oeuvre") }}
-                                                            {{ form_errors(formAdd.image) }}
-                                                            {{ form_widget(formAdd.image) }}
-                                                        </div>
-                                                        {{ form_label(formAdd.descriptions, "Saisie des descriptions de l'oeuvre") }}
-                                                        <div class="p-4">
-                                                            {{ form_errors(formAdd.descriptions) }}
-                                                            {{ form_widget(formAdd.descriptions) }}
-                                                            <a href="#" id="add_description" class="btn btn-success mt-3">Ajouter une description</a>
-                                                        </div>
-                                                        {{ form_label(formAdd.descriptions, "Saisie des questions sur l'oeuvre") }}
-                                                        <div class="p-4">
-                                                            {{ form_errors(formAdd.questions) }}
-                                                            {{ form_widget(formAdd.questions) }}
-                                                            <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
-                                                        </div>
-                                                        {{ form_end(formAdd) }}
+
+                                                                {{ form_start(formAdd) }}
+                                                                {{ form_label(formAdd.questions, "Liste des questions sur l'oeuvre") }}
+                                                                <div class="form-group">
+                                                                    {{ form_label(formAdd.name, "Nom de l'oeuvre") }}
+                                                                    {{ form_errors(formAdd.name) }}
+                                                                    {{ form_widget(formAdd.name) }}
+                                                                </div>
+                                                                <div>
+                                                                    {{ form_label(formAdd.image, "Image illustrative de l'oeuvre") }}
+                                                                    {{ form_errors(formAdd.image) }}
+                                                                    {{ form_widget(formAdd.image) }}
+                                                                </div>
+                                                                {{ form_label(formAdd.descriptions, "Saisie des descriptions de l'oeuvre") }}
+                                                                <div class="p-4">
+                                                                    {{ form_errors(formAdd.descriptions) }}
+                                                                    {{ form_widget(formAdd.descriptions) }}
+                                                                    <a href="#" id="add_description" class="btn btn-success mt-3">Ajouter une description</a>
+                                                                </div>
+                                                                {{ form_label(formAdd.descriptions, "Saisie des questions sur l'oeuvre") }}
+                                                                <div class="p-4">
+                                                                    {{ form_errors(formAdd.questions) }}
+                                                                    {{ form_widget(formAdd.questions) }}
+                                                                    <a href="#" id="add_question" class="btn btn-success mt-3">Ajouter une question</a>
+                                                                </div>
+                                                                {{ form_end(formAdd) }}
+
+
                                                 </div>
 
-                                                <div>
-
-                                                </div>
 
                                                    
                     </div> 
