@@ -37,7 +37,6 @@ class Mark
      */
     private $image;
 
-
     /**
      * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
      */

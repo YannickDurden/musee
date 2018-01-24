@@ -30,17 +30,11 @@ class AddMarkController extends  Controller
         $em=$this->getDoctrine()->getManager();
         $maps=$em->getRepository(Museum::class)->findBy([],['id'=>'desc'],1);
 
-
-        foreach( $maps  as $key => $value )
-        {
-
-        }
         // Validation du formulaire
         $form->handleRequest($request);
         $museum = $session->get('museum');
 
         if ($form->isSubmitted() && $form->isValid()) {
-
 
             $markSave = $form->getData();
             $markQuestions = $markSave->getQuestions();
@@ -55,11 +49,7 @@ class AddMarkController extends  Controller
 
             $file->move($this->getParameter('uploads_directory'), $fileName);
 
-            foreach($markQuestions as $currentQuestion)
-            {
-                $jsonAnswer = json_encode($currentQuestion->getAnswers());
-                $currentQuestion->setAnswers($jsonAnswer);
-            }
+
 
 
             $em = $this->getDoctrine()->getManager();
@@ -75,6 +65,7 @@ class AddMarkController extends  Controller
                 $currentQuestion->setAnswers($jsonAnswer);
                 $currentQuestion->setMark($lastId[0]);
                 $em = $this->getDoctrine()->getManager();
+                $em->persist($currentQuestion);
                 $em->flush();
             }
 
@@ -82,6 +73,7 @@ class AddMarkController extends  Controller
             {
                 $currentDescription->setMark($lastId[0]);
                 $em = $this->getDoctrine()->getManager();
+                $em->persist($currentDescription);
                 $em->flush();
             }
             return $this->redirectToRoute('mark_create_confirmation');

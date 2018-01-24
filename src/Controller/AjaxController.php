@@ -56,6 +56,7 @@ class AjaxController extends Controller
         $updatedRoute->setName($arrayObject['add_route']['name']);
         $durationArrayToString = $arrayObject['add_route']['duration']['hour']." ".$arrayObject['add_route']['duration']['minute'];
         $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
+        $duration = new \DateTime('now');
         $updatedRoute->setDuration($duration);
         $arrayMarks = new ArrayCollection();
         for($i=0; $i<count($arrayObject['add_route']['marks']); $i++)

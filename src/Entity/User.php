@@ -24,17 +24,17 @@ class User implements UserInterface, \Serializable
     private $username;
 
     /**
-     * @ORM\Column(type="string", name="first_name", length=50)
+     * @ORM\Column(type="string", name="first_name", length=50, nullable=true)
      */
     private $firstName;
 
     /**
-     * @ORM\Column(type="string",name="last_name", length=50)
+     * @ORM\Column(type="string",name="last_name", length=50, nullable=true)
      */
     private $lastName;
 
     /**
-     * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64, nullable=true)
      */
     private $password;
 
@@ -68,7 +68,6 @@ class User implements UserInterface, \Serializable
      */
     private $answers;
 
-
     /**
      * User constructor.
      */
@@ -77,7 +76,6 @@ class User implements UserInterface, \Serializable
         $this->isActive = true;
         $this->role = new ArrayCollection();
     }
-
 
     /**
      * @return mixed
