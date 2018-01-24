@@ -47,7 +47,8 @@ class RouteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find(1));
+            $currentMuseumId = $museum->getId();
+            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($currentMuseumId));
             $newRoute->setDescription("Test");
             $em2->persist($newRoute);
             $em2->flush();
