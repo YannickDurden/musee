@@ -8,6 +8,7 @@ use App\Form\AddRouteType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Validator\Constraints\DateTime;
@@ -30,6 +31,8 @@ class AjaxController extends Controller
     {
         $id = $_POST['id'];
         $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
+        $currentMap = new File('C:\xampp\htdocs\musee\public\uploads\\'.$currentRoute->getMap());
+        $currentRoute->setMap($currentMap);
         $form = $this->createForm(AddRouteType::class, $currentRoute);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
@@ -40,6 +43,7 @@ class AjaxController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($updatedRoute);
             $em->flush();
+
         }
         return $this->render('Back-Office/Route/AddRoute.html.twig', [
             'formAdd' => $form->createView()
@@ -54,9 +58,10 @@ class AjaxController extends Controller
         parse_str($_POST['form'], $arrayObject);
         $updatedRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($_POST['id']);
         $updatedRoute->setName($arrayObject['add_route']['name']);
+        $updatedRoute->setDescription($arrayObject['add_route']['description']);
         $durationArrayToString = $arrayObject['add_route']['duration']['hour']." ".$arrayObject['add_route']['duration']['minute'];
         $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
-        //$duration = new \DateTime('now');
+        $duration = new \DateTime('now');
         $updatedRoute->setDuration($duration);
         $arrayMarks = new ArrayCollection();
         for($i=0; $i<count($arrayObject['add_route']['marks']); $i++)
@@ -67,6 +72,7 @@ class AjaxController extends Controller
         $em =$this->getDoctrine()->getManager();
         $em->merge($updatedRoute);
         $em->flush();
-        return new Response("ok");
+
+        return new Response("Modif effectuée");
     }
 }

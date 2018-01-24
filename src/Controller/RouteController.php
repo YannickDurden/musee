@@ -49,7 +49,15 @@ class RouteController extends Controller
         {
             $currentMuseumId = $museum->getId();
             $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($currentMuseumId));
-            $newRoute->setDescription("Test");
+
+            $file = $form->get('map')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move(
+                $this->getParameter('uploads_directory'),
+                $fileName
+            );
+            $newRoute->setMap($fileName);
+
             $em2->persist($newRoute);
             $em2->flush();
 

@@ -2,36 +2,15 @@
 
 namespace App\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnswerRepository")
- */
+
 class Answer
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+
     private $id;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="answers")
-     */
-    private $user;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Question",inversedBy="answers")
-     */
-    private $question;
-
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
     private $value;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
     private $correct;
 
 
@@ -52,37 +31,7 @@ class Answer
         $this->id = $id;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
 
-    /**
-     * @param mixed $user
-     */
-    public function setUser($user): void
-    {
-        $this->user = $user;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getQuestion()
-    {
-        return $this->question;
-    }
-
-    /**
-     * @param mixed $question
-     */
-    public function setQuestion($question): void
-    {
-        $this->question = $question;
-    }
 
     /**
      * @return mixed

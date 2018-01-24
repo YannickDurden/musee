@@ -25,9 +25,19 @@
                 {{ form_widget(formAdd.name, {'attr': {'placeholder': 'Entrer le nom du parcours', 'class': 'form-control col-6'}}) }}
             </div>
             <div class="m-1">
+                <h5>{{ form_label(formAdd.map, "Selectionner la map du parcours") }}</h5>
+                {{ form_errors(formAdd.map) }}
+                {{ form_widget(formAdd.map) }}
+            </div>
+            <div class="m-1">
                 <h5>{{ form_label(formAdd.duration, "Durée estimée du parcours:") }}</h5>
                 {{ form_errors(formAdd.duration) }}
                 {{ form_widget(formAdd.duration) }}
+            </div>
+            <div class="m-1">
+                <h5>{{ form_label(formAdd.description, "Description du parcours") }}</h5>
+                {{ form_errors(formAdd.description) }}
+                {{ form_widget(formAdd.description) }}
             </div>
             <div class="m-1">
                 <h5>{{ form_label(formAdd.marks, "Selectionner les repères à ajouter:") }}</h5>

@@ -63,10 +63,6 @@ class User implements UserInterface, \Serializable
      */
     private $scores;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Answer",mappedBy="user")
-     */
-    private $answers;
 
     /**
      * User constructor.
@@ -231,21 +227,6 @@ class User implements UserInterface, \Serializable
         $this->scores = $scores;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getAnswers()
-    {
-        return $this->answers;
-    }
-
-    /**
-     * @param mixed $answers
-     */
-    public function setAnswers($answers): void
-    {
-        $this->answers = $answers;
-    }
 
     public function getRoles()
     {
