@@ -31,13 +31,13 @@
         {
             $builder->add('name', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank(['message' => 'route.name.not_blank']),
                     new Length(['max' => 50]),
                 ]
             ]);
             $builder->add('map', FileType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank(['message' => 'route.map.not_blank']),
                     new Image(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']])
                 ]
             ]);
@@ -49,7 +49,7 @@
             ]);
             $builder->add('description', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank(['message' => 'route.description.not_blank']),
                 ]
             ]);
             $builder->add('marks', EntityType::class, [

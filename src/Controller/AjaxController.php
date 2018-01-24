@@ -60,6 +60,7 @@ class AjaxController extends Controller
         $updatedRoute->setName($arrayObject['add_route']['name']);
         $updatedRoute->setDescription($arrayObject['add_route']['description']);
         $durationArrayToString = $arrayObject['add_route']['duration']['hour']." ".$arrayObject['add_route']['duration']['minute'];
+        //$updatedRoute->setMap($_POST['fileName']);
         $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
         $duration = new \DateTime('now');
         $updatedRoute->setDuration($duration);

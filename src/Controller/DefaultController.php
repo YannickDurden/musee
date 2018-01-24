@@ -40,6 +40,13 @@ class DefaultController extends Controller
         return $this->render('Back-Office/home-admin.html.twig');
     }
 
+    /**
+     * @Route("/testv2", name="test_v2")
+     */
+    public function testHome()
+    {
+        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig');
+    }
     /* FONCTIONS FRONT OFFICE */
 
     /**
