@@ -40,7 +40,6 @@ class MuseumController extends Controller
             // Déplacement du fichier
             // $file contient le fichier uploadé, il est de type Symfony\Component\HttpFoundation\File\UploadedFile
             $file = $form->get('map')->getData();
-
             // Génération d'un nom aléatoire
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
 
@@ -51,6 +50,7 @@ class MuseumController extends Controller
             );
 
             $museum->setMap($fileName);
+            $em->merge($museum);
             $em->flush();
         }
         return $this->render('Back-Office/museum/add-map.html.twig', [

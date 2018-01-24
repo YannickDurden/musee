@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Museum;
+use App\Entity\User;
 use App\Form\AddRouteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -36,9 +37,9 @@ class RouteController extends Controller
     /**
      * @route("/route/add", name="create_route", methods="POST")
      */
-    public function createRoute(Request $request, SessionInterface $session, $id= null)
+    public function createRoute(Request $request, SessionInterface $session)
     {
-
+        $em2 = $this->getDoctrine()->getManager();
         $newRoute = new \App\Entity\Route();
         $museum = $session->get('museum');
         $form = $this->generateCreateForm($newRoute);
@@ -46,10 +47,10 @@ class RouteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $em = $this->getDoctrine()->getManager();
-            $newRoute->setMuseum($museum);
-            $em->merge($newRoute);
-            $em->flush();
+            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find(1));
+            $newRoute->setDescription("Test");
+            $em2->persist($newRoute);
+            $em2->flush();
 
             return new Response("Insertion faite");
         }

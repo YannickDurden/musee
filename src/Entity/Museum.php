@@ -68,13 +68,13 @@ class Museum
     private $map;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist"})
      * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
      */
     private $admin;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="marks")
+     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="museum")
      */
     private $marks;
 
@@ -85,6 +85,24 @@ class Museum
     {
         $this->marks = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMarks()
+    {
+        return $this->marks;
+    }
+
+    /**
+     * @param mixed $marks
+     */
+    public function setMarks($marks): void
+    {
+        $this->marks = $marks;
+    }
+
+
 
 
     /**
