@@ -37,6 +37,9 @@ class DefaultController extends Controller
         $user = $this->getUser();
         $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
         $session->set('museum', $museum);
+        $session->set('correctAnswers', 0);
+        $session->set('answeredQuestions',0);
+        $session->set('lastQuestion',null);
         return $this->render('Back-Office/home-admin.html.twig');
     }
 

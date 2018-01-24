@@ -46,8 +46,22 @@ body{
     margin-bottom: 0;
 }
 
-.quiz{
+#quiz{
     text-align: center;
+}
+
+#quiz p{
+    font-size: 25px;
+}
+
+#quiz .form-check{
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+#quiz .btn{
+    margin: 70% 0 0 0;
+    font-size: 25px;
 }
 
 
