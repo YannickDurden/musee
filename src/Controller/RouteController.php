@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Entity\User;
 use App\Form\AddRouteType;
@@ -103,9 +104,54 @@ class RouteController extends Controller
             'formList' => $form2->createView(),
             'museum' => $museum
         ]);
-
-
     }
+
+    /**
+     * @route("/back-office/route/edit", name="edit_routev2")
+     */
+    public function editRoutev2(Request $request, SessionInterface $session)
+    {
+        $museum = $session->get('museum');
+        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
+        //Conversion du tableau d'objet en tableau associatif id => nom
+        $arrayRoutes = [];
+
+        foreach ($allRoutes as $route) {
+            $arrayRoutes[$route->getName()] = $route->getId();
+        }
+        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
+            'choices' => $arrayRoutes
+        ]);
+        $form2 = $formBuilder->getForm();
+        $form2->handlerequest($request);
+
+        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig', [
+
+            'formList' => $form2->createView(),
+            'museum' => $museum
+        ]);
+    }
+
+        /**
+         * @route("/ajax/getMarks", name="getMarks")
+         */
+    public function getMarks(Request $request, SessionInterface $session)
+    {
+        $id = $_POST['id'];
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
+        $allMarks = $currentRoute->getMarks();
+        //Conversion du tableau d'objet en tableau associatif id => nom
+        $arrayMarks = [];
+
+        foreach ($allMarks as $mark) {
+            $arrayMarks[$mark->getName()] = $mark->getId();
+        }
+
+        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
+            'marks' => $arrayMarks
+        ]);
+    }
+
 
 
 }
