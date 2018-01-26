@@ -37,9 +37,6 @@ class DefaultController extends Controller
         $user = $this->getUser();
         $museum = $this->getDoctrine()->getRepository(Museum::class)->findOneBy(['admin' => $user->getId()]);
         $session->set('museum', $museum);
-        $session->set('correctAnswers', 0);
-        $session->set('answeredQuestions',0);
-        $session->set('lastQuestion',null);
         return $this->render('Back-Office/home-admin.html.twig');
     }
 
@@ -56,6 +53,9 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $session->set('firstname', $user->getFirstName());
+            $session->set('correctAnswers', 0);
+            $session->set('answeredQuestions',0);
+            $session->set('lastQuestion',null);
             return $this->redirectToRoute("my_museum_session");
         }
         return $this->render('Front-Office/home-front.html.twig', [
@@ -72,12 +72,16 @@ class DefaultController extends Controller
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
 
-
         if($form->isSubmitted() && $form->isValid())
         {
-            return $this->render('Front-Office/select-route.html.twig', [
-                'formSelectRoute' => $form->createView()
-            ]);
+            $id = $form->getData();
+            $route = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(3);
+            //$session->set('selectedRoute',$selectedRoute->getMarks());
+            $marks = $route->getMarks();
+            dump($marks);
+            exit;
+
+            return $this->redirectToRoute('begin_route');
         }
 
         return $this->render('Front-Office/select-route.html.twig', [
@@ -120,6 +124,8 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $register->setRole(['ROLE_USER']);
+            $register->setUsername($mail);
+            $register->setPassword('visiteur');
             $em->persist($register);
             $em->flush();
 
@@ -144,7 +150,6 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */
-
     public function ajaxDescription($action, $param)
     {
         /**
@@ -156,13 +161,10 @@ class DefaultController extends Controller
             $info = $getInfo->find(intval($param));
             $description = $info->getDescription();
             $duration = $info->getDuration();
-
-
         }
         return $this->render('Front-Office/ajax.html.twig', [
             'description' => $description,
             'duration' => $duration,
         ]);
-
     }
 }

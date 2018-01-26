@@ -87,7 +87,11 @@ class QuestionController extends Controller
             $em->persist($answer);
             $em->flush();
 
-            return $this->redirectToRoute('score_quiz');
+
+            $routeArray = [];
+            array_push($routeArray,[]);
+            $session->set('routeArray',$routeArray);
+
         }
 
         //Affichage de la carte avec l'id 1
