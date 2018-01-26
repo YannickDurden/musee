@@ -113,11 +113,19 @@ class RouteController extends Controller
     {
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
-        //Conversion du tableau d'objet en tableau associatif id => nom
         $arrayRoutes = [];
+        $allMarks = [];
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
+            $marksInRoute = $route->getMarks();
+            foreach($marksInRoute as $currentMark)
+            {
+                if(array_search($currentMark->getName(), $allMarks)=== false)
+                {
+                    $allMarks[$currentMark->getName()]=['X'=>$currentMark->getCoordinateX(), 'Y'=>$currentMark->getCoordinateY()];
+                }
+            }
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
             'choices' => $arrayRoutes
@@ -126,7 +134,7 @@ class RouteController extends Controller
         $form2->handlerequest($request);
 
         return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig', [
-
+            'allMarks' => $allMarks,
             'formList' => $form2->createView(),
             'museum' => $museum
         ]);

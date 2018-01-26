@@ -4,8 +4,14 @@ html, body, #content {
 .container-fluid {
     min-height: 100vh;
 }
+#map {
 
+}
+#pointeur {
+    position: absolute;
+}
 #map img {
+    position: relative;
     height: 100%;
     width: 100%;
 }

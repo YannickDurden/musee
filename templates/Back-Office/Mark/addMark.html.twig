@@ -41,10 +41,12 @@
                                                            flex-direction:column;
                                                         }
                                                         #contenu 
-                                                        { 
+                                                        {
+                                                            height: 1400px;
+                                                            width: 2336px;
                                                             position: relative;
-                                                            width:1034.5px;
-                                                            height:667px;
+                                                            background-repeat: no-repeat;
+                                                            background-size: contain;
                                                             overflow: hidden; 
                                                             background-image:url("{{ app.request.basepath }}/uploads/{{ m.map }}");
                                                         } 
@@ -70,12 +72,11 @@
 
                                                         function addMapMarker(event)
                                                         {
+
                                                                 var x=event.offsetX;
                                                                 var y=event.offsetY;
-                                                                var PosX= (x-23);
-                                                                var PosY= (y-75);
-                                                                document.getElementById('add_mark_add_coordinateX').value=PosX;
-                                                                document.getElementById('add_mark_add_coordinateY').value=PosY;
+                                                                document.getElementById('add_mark_add_coordinateX').value=x;
+                                                                document.getElementById('add_mark_add_coordinateY').value=y;
                                                                 count ++;
                                                                 var pointeurs =document.getElementById("contenu");
                                                                 var p = document.createElement("div");
