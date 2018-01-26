@@ -24,21 +24,19 @@ use Symfony\Component\HttpFoundation\Response;
 class QuestionController extends Controller
 {
     /**
-     * @Route("/mymuseum/quiz", name="quiz")
+     * @Route("/mymuseum/quiz/{id}", name="quiz")
      * Affiche la vue du questionnaire
      */
-    public function question(SessionInterface $session,Request $request)
+    public function question(SessionInterface $session,Request $request, $id)
     {
-        //Récupération des questions et réponses
-        $questionRepository = $this->getDoctrine()->getRepository(Question::class);
-        $question = $questionRepository->find(2);
-
         //Récupération de l'image de l'oeuvre
         $repository = $this->getDoctrine()->getRepository(Mark::class);
-        $currentMark = $repository->find(2);
+        $currentMark = $repository->find($id);
+
+        $question = $currentMark->getQuestions();
 
         //décodage du json pour envoyer les réponses dans la vue
-        $answers = $question->getAnswers();
+        $answers = $question[0]->getAnswers();
         $json = json_decode($answers,true);
 
         $jsonFinal = [];
@@ -64,7 +62,7 @@ class QuestionController extends Controller
             $userAnswer = $formBuilder->getData();
             $answer = new Answer();
             $answer->setValue($userAnswer['answers']);
-            $answer->setQuestion($question);
+            $answer->setQuestion($question[0]);
 
             $answeredQuestions = $session->get('answeredQuestions');
             $answeredQuestions++;
@@ -87,22 +85,28 @@ class QuestionController extends Controller
             $em->persist($answer);
             $em->flush();
 
-
-            $routeArray = [];
-            array_push($routeArray,[]);
-            $session->set('routeArray',$routeArray);
-
+            if(!(array_search($id,$session->get('visitedMarkArray'))))
+            {
+                $visitedMarkArray = $session->get('visitedMarkArray');
+                array_push($visitedMarkArray,$id);
+                $session->set('visitedMarkArray',$visitedMarkArray);
+                $markCount = $session->get('markCount');
+                $markCount++;
+                $session->set('markCount',$markCount);
+            }
+            return $this->redirectToRoute('score_quiz');
         }
 
-        //Affichage de la carte avec l'id 1
+        //Affichage de la carte avec l'id
         $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
         $map = $mapRespository->find(1);
 
         return $this->render('Front-Office/quiz.html.twig',[
             'map' => $map->getMap(),
-            'question' => $question,
+            'question' => $question[0],
             'currentMark' => $currentMark,
             'formQ'=> $formBuilder->createView(),
+            'id' => $id,
         ]);
 
     }

@@ -28,7 +28,6 @@ class DefaultController extends Controller
     {
         return new Response("Bienvenue sur le panel admin");
     }
-
     /**
      * @Route("/admin/home", name="admin_home")
      */
@@ -61,7 +60,6 @@ class DefaultController extends Controller
         return $this->render('Front-Office/home-front.html.twig', [
             'formFirstname' => $form->createView(),
         ]);
-
     }
 
     /**
@@ -75,11 +73,14 @@ class DefaultController extends Controller
         if($form->isSubmitted() && $form->isValid())
         {
             $id = $form->getData();
-            $route = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(3);
-            //$session->set('selectedRoute',$selectedRoute->getMarks());
-            $marks = $route->getMarks();
-            dump($marks);
-            exit;
+            $session->set('selectedRoute',$id['route']->getMarks());
+            $session->set('markCount',0);
+
+            $visitedMarkArray = [];
+            $session->set('visitedMarkArray',$visitedMarkArray);
+
+            $totalMark = count($id['route']->getMarks());
+            $session->set('totalMark', $totalMark);
 
             return $this->redirectToRoute('begin_route');
         }
@@ -91,16 +92,18 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
-    public function beginRoute()
+    public function beginRoute(SessionInterface $session)
     {
-        return $this->render('Front-Office/begin-route.html.twig');
+        $idMark = $session->get('selectedRoute');
+        return $this->render('Front-Office/begin-route.html.twig',[
+            'idMark' => $idMark,
+        ]);
     }
 
 
     /**
      * @Route("/mymuseum/end-results", name="end_results")
      */
-
     public function results(SessionInterface $session)
     {
         /*$session->getMetadataBag()->getLastUsed();
