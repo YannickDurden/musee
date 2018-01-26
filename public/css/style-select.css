@@ -46,7 +46,7 @@ body {
 
 @media screen and (max-width: 760px) {
 
-    #btn-start {
+    .btn-start {
         position: fixed;
         right: 0;
         bottom: 0;
@@ -82,7 +82,7 @@ body {
     }
 }
 
-#btn-start{
+.btn-start{
     font-size: 30px;
     border-radius: 0;
 

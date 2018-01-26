@@ -13,7 +13,7 @@
             <div id="route-info" class="col-12 col-md-6">
                 <h1 class="h2 text-center">Je sélectionne mon parcours</h1>
                 {#{{ form(formSelect, {'attr': {'novalidate': 'novalidate'}}) }}#}
-                {{ form_start(formSelectRoute, {'method': 'GET', 'attr': {'class': 'form-route'}}) }}
+                {{ form_start(formSelectRoute, {'attr': {'class': 'form-route'}}) }}
                 <div id="select-route"class="form-group">
                     {{ form_widget(formSelectRoute.route, {'attr': {'class': 'select-route form-control'}}) }}
                 </div>
@@ -23,7 +23,7 @@
                        <!-- affichage de la description -->
                    </p>
                 </div>
-                <button type="button" id="btn-start" class="btn btn-primary btn-lg route-btn btn-block"><a class="link-route" href="{{ path('begin_route') }}">Démarrer</a></button>
+                {{ form_widget(formSelectRoute.submit, {'attr': {'class': 'btn btn-primary btn-lg route-btn btn-block btn-start'}}) }}
                 {{ form_end(formSelectRoute) }}
             </div>
         </div>

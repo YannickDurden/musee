@@ -72,6 +72,9 @@ class DefaultController extends Controller
 
         if($form->isSubmitted() && $form->isValid())
         {
+            $route = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(1);
+            dump($route);
+            exit;
             return $this->render('Front-Office/select-route.html.twig', [
                 'formSelectRoute' => $form->createView()
             ]);
@@ -87,19 +90,6 @@ class DefaultController extends Controller
     public function beginRoute()
     {
         return $this->render('Front-Office/begin-route.html.twig');
-    }
-
-
-    /**
-     * @Route("/mymuseum/end-results", name="end_results")
-     */
-
-    public function results(SessionInterface $session)
-    {
-        /*$session->getMetadataBag()->getLastUsed();
-        $dateTime = $session->getMetadataBag()->getLifetime();
-        $session->get('dateTime', $dateTime);*/
-        return $this->render('Front-Office/end-results.html.twig');
     }
 
     /**
