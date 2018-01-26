@@ -1,6 +1,7 @@
 /* reset */
 
 body {
+    position: relative;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -15,52 +16,113 @@ body {
 
 /* CONTAINER */
 
+/* Backgroung image musée et div linear gradient */
+
+#jumbotron {
+    position: relative;
+    background: url('img/louvre.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+#bg-jumbotron {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    height: 100vh;
+    width: 100vw;
+}
+
+#bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: white;
+    margin: 7vh 0 0 0 ;
+    text-align: center;
+}
+
+#jumbotron .section-home {
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    padding: 0 10vw 0 10vw;
+}
+
+#jumbotron .text-home {
+    background-color: rgba(245, 248, 255, 0.8);
+    border-radius: 10px;
+    color: rgb(20, 20, 20);
+}
+
+#jumbotron .btn {
+    background-color: rgb(1, 32, 86);
+}
+
 /* mise en forme div texte et input */
+
 .form-home {
-   display: flex;
-   flex-direction: column;
-   justify-content: center;
-   margin-top: 5%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
 }
 
 .form-home input {
     background-color: #d1d1d1;
 }
 
-.form-home a {
-    text-decoration: none;
+.form-home .btn{
     color: white;
 }
 
 .text-home{
-    padding: 15px;
-}
-
-/* marges pour le texte vue smartphone */
-@media screen and (max-width: 720px) { 
-    .text-home {
-        margin-top: 5%;
-    }
+    padding: 40px;
 }
 
 /* mise en forme à la vue tablette en paysage */
+
 @media screen and (min-width: 760px) {
-    #museum-img {
-        width: 100%;
-        height: 50%; 
+    #jumbotron .section-home {
+        top: 30vh;
+        padding: 0 25vw 0 25vw;
     }
 
-    .section-home {
-        margin-top: 15%;
-    }
-    .col-md-6 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-self: center;
-        padding: 15px;
+    #jumbotron h1 {
+        padding-top: 14vh;
+        text-align: center;
     }
 
+    #jumbotron .form-home {
+        width: 30vw;
+        margin: 3vh auto 0;
+    }
+}
+
+
+/**********/
+
+#start{
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 10000;
+    background-color: rgba(255,255,255,0.8);
+    background-image: radial-gradient(circle at center,
+    rgba(130,120,120,0.5) 0%,
+    rgba(130,120,120,0.6) 50%,
+    rgba(130,120,120,0.7) 60%,
+    rgba(130,120,120,0.8) 70%,
+    rgba(130,120,120,0.85) 80%,
+    rgba(130,120,120,0.9) 100%);
+}
+
+#start .btn{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40px;
+    background-color: rgb(1, 32, 86);
 }
 
 
