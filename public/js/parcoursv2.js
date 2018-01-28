@@ -25,6 +25,24 @@ $(function() {
     //hauteur 1: 24
 
     */
+    $('#map').click(function(e){
+       var coordX = e.pageX - $(this).offset().left;
+       var coordY = e.pageY - $(this).offset().top;
+       console.log(coordX);
+       console.log(coordY);
+
+       $('#add_mark_add_coordinateX').val(coordX);
+       $('#add_mark_add_coordinateY').val(coordY);
+
+        var p = document.createElement("div");
+        p.setAttribute("id","repereMap");
+        p.style.width = 10 + "px";
+        p.style.height = 10 + "px";
+        p.style.backgroundColor ="red";
+        p.style.left= coordX + 'px';
+        p.style.top= coordY + 'px';
+        $('#map').append(p);
+    });
 
     $('#form_route').change(function(){
 
