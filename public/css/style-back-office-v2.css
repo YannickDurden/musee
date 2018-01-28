@@ -106,14 +106,14 @@ html, body, #content {
     font-size: 20px;
     background-color: #0069D9;
 }
-#wrapper {
-}
 #animation {
     transform: translate(40%, 10%);
     width: 100%;
     display: none;
     min-height: 100px;
 }
+
+
 /* Animation CSS
     Credits : http://www.alessioatzeni.com/blog/css3-loading-animation-loop
  */

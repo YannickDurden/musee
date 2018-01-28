@@ -1,51 +1,43 @@
 $(function() {
-    /*
-    var mapWidth = $('#map').width();
-    var mapHeight = $('#map').height();
-    console.log("Largeur :" + mapWidth);
-    console.log("Hauteur :" + mapHeight);
-    $('#map').append("<div id='pointeur'>test</div>");
-    var pointeur = $('#pointeur');
-    //pointeur[0].style.top = 396 + 'px';
-    //pointeur[0].style.left = 332 + 'px';
-    pointeur[0].style.top = 365/1400 * mapHeight + 'px';
-    pointeur[0].style.left = 469/2336 * mapWidth + 'px';
-    pointeur[0].style.width= 10 + "px";
-    pointeur[0].style.height= 10 + "px";
-    pointeur[0].style.backgroundColor="red";
-    //365 x
-    //469 y
 
-    //705/1034.5 * mapWidth
-    //193/667 * mapHeight
-
-    //1034.5 largeur 0
-    //667 hauteur 0
-    //largeur 1 : 421
-    //hauteur 1: 24
-
-    */
+    /**
+     * Gestion des coordonnées des repères
+     */
     $('#map').click(function(e){
-       var coordX = e.pageX - $(this).offset().left;
-       var coordY = e.pageY - $(this).offset().top;
-       console.log(coordX);
-       console.log(coordY);
 
-       $('#add_mark_add_coordinateX').val(coordX);
-       $('#add_mark_add_coordinateY').val(coordY);
+        //Recupere les coordonnées du clique par rapport a la div #map
+        var coordX = e.pageX - $(this).offset().left;
+        var coordY = e.pageY - $(this).offset().top;
+        var mapWidth = $('#map').width();
+        var mapHeight = $('#map').height();
 
+        //Pour les afficher plus facilement par la suite on stock les coordonnées
+        //en % de la hauteur et largeur
+        coordX = (coordX / mapWidth).toFixed(3);
+        coordY = (coordY / mapHeight).toFixed(3);
+
+        //Affiche les coordonnées dans le formulaire
+        $('#add_mark_add_coordinateX').val(coordX);
+        $('#add_mark_add_coordinateY').val(coordY);
+
+        //Affiche le repere sur la map
         var p = document.createElement("div");
         p.setAttribute("id","repereMap");
         p.style.width = 10 + "px";
         p.style.height = 10 + "px";
         p.style.backgroundColor ="red";
-        p.style.left= coordX + 'px';
-        p.style.top= coordY + 'px';
+        //Sans oublier de convertir le % en valeur en pixel
+        p.style.left= (coordX*mapWidth) + 'px';
+        p.style.top= (coordY*mapHeight) + 'px';
         $('#map').append(p);
     });
 
+    /**
+     * Gestion de l'affichage de la liste des repères si un parcours pré-existant est selectionné
+     */
     $('#form_route').change(function(){
 
+        //Affiche l'animation de chargment
         $('#animation').show();
         $('#liste-reperes').fadeOut('slow');
 
@@ -56,12 +48,17 @@ $(function() {
             data: {id : id}
         })
             .done(function( response ) {
+                //Masque l'animation et affiche le resultat dans un tableau
                 $('#animation').hide();
                 $('#liste-reperes').fadeIn('slow');
                 $('#liste-reperes').html(response);
             });
     });
 
+
+    /**
+     * Ajout d'un repère au parcours
+     */
     $('#add_mark_add_save').click(function(e){
         e.preventDefault();
         $markInfo = $('[name =add_mark_add]').serialize();
@@ -72,7 +69,10 @@ $(function() {
             data: {markInfo: $markInfo}
         });
 
+        //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
         var newName = $('#add_mark_add_name').val();
+
+        //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
         var nbreRows = $('#table-mark tbody tr').length;
         console.log(nbreRows);
         nbreRows++;
@@ -82,9 +82,14 @@ $(function() {
             "        <td><a href=\"#\" id=\"45\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
             "        <td><a href=\"#\" id=\"45\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
             "    </tr>";
+        //Enfin on ajoute la nouvelle ligne au tableau
         $('#table-mark > tbody:last').append(newRow);
     });
 
+    /**
+     *  Ajout du parcours en BDD
+     */
+    /*
     $('#submit-info-parcours').click(function(e){
         e.preventDefault();
         $routeInfo = $('#add_mark').serialize();
@@ -96,6 +101,7 @@ $(function() {
         });
 
     });
+    */
 
 
 
@@ -117,5 +123,4 @@ $(function() {
         $container.append($prototype);
         $containerQuestion.append($prototype2);
     }
-
 });
