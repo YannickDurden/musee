@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Entity\User;
+use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -132,10 +133,13 @@ class RouteController extends Controller
         ]);
         $form2 = $formBuilder->getForm();
         $form2->handlerequest($request);
+        $formMark = $this->createForm(AddMarkAddType::class);
+        $formMark->handleRequest($request);
 
         return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig', [
             'allMarks' => $allMarks,
             'formList' => $form2->createView(),
+            'formMark' => $formMark->createView(),
             'museum' => $museum
         ]);
     }
@@ -148,7 +152,6 @@ class RouteController extends Controller
         $id = $_POST['id'];
         $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
         $allMarks = $currentRoute->getMarks();
-        //Conversion du tableau d'objet en tableau associatif id => nom
         $arrayMarks = [];
 
         foreach ($allMarks as $mark) {
@@ -160,6 +163,18 @@ class RouteController extends Controller
         ]);
     }
 
+    /**
+     * @route("route/list", name="list_routes")
+     */
+    public function listRoutes(SessionInterface $session)
+    {
+        $idMuseum = $session->get('museum')->getId();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $allRoutes = $museum->getRoutes();
+        return $this->render('Back-Office/BackOffice-v2/list-routes.html.twig', [
+            'allRoutes' => $allRoutes
+        ]);
+    }
 
 
 }

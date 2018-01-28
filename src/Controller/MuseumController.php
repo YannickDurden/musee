@@ -62,6 +62,10 @@ class MuseumController extends Controller
     /**
      * @Route("/museum/info", name="edit_info")
      */
+
+    /*
+     * Gère l'affichage du formulaire de modification des infos du musée et sa soumission
+     */
     public function editInfo(Request $request, SessionInterface $session)
     {
         $museum = $session->get('museum');

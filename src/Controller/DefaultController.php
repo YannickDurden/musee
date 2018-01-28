@@ -32,6 +32,10 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/home", name="admin_home")
      */
+
+    /*
+     * Affiche la HomePage du panel admin et stock en session les infos sur le musée
+     */
     public function adminHome(SessionInterface $session)
     {
         $user = $this->getUser();
