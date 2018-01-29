@@ -100,18 +100,6 @@ class DefaultController extends Controller
         ]);
     }
 
-
-    /**
-     * @Route("/mymuseum/end-results", name="end_results")
-     */
-    public function results(SessionInterface $session)
-    {
-        /*$session->getMetadataBag()->getLastUsed();
-        $dateTime = $session->getMetadataBag()->getLifetime();
-        $session->get('dateTime', $dateTime);*/
-        return $this->render('Front-Office/end-results.html.twig');
-    }
-
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
