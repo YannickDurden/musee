@@ -73,8 +73,6 @@ class DefaultController extends Controller
         if($form->isSubmitted() && $form->isValid())
         {
             $route = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(1);
-            dump($route);
-            exit;
             return $this->render('Front-Office/select-route.html.twig', [
                 'formSelectRoute' => $form->createView()
             ]);

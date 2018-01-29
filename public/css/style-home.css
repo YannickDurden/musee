@@ -35,14 +35,14 @@ body {
 
 #bg-jumbotron h1 {
     font-family: 'Great Vibes', cursive;
-    color: white;
-    margin: 7vh 0 0 0 ;
+    color: whitesmoke;
+    margin-top: 7vh;
     text-align: center;
 }
 
 #jumbotron .section-home {
     position: absolute;
-    top: 20vh;
+    top: 17vh;
     left: 0;
     padding: 0 10vw 0 10vw;
 }
@@ -51,10 +51,12 @@ body {
     background-color: rgba(245, 248, 255, 0.8);
     border-radius: 10px;
     color: rgb(20, 20, 20);
+
 }
 
 #jumbotron .btn {
     background-color: rgb(1, 32, 86);
+    color: rgb(78, 255, 176);
 }
 
 /* mise en forme div texte et input */
@@ -66,11 +68,15 @@ body {
 }
 
 .form-home input {
-    background-color: #d1d1d1;
+    background-color: rgba(201,201,201,0.7);
 }
 
 .form-home .btn{
-    color: white;
+    color: rgb(78, 255, 176);
+    text-transform: uppercase;
+    padding: 15px;
+    font-size: 18px;
+    margin-top: 1vh;
 }
 
 .text-home{
@@ -86,7 +92,8 @@ body {
     }
 
     #jumbotron h1 {
-        padding-top: 14vh;
+
+        margin-top: 14vh;
         text-align: center;
     }
 
@@ -97,7 +104,11 @@ body {
 }
 
 
-/**********/
+/******
+
+BOUTON START QUI CACHE LA DIV
+
+****/
 
 #start{
     position: absolute;
@@ -106,14 +117,8 @@ body {
     bottom: 0;
     right: 0;
     z-index: 10000;
-    background-color: rgba(255,255,255,0.8);
-    background-image: radial-gradient(circle at center,
-    rgba(130,120,120,0.5) 0%,
-    rgba(130,120,120,0.6) 50%,
-    rgba(130,120,120,0.7) 60%,
-    rgba(130,120,120,0.8) 70%,
-    rgba(130,120,120,0.85) 80%,
-    rgba(130,120,120,0.9) 100%);
+    border-radius: 10px;
+    background: radial-gradient(rgba(255, 255, 255, 0.92), rgba(181, 181, 181, 0.8));
 }
 
 #start .btn{

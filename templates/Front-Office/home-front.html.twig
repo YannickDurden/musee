@@ -16,6 +16,10 @@
                 <div class="section-home container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-12 text-home">
+                            <div id="start">
+                                <button type="button" class="btn btn-success btn-lg" id="btn-start">Let's
+                                    go</button>
+                            </div>
                             <p class="text-center">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                 Cras iaculis iaculis viverra. Vivamus sed dui arcu.
@@ -23,12 +27,7 @@
                                 Curabitur at ipsum quis tellus rutrum auctor volutpat a ligula.
                                 Cras molestie id turpis in ultrices.
                             </p>
-
                             <div class="form-home">
-                                <div id="start">
-                                    <button type="button" class="btn btn-success btn-lg" id="btn-start">Let's
-                                        go</button>
-                                </div>
                                     {{ form_start(formFirstname, {'attr': {'class': 'form-home'}}) }}
                                 <div class="form-group">
                                     {{ form_label(formFirstname.firstName, "Votre prénom") }}
@@ -36,6 +35,7 @@
                                 </div>
                                     {{ form_widget(formFirstname.submit, {'attr': {'class': 'btn btn-lg'}}) }}
                                     {{ form_end(formFirstname) }}
+
                             </div>
                         </div>
                     </div>
