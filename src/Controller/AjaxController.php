@@ -6,6 +6,7 @@ use App\Entity\Description;
 use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Entity\Question;
+use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -96,9 +97,34 @@ class AjaxController extends Controller
      * @route("ajax/saveMarkToSession", name="add_mark_session")
      * Créé un objet de type Mark avec les info envoyées et le stock en session
      */
-    public function addMarkSession(SessionInterface $session)
+    public function addMarkSession(SessionInterface $session, Request $request)
     {
+        /*
+        $newMark = new Mark();
+        $form = $this->createForm(AddMarkAddType::class, $newMark);
+        $form->handleRequest($request);
+
+        $newMark = $form->getData();
+        print_r($newMark);
+        exit;
+
+        $file =$newMark->getImage();
+        // Générer le nom de fichier
+        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        // Déplacer le fichier temporaire vers le dossier uploads/
+        $newMark->setImage($fileName);
+        $file->move($this->getParameter('uploads_directory'), $fileName);
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newMark);
+        $em->flush();
+        return  new Response("Ok");
+        */
+
+
+
+
         parse_str($_POST['markInfo'], $decodedJson);
+
         $savedMark = new Mark();
         $savedMark->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($session->get('museum')->getId()));
         $savedMark->setName($decodedJson['add_mark_add']['name']);
@@ -141,17 +167,67 @@ class AjaxController extends Controller
         }
         $savedMark->setDescriptions($descriptions);
         $savedMark->setQuestions($questions);
-        $savedMark->setImage("123456.jpeg");
-        $sessionMarks []= $session->get('savedMarksNames');
-        // Avant de stocker en session il faut verifier que ça ne soit pas qu'un update d'un repère exisant dans le parcours
-        if(!(array_search($savedMark->getName(), $sessionMarks)))
+        $savedMark->setImage('123456.jpeg');
+        //$savedMark->setImage($decodedJson['add_mark_add']['image']);
+        //$file =$savedMark->getImage();
+        // Générer le nom de fichier
+        //$fileName = md5(uniqid()) . '.' . $file->guessExtension();
+        // Déplacer le fichier temporaire vers le dossier uploads/
+        //$savedMark->setImage($fileName);
+        //$file->move($this->getParameter('uploads_directory'), $fileName);
+        $sessionMarks = $session->get('savedMarksNames');
+        if(empty($sessionMarks))
         {
-            $sessionMarks [] = $savedMark->getName();
+            $session->set('savedMarksNames', []);
+            $sessionMarks = [];
+        }
+        // Avant de stocker en session il faut verifier que ça ne soit pas qu'un update d'un repère exisant dans le parcours
+        if(!(in_array($savedMark->getName(), $sessionMarks)))
+        {
+            $sessionMarks []= $savedMark->getName();
         }
         $session->set('savedMarksNames', $sessionMarks);
+        print_r($session->get('savedMarksNames'));
         $em = $this->getDoctrine()->getManager();
         $em->persist($savedMark);
         $em->flush();
         return  new Response("Ok");
+    }
+
+    /**
+     * @route("ajax/saveRoutetoBDD", name="add_route_to_BDD")
+     */
+    public function addRouteToBDD(Request $request, SessionInterface $session)
+    {
+        /*
+        $newRoute = new \App\Entity\Route();
+        $form = $this->createForm(AddRouteType::class, $newRoute);
+        $form->handleRequest($request);
+        $newRouteToSave = $form->getData();
+        */
+        parse_str($_POST['routeInfo'], $decodedJson);
+        $arrayMarks = [];
+        $newRouteToSave = new \App\Entity\Route();
+        $newRouteToSave->setName($decodedJson['name']);
+        $newRouteToSave->setDescription($decodedJson['description']);
+        $durationArrayToString = $decodedJson['hours']." ".$decodedJson['minutes'];
+        //$updatedRoute->setMap($_POST['fileName']);
+        $duration = new \DateTime();
+        $duration->createFromFormat('H i', $durationArrayToString);
+        //$duration = new \DateTime('now');
+        $newRouteToSave->setDuration($duration);
+        foreach($session->get('savedMarksNames') as $mark)
+        {
+            $arrayMarks [] = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name'=>$mark]);
+        }
+        $newRouteToSave->setMarks($arrayMarks);
+        $newRouteToSave->setMap('123456.jpeg');
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($newRouteToSave);
+        $em->flush();
+
+        return new Response("Ok");
+
     }
 }

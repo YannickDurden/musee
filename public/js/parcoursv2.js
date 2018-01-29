@@ -52,21 +52,28 @@ $(function() {
                 $('#animation').hide();
                 $('#liste-reperes').fadeIn('slow');
                 $('#liste-reperes').html(response);
+                $('#name').val($('#route_name').val());
+                $('#description').val($('#route_description').val());
+                $('#hours').val($('#route_hours').val());
+                $('#minutes').val($('#route_minutes').val());
+
             });
     });
-
 
     /**
      * Ajout d'un repère au parcours
      */
     $('#add_mark_add_save').click(function(e){
         e.preventDefault();
-        $markInfo = $('[name =add_mark_add]').serialize();
+        var $markInfo = $('[name =add_mark_add]').serialize();
+        var file = new FormData(document.getElementById('add_mark_form'));
         $.ajax({
             url: 'http://localhost:8000/ajax/saveMarkToSession',
             type: 'POST',
-            dataType: "json",
-            data: {markInfo: $markInfo}
+            //processData: false,
+            //cache: false,
+            //dataType: false,
+            data: {markInfo : $markInfo}
         });
 
         //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
@@ -87,21 +94,28 @@ $(function() {
     });
 
     /**
+     * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
+     */
+    $('table#table-mark td button.delete').click(function (event) {
+        event.preventDefault();
+        console.log("test");
+    })
+
+
+    /**
      *  Ajout du parcours en BDD
      */
-    /*
+
     $('#submit-info-parcours').click(function(e){
         e.preventDefault();
-        $routeInfo = $('#add_mark').serialize();
-
+        var $routeInfo = $('#add_route').serialize();
+        console.log($routeInfo);
         $.ajax({
-            url: 'http://localhost:8000/ajax/saveMarkToSession',
+            url: 'http://localhost:8000/ajax/saveRoutetoBDD',
             type: 'POST',
-            data: {markInfo: $markInfo}
+            data: {routeInfo: $routeInfo},
         });
-
     });
-    */
 
 
 

@@ -23,12 +23,12 @@ class Mark
     private $name;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=4)
      */
     private $coordinateX;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=4)
      */
     private $coordinateY;
 

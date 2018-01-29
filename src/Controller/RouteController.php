@@ -152,14 +152,19 @@ class RouteController extends Controller
         $id = $_POST['id'];
         $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
         $allMarks = $currentRoute->getMarks();
+        $duration = $currentRoute->getDuration();
         $arrayMarks = [];
+        $arrayId = [];
 
         foreach ($allMarks as $mark) {
             $arrayMarks[$mark->getName()] = $mark->getId();
+            $arrayId []= $mark->getId();
         }
-
+        $session->set('savedMarksId', $arrayId);
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
-            'marks' => $arrayMarks
+            'marks' => $arrayMarks,
+            'route' => $currentRoute,
+            'duration' => $duration
         ]);
     }
 

@@ -13,9 +13,17 @@
     <tr>
         <th scope="row">{{ loop.index }}</th>
         <td>{{ key }}</td>
-        <td><a href="#" id="{{ mark }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-        <td><a href="#" id="{{ mark }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+        <td><a href="#" id="{{ mark }}" class="editMark"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+        <td><a href="#" id="{{ mark }}" class="deleteMark"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
     </tr>
     {% endfor %}
     </tbody>
 </table>
+{% if route is defined %}
+<input type="hidden" value="{{ route.name }}" id="route_name">
+<input type="hidden" value="{{ route.description }}" id="route_description">
+{% endif %}
+{% if duration is defined %}
+    <input type="hidden" value="{{ duration|date('H') }}" id="route_hours">
+    <input type="hidden" value="{{ duration|date('i') }}" id="route_minutes">
+{% endif %}
