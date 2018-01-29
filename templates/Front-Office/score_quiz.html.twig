@@ -6,9 +6,16 @@
     <section class="picture-museum">
         <div class="section-route container-fluid">
             <div class="row">
-
                 <div id="museum-map" class="col-12 col-md-6">
-                    <img src="{{ app.request.basepath }}/uploads/{{ map }}" class="img-fluid" alt="">
+                    <img  id="map"
+                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                          alt="carte image">
+                    {% for id in idMark %}
+                        <a class="repere-map" id="repere-{{ id.id }}"
+                           data-coordx ="{{ id.coordinateX }}"
+                           data-coordy ="{{ id.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    {% endfor %}
                 </div>
 
                 <div class="museum-wrapper col col-md-6 text-center">
@@ -34,9 +41,8 @@
                     </div>
 
                     <div class="return-btn">
-                        <button type="button" class="btn btn-primary btn-lg">
-                            <a href="#">Oeuvre suivante</a>
-                        </button>
+                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
+                           visite</p>
                     </div>
                 </div><!-- museum-wrapper-->
             </div>
@@ -44,3 +50,4 @@
     </section>
 </main>
 {% endblock %}
+{% block javascripts %}<script src="{{ app.request.basepath }}/js/scripteRepere.js"></script>{% endblock %}

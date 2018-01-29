@@ -15,9 +15,20 @@ body {
 
 /* CONTAINER */
 
-#museum-map {
-    width: 100vw;
-    height: 50vh;
+/* MAP */
+#museum-map{
+    position: relative;
+}
+
+.repere-map{
+    position: absolute;
+    transform: translate(-50%,-50%);
+    text-decoration: none;
+    color : #7e7e7e;
+}
+
+.fa{
+    font-size: 50px;
 }
 
 .return-btn, .score, .progression {

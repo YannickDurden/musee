@@ -1,28 +1,20 @@
-<!doctype html>
-<html lang="fr">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">
-
-    <title>Begin route MyMuseum</title>
-
-</head>
-
-<body>
+{% extends 'front-base.html.twig'  %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">{%
+    endblock %}
+{% block body %}
 <section class="picture-museum">
     <div class="section-route container-fluid">
         <div class="row">
             <div id="museum-map" class="col-12 col-md-6">
-                <h1>Mes liens</h1>
+                <img  id="map"
+                      class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                      alt="carte image">
                 {% for id in idMark %}
-                <a href="http://localhost:8000/mymuseum/artwork/{{ id.id }}">Lien</a>
+                <a class="repere-map" id="repere-{{ id.id }}"
+                   data-coordx ="{{ id.coordinateX }}"
+                   data-coordy ="{{ id.coordinateY }}"
+                   href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                 {% endfor %}
             </div>
 
@@ -52,6 +44,8 @@
     </div>  <!-- container -->
 </section>
 
-</body>
+{% endblock %}
+{% block javascripts %}<script src="{{ app.request.basepath }}/js/scripteRepere.js"></script>{% endblock %}
 
-</html>
+
+

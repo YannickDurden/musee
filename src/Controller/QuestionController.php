@@ -60,9 +60,9 @@ class QuestionController extends Controller
         if($formBuilder->isSubmitted() && $formBuilder->isValid())
         {
             $userAnswer = $formBuilder->getData();
-            $answer = new Answer();
+            /*$answer = new Answer();
             $answer->setValue($userAnswer['answers']);
-            $answer->setQuestion($question[0]);
+            $answer->setQuestion($question[0]);*/
 
             $answeredQuestions = $session->get('answeredQuestions');
             $answeredQuestions++;
@@ -70,20 +70,20 @@ class QuestionController extends Controller
 
             if($json['goodAnswer'] == $userAnswer['answers'])
             {
-                $answer->setCorrect(true);
+                //$answer->setCorrect(true);
                 $session->set('lastQuestion', true);
                 $currentReponsePositive = $session->get('correctAnswers');
                 $currentReponsePositive++ ;
                 $session->set('correctAnswers',$currentReponsePositive);
 
             } else {
-                $answer->setCorrect(false);
+                //$answer->setCorrect(false);
                 $session->set('lastQuestion', false);
             }
 
-            $em = $this->getDoctrine()->getManager();
+            /*$em = $this->getDoctrine()->getManager();
             $em->persist($answer);
-            $em->flush();
+            $em->flush();*/
 
             if(!(array_search($id,$session->get('visitedMarkArray'))))
             {
@@ -117,9 +117,8 @@ class QuestionController extends Controller
      */
     public function scoreQuiz(SessionInterface $session)
     {
-        //Affichage de la carte du musée
-        $mapRepository = $this->getDoctrine()->getRepository(Museum::class);
-        $map = $mapRepository->find(1);
+        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $idMark = $session->get('selectedRoute');
 
         //Affichage du score
         if($session->get('lastQuestion') == true )
@@ -132,7 +131,8 @@ class QuestionController extends Controller
 
 
         return $this->render("/Front-Office/score_quiz.html.twig",[
-            'map' => $map->getMap(),
+            'map' => $map,
+            'idMark'=> $idMark,
             'message' => $message,
             'progression' => $session->get('answeredQuestions'),
             'score' => $session->get('correctAnswers'),
