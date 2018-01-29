@@ -15,11 +15,6 @@ body {
 
 /* CONTAINER */
 
-#museum-map {
-    background-color: gray;
-    width: 100vw;
-    height: 50vh;
-}
 
 .return-btn, .score, .progression {
     display: flex;

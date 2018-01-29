@@ -2,61 +2,64 @@
 
 {% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/artwork.css">{% endblock %}
 {% block body %}
-
-    <div class="wrapper">
         <main class="container-fluid">
-            <div class="row">
-                <div id="map" class="col-md-6">
-                    <section class="map">
-                        <img class="img-map img-fluid"
-                             src="{{ app.request.basepath }}/uploads/{{ map }}"
-                             alt="map-museum"><!-- Carte du musée-->
-                    </section>
-                </div>
+            <div class="wrapper">
+                <div class="row">
+                    <div id="map" class="col-md-6">
+                        <section class="map">
+                            <img class="img-map img-fluid"
+                                 src="{{ app.request.basepath }}/uploads/{{ map }}"
+                                 alt="map-museum"><!-- Carte du musée-->
+                        </section>
+                    </div>
 
-                <div class="col-md-6">
-                    <ul id="btn-tablet" class="nav nav-tabs nav-fill">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="#">Description</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Retour carte</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path("quiz") }}">Quiz</a>
-                        </li>
-                    </ul>
-                    <section class="picture-artwork">
-                        <img class="img-artwork w-100" src="{{app.request.basepath}}/uploads/809d741d948ff84be27b289c95c8745e.jpeg"
-                             alt="le-penseur">
-                        <h1 class="text-center">{{ currentMark.name }}<!--Titre de
-                        l'oeuvre--></h1>
-                    </section>
+                    <div class="col-md-6">
+                        <ul id="btn-tablet" class="nav nav-tabs nav-fill">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="#">Description</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Retour carte</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path("quiz",{'id': id})
+                                }}">Quiz</a>
+                            </li>
+                        </ul>
+                        <section class="picture-artwork">
+                            <img class="img-artwork img-fluid w-100" src="{{app.request
+                            .basepath}}/uploads/{{ currentMark.image }}"
+                                 alt="le-penseur">
+                            <h1 class="text-center">{{ currentMark.name }}<!--Titre de
+                            l'oeuvre--></h1>
+                        </section>
 
-                    <section class="description-artwork">
-                        <article>
-                            <p>{{ description.label }}<!-- Description de
-                            l'oeuvre--></p>
-                        </article>
-                    </section>
+                        <section class="description-artwork">
+                            <article>
+                                <p>{{ description.label }}<!-- Description de
+                                l'oeuvre--></p>
+                            </article>
+                        </section>
 
-                    <div id="btn-footer" class="row">
-                        <div class="col-md-6">
-                            <ul class="fixed-bottom nav nav-tabs nav-fill">
-                                <li class="nav-item">
-                                    <a class="nav-link active" href="#">Description</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">Retour carte</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ path("quiz") }}">Quiz</a>
-                                </li>
-                            </ul>
+                        <div id="btn-footer" class="row">
+                            <div class="col-md-6">
+                                <ul class="fixed-bottom nav nav-tabs nav-fill">
+                                    <li class="nav-item">
+                                        <a class="nav-link active" href="#">Description</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="#">Retour carte</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{ path("quiz",{'id': id })
+                                        }}">Quiz</a>
+                                    </li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!-- wrapper -->
         </main>
-    </div><!-- wrapper -->
+
 {% endblock %}
