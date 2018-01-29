@@ -3,6 +3,9 @@ body{
     margin :0;
     padding: 0;
     box-sizing: border-box;
+    background: url('img/louvre.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
 }
 
 .row,
@@ -64,7 +67,6 @@ header li{
 
 /* DESCRIPTION ARTWORK*/
 article p{
-    padding: 5%;
     margin: 0;
 }
 

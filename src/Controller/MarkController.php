@@ -24,9 +24,7 @@ class MarkController extends Controller
      */
     public function displayMark($id)
     {
-        //la catégorie est passée en <dur>
-        $category = "adulte";
-
+        $category = 'adulte' ;
         //récupération en base de l'oeuvre via l'entité Mark
         $repository = $this->getDoctrine()->getRepository(Mark::class);
         $currentMark = $repository->find($id);
@@ -45,7 +43,8 @@ class MarkController extends Controller
         return $this->render('Front-Office/artwork.html.twig',[
             'currentMark' => $currentMark,
             'description' => $description[0],
-            'map' => $map->getMap()//On recupère seulement la carte
+            'map' => $map->getMap(),
+            'id' => $id,
         ]);
     }
 }

@@ -22,8 +22,10 @@ class AddSelectRouteType extends AbstractType
                 return $er->createQueryBuilder('u')
                     ->where('u.museum = 1') ;},
         ]);
-        $builder->add('submit', SubmitType::class, [
-            'label' => 'Démarrer'
+
+        $builder->add('submit',SubmitType::class,[
+            'label'=> 'Démarrer'
         ]);
+
     }
 }

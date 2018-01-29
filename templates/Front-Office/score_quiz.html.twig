@@ -15,16 +15,19 @@
                     <div class="museum-stats">
                         <div class="score text-center">
                             <h2 class="h4">Score</h2>
-                            <p>25/100</p>
+                            <p>{{ message }}</p>
+                            <p>Votre score : {{ score }} / {{ progression }}</p>
                         </div>
 
                         <div class="progression text-center">
                             <h2 class="h4">Progression</h2>
                             <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated"
+                                <div class="progress-bar bg-success"
                                      role="progressbar"
-                                     aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"
-                                     style="width: 25%">
+                                     style="width: 25%"
+                                     aria-valuenow="{{ progression }}"
+                                     aria-valuemin="0"
+                                     aria-valuemax="100">
                                 </div>
                             </div>
                         </div>
