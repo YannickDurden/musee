@@ -1,0 +1,21 @@
+<h3>Liste des reperes ajoutés</h3>
+<table class="table table-striped" id="table-mark">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom du repère</th>
+        <th scope="col">Modifier</th>
+        <th scope="col">Supprimer</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for key, mark in marks %}
+    <tr>
+        <th scope="row">{{ loop.index }}</th>
+        <td>{{ key }}</td>
+        <td><a href="#" id="{{ mark }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+        <td><a href="#" id="{{ mark }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>

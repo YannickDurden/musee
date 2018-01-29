@@ -11,6 +11,7 @@
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+    use Symfony\Component\Form\Extension\Core\Type\FileType;
     use Symfony\Component\Form\Extension\Core\Type\TimeType;
     use Symfony\Component\Form\Form;
     use Symfony\Component\Form\FormBuilderInterface;
@@ -19,6 +20,7 @@
     use Symfony\Component\Form\Extension\Core\Type\DateType;
     use Symfony\Component\Form\Extension\Core\Type\SubmitType;
     use Symfony\Component\OptionsResolver\OptionsResolver;
+    use Symfony\Component\Validator\Constraints\Image;
     use Symfony\Component\Validator\Constraints\Length;
     use Symfony\Component\Validator\Constraints\NotBlank;
     use Symfony\Component\Validator\Constraints\NotNull;
@@ -29,14 +31,25 @@
         {
             $builder->add('name', TextType::class, [
                 'constraints' => [
-                    new NotBlank(),
+                    new NotBlank(['message' => 'route.name.not_blank']),
                     new Length(['max' => 50]),
+                ]
+            ]);
+            $builder->add('map', FileType::class, [
+                'constraints' => [
+                    new NotBlank(['message' => 'route.map.not_blank']),
+                    new Image(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']])
                 ]
             ]);
             $builder->add('duration', TimeType::class, [
                 'widget' => 'choice',
                 'constraints' => [
                     new NotBlank(),
+                ]
+            ]);
+            $builder->add('description', TextType::class, [
+                'constraints' => [
+                    new NotBlank(['message' => 'route.description.not_blank']),
                 ]
             ]);
             $builder->add('marks', EntityType::class, [

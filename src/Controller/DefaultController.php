@@ -32,6 +32,10 @@ class DefaultController extends Controller
     /**
      * @Route("/admin/home", name="admin_home")
      */
+
+    /*
+     * Affiche la HomePage du panel admin et stock en session les infos sur le musée
+     */
     public function adminHome(SessionInterface $session)
     {
         $user = $this->getUser();
@@ -40,6 +44,13 @@ class DefaultController extends Controller
         return $this->render('Back-Office/home-admin.html.twig');
     }
 
+    /**
+     * @Route("/testv2", name="test_v2")
+     */
+    public function testHome()
+    {
+        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig');
+    }
     /* FONCTIONS FRONT OFFICE */
 
     /**

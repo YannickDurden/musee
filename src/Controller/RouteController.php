@@ -2,8 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Entity\User;
+use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -47,8 +49,17 @@ class RouteController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find(1));
-            $newRoute->setDescription("Test");
+            $currentMuseumId = $museum->getId();
+            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($currentMuseumId));
+
+            $file = $form->get('map')->getData();
+            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+            $file->move(
+                $this->getParameter('uploads_directory'),
+                $fileName
+            );
+            $newRoute->setMap($fileName);
+
             $em2->persist($newRoute);
             $em2->flush();
 
@@ -94,8 +105,75 @@ class RouteController extends Controller
             'formList' => $form2->createView(),
             'museum' => $museum
         ]);
+    }
 
+    /**
+     * @route("/back-office/route/edit", name="edit_routev2")
+     */
+    public function editRoutev2(Request $request, SessionInterface $session)
+    {
+        $museum = $session->get('museum');
+        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
+        $arrayRoutes = [];
+        $allMarks = [];
 
+        foreach ($allRoutes as $route) {
+            $arrayRoutes[$route->getName()] = $route->getId();
+            $marksInRoute = $route->getMarks();
+            foreach($marksInRoute as $currentMark)
+            {
+                if(array_search($currentMark->getName(), $allMarks)=== false)
+                {
+                    $allMarks[$currentMark->getName()]=['X'=>$currentMark->getCoordinateX(), 'Y'=>$currentMark->getCoordinateY()];
+                }
+            }
+        }
+        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
+            'choices' => $arrayRoutes
+        ]);
+        $form2 = $formBuilder->getForm();
+        $form2->handlerequest($request);
+        $formMark = $this->createForm(AddMarkAddType::class);
+        $formMark->handleRequest($request);
+
+        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig', [
+            'allMarks' => $allMarks,
+            'formList' => $form2->createView(),
+            'formMark' => $formMark->createView(),
+            'museum' => $museum
+        ]);
+    }
+
+        /**
+         * @route("/ajax/getMarks", name="getMarks")
+         */
+    public function getMarks(Request $request, SessionInterface $session)
+    {
+        $id = $_POST['id'];
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
+        $allMarks = $currentRoute->getMarks();
+        $arrayMarks = [];
+
+        foreach ($allMarks as $mark) {
+            $arrayMarks[$mark->getName()] = $mark->getId();
+        }
+
+        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
+            'marks' => $arrayMarks
+        ]);
+    }
+
+    /**
+     * @route("route/list", name="list_routes")
+     */
+    public function listRoutes(SessionInterface $session)
+    {
+        $idMuseum = $session->get('museum')->getId();
+        $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
+        $allRoutes = $museum->getRoutes();
+        return $this->render('Back-Office/BackOffice-v2/list-routes.html.twig', [
+            'allRoutes' => $allRoutes
+        ]);
     }
 
 

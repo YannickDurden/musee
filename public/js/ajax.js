@@ -15,13 +15,14 @@ $(function() {
 
     $(document).on("click", "#add_route_save", function(e){
         e.preventDefault();
+        var fileName = $('#add_route_map').val()
         var data = $("#add_route_form").serialize();
         var id = $('#form_route').val()
         var request = $.ajax({
             url: 'http://localhost:8000/ajax/route/add',
             type: 'POST',
             dataType: "json",
-            data: {form: data, id: id }
+            data: {form: data, id: id, fileName: fileName }
         });
         var modifSuccess =
             "    <div class=\"alert alert-success\" role=\"alert\">\n" +

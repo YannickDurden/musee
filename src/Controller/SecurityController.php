@@ -16,9 +16,9 @@
          */
         public function login(Request $request, AuthenticationUtils $authUtils)
         {
-            // get the login error if there is one
+            // Recupère les erreurs de login
             $error = $authUtils->getLastAuthenticationError();
-            // last username entered by the user
+            // Permet de récuperer le dernier nom d'utilisateur entré
             $lastUsername = $authUtils->getLastUsername();
 
             $form = $this->createForm(LoginType::class);

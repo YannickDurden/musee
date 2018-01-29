@@ -16,6 +16,7 @@ class UserController extends Controller
 {
     /**
      * @Route("/addusertest", name="add_user_test")
+     * Fonction de dev permettant d'ajouter des user avec des roles en BDD
      */
     public function addUserTest()
     {
@@ -39,8 +40,6 @@ class UserController extends Controller
 
             $em->persist($user);
         }
-
-        // On déclenche l'enregistrement
         $em->flush();
         return new Response("ajout fait");
     }

@@ -33,6 +33,11 @@ class Route
     private $duration;
 
     /**
+     * @ORM\Column(type="string")
+     */
+    private $map;
+
+    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="routes", cascade ={"persist"})
      */
     private $museum;
@@ -122,6 +127,23 @@ class Route
     {
         $this->description = $description;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param mixed $map
+     */
+    public function setMap($map): void
+    {
+        $this->map = $map;
+    }
+
 
     /**
      * @return mixed
