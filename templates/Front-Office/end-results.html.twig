@@ -26,7 +26,7 @@
 
                     <div class="stats text-center">
                         <h2 class="h4">Durée de votre parcours</h2>
-                        <p>1h30</p>
+                        <p id="durate">{{ duration | date('G') }} heure et {{ duration | date('i') }} minutes.</p>
                     </div>
                 </div>
                 <div class="museum-best">
@@ -36,19 +36,10 @@
 
                     <div class="stats text-center">
                         <h2 class="h4">Votre score total</h2>
-                        <p>70/100</p>
+                        <p id="score">{{ score }}/10</p>
                     </div>
                 </div>
-                <div class="museum-best">
-                    <div class="score-icon">
-                        <i class="fa fa-pie-chart fa-3x" aria-hidden="true"></i>
-                    </div>
 
-                    <div class="stats text-center">
-                        <h2 class="h4">Votre meilleur score</h2>
-                        <p>75/100</p>
-                    </div>
-                </div>
                 <div class="return-btn">
                     <button type="button" class="btn btn-primary btn-lg">
                         <a href="{{ path("newsletter") }}">Recevoir mes scores par mail</a>

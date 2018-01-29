@@ -1,0 +1,132 @@
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: url("img/louvre.jpg") no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+#bg-jumbotron {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    height: 100vh;
+    width: 100vw;
+}
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Page select parcours */
+
+#bg-jumbotron h1 {
+    color: rgb(78, 255, 176);
+    font-size: 30px;
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+    margin-top: 7vh;
+
+}
+
+.section-route {
+    position: absolute;
+    top: 25vh;
+    left: 0;
+    padding: 0 10vw 0 10vw;
+}
+
+#route-info {
+    background-color: rgba(245, 248, 255, 0.8);
+    border-radius: 10px;
+    color: rgb(20, 20, 20);
+}
+
+/* CONTAINER */
+
+.form-route {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+}
+
+.link-route {
+    text-decoration: none;
+    color: white;
+}
+
+.route-btn {
+    margin-top: 5%;
+}
+
+.border-desc {
+    padding: 10px;
+    background-color: rgba(78, 255, 176, 0.4);
+    border-radius: 5px 5px 5px;
+}
+
+#display-route{
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.btn-start{
+    background-color: rgb(1, 32, 86);
+    color: rgb(78, 255, 176);
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+}
+
+
+@media screen and (max-width: 760px) {
+
+    .btn-start {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+        border-radius: 0;
+        padding: 20px;
+    }
+    #display-route {
+        max-height: 30vh;
+    }
+}
+
+
+    /* mise en forme à la vue tablette en paysage */
+
+@media screen and (min-width: 760px) {
+    #bg-jumbotron h1 {
+        margin-top: 14vh;
+    }
+    .section-route {
+        top: 30vh;
+        padding: 0 25vw 0 25vw;
+    }
+    #display-route {
+        max-height: 25vh;
+    }
+
+    .btn-start {
+        border-radius: .3rem;
+        margin-top: 7vh;
+        padding: 15px;
+    }
+    .col-12 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-self: center;
+        padding: 15px;
+    }
+}
+

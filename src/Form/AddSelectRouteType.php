@@ -27,7 +27,5 @@ class AddSelectRouteType extends AbstractType
             'label'=> 'Démarrer'
         ]);
 
-
-
     }
 }
