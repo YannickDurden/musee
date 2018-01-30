@@ -142,8 +142,9 @@ class QuestionController extends Controller
             'idMark'=> $idMark,
             'message' => $message,
             'progression' => $progression,
+            'totalMark' => $session->get('totalMark'),
             'answeredQuestions' => $session->get('answeredQuestions'),
-            'score' => $session->get('correctAnswers'),
+            'correctAnswers' => $session->get('correctAnswers'),
         ]);
     }
 }

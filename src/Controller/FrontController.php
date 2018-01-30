@@ -32,7 +32,7 @@ class FrontController extends Controller
         return $this->render('Front-Office/end-results.html.twig',[
             'duration' => $durate,
          //   'nameRoute' => $route,
-            'score' => $userScore->getValue(),
+           // 'score' => $userScore->getValue(),
         ]);
     }
 }
