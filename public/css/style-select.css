@@ -4,7 +4,19 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    background: url("img/louvre.jpg") no-repeat center center;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Page select parcours */
+#jumbotron {
+    position: relative;
+    background: url('img/louvre.jpg') no-repeat center center;
     background-size: cover;
     height: 100vh;
 }
@@ -17,17 +29,9 @@ body {
     width: 100vw;
 }
 
-.row, .container-fluid, .col, .col-12, p {
-    margin: 0;
-    padding: 0;
-}
-
-/* Page select parcours */
-
 #bg-jumbotron h1 {
     color: rgb(78, 255, 176);
     font-size: 30px;
-    font-family: 'Montserrat', sans-serif;
     text-align: center;
     margin-top: 7vh;
 
@@ -35,12 +39,12 @@ body {
 
 .section-route {
     position: absolute;
-    top: 25vh;
+    top: 30vh;
     left: 0;
     padding: 0 10vw 0 10vw;
 }
 
-#route-info {
+#col-route {
     background-color: rgba(245, 248, 255, 0.8);
     border-radius: 10px;
     color: rgb(20, 20, 20);
@@ -60,12 +64,9 @@ body {
     color: white;
 }
 
-.route-btn {
-    margin-top: 5%;
-}
-
 .border-desc {
     padding: 10px;
+    background-color: rgba(201, 201, 201, 0.4);
     border-radius: 5px 5px 5px;
 }
 
@@ -81,6 +82,7 @@ body {
     font-size: 18px;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;
+    margin-top: 5%;
 }
 
 
@@ -108,7 +110,6 @@ body {
         margin-top: 14vh;
     }
     .section-route {
-        top: 30vh;
         padding: 0 25vw 0 25vw;
     }
     #display-route {

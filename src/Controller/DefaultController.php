@@ -80,11 +80,13 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
+        $user = $session->get('firstname');
 
         if($form->isSubmitted() && $form->isValid())
         {
             $id = $form->getData();
             $session->set('selectedRoute',$id['route']->getMarks());
+            //$session->set('nameRoute', $id['route']->getName());
             $session->set('markCount',0);
 
             $visitedMarkArray = [];
@@ -98,6 +100,7 @@ class DefaultController extends Controller
 
         return $this->render('Front-Office/select-route.html.twig', [
             'formSelectRoute' => $form->createView(),
+            'userName' => $user
         ]);
     }
     /**
