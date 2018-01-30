@@ -59,20 +59,12 @@ body{
     font-size: 20px;
 }
 
-#quiz .btn{
-    margin: 70% 0 0 0;
-    font-size: 25px;
-}
-
-
-/****** MODAL ******/
-
-#valid-btn{
-    margin-top: 3%;
-}
-#btn-modal a{
+#form_submit{
     text-decoration: none;
-    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    color: rgb(78, 255, 176);
+    text-transform: uppercase;
+    background-color: rgb(1, 32, 86);
+    border-radius: 0;
 }
-
-

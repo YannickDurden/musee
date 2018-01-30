@@ -1,73 +1,82 @@
 {% extends 'front-base.html.twig' %}
 
-{% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/artwork.css">{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/artwork.css">
+{% endblock %}
 {% block body %}
-        <main class="container-fluid">
-            <div class="wrapper">
-                <div class="row">
-                    <div id="museum-map" class="col-12 col-md-6">
-                        <img  id="map"
-                              class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
-                              alt="carte image">
-                        {% for id in idMark %}
-                            <a class="repere-map" id="repere-{{ id.id }}"
-                               data-coordx ="{{ id.coordinateX }}"
-                               data-coordy ="{{ id.coordinateY }}"
-                               href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                        {% endfor %}
-                    </div>
-
-                    <div class="col-md-6">
-                        <ul id="btn-tablet" class="nav nav-tabs nav-fill">
-                            <li class="nav-item">
-                                <a class="nav-link active" href="#">Description</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path("begin_route")
-                                }}">Retour carte</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path("quiz",{'id': id})
-                                }}">Quiz</a>
-                            </li>
-                        </ul>
-                        <section class="picture-artwork">
-                            <img class="img-artwork img-fluid w-100" src="{{app.request
-                            .basepath}}/uploads/{{ currentMark.image }}"
-                                 alt="image de l'oeuvre">
-                            <h1 class="text-center">{{ currentMark.name }}<!--Titre de
-                            l'oeuvre--></h1>
-                        </section>
-
-                        <section class="description-artwork">
-                            <article>
-                                <p>{{ description }}<!-- Description de
-                                l'oeuvre--></p>
-                            </article>
-                        </section>
-
-                        <div id="btn-footer" class="row">
-                            <div class="col-md-6">
-                                <ul class="fixed-bottom nav nav-tabs nav-fill">
-                                    <li class="nav-item">
-                                        <a class="nav-link active" href="#">Description</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ path("begin_route")
-                                        }}">Retour
-                                            carte</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ path("quiz",{'id': id })
-                                        }}">Quiz</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+    <main class="container-fluid">
+            <div class="row">
+                <!-- Affichage de la carte et des reperes -->
+                <div id="museum-map" class="col-12 col-md-6">
+                    <img  id="map"
+                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                          alt="carte image">
+                    {% for id in idMark %}
+                        <a class="repere-map" id="repere-{{ id.id }}"
+                           data-coordx ="{{ id.coordinateX }}"
+                           data-coordy ="{{ id.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    {% endfor %}
                 </div>
-            </div><!-- wrapper -->
-        </main>
+                <!-- Fin Affichage de la carte et des reperes -->
 
+                <div class="col-md-6">
+                    <!-- Menu tablette -->
+                    <ul id="btn-tablet" class="nav nav-tabs nav-fill">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#">Description</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("begin_route")
+                            }}">Retour carte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path("quiz",{'id': id})
+                            }}">Quiz</a>
+                        </li>
+                    </ul>
+                    <!-- Fin Menu tablette -->
+
+                    <section class="picture-artwork">
+                        <img class="img-artwork img-fluid w-100" src="{{app.request
+                        .basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{
+                        currentMark.image }#}"
+                             alt="image de l'oeuvre">
+                        <h1 class="text-center">{{ currentMark.name }}<!--Titre de
+                        l'oeuvre--></h1>
+                    </section>
+
+                    <section class="description-artwork">
+                        <article>
+                            <p>{{ description }}<!-- Description de
+                            l'oeuvre--></p>
+                        </article>
+                    </section>
+
+                    <div id="btn-footer" class="row">
+                        <div class="col-md-6">
+                            <!-- Menu mobile -->
+                            <ul class="fixed-bottom nav nav-tabs nav-fill">
+                                <li class="nav-item">
+                                    <a class="nav-link active" href="#">Description</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path("begin_route")
+                                    }}">Retour
+                                        carte</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{{ path("quiz",{'id': id })
+                                    }}">Quiz</a>
+                                </li>
+                            </ul>
+                            <!-- Fin Menu mobile -->
+                        </div>
+                    </div><!-- btn footer -->
+                </div><!-- col md 6 -->
+            </div><!-- row -->
+    </main>
 {% endblock %}
 {% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}
