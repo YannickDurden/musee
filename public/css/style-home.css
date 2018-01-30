@@ -1,10 +1,10 @@
 /* reset */
 
 body {
-    position: relative;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .row, .container-fluid, .col, .col-12, p {
@@ -54,12 +54,17 @@ body {
 
 }
 
+
+/* mise en forme div texte et input */
+
 #jumbotron .btn {
     background-color: rgb(1, 32, 86);
     color: rgb(78, 255, 176);
+    text-transform: uppercase;
+    padding: 15px;
+    font-size: 16px;
+    margin-top: 1vh;
 }
-
-/* mise en forme div texte et input */
 
 .form-home {
     display: flex;
@@ -71,17 +76,10 @@ body {
     background-color: rgba(201,201,201,0.7);
 }
 
-.form-home .btn{
-    color: rgb(78, 255, 176);
-    text-transform: uppercase;
-    padding: 15px;
-    font-size: 18px;
-    margin-top: 1vh;
-}
-
 .text-home{
     padding: 40px;
 }
+
 
 /* mise en forme à la vue tablette en paysage */
 
@@ -100,6 +98,10 @@ body {
     #jumbotron .form-home {
         width: 30vw;
         margin: 3vh auto 0;
+    }
+
+    #jumbotron .btn {
+        font-size: 20px;
     }
 }
 
@@ -126,8 +128,9 @@ BOUTON START QUI CACHE LA DIV
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 40px;
-    background-color: rgb(1, 32, 86);
+    font-size: 25px;
+    padding: 20px;
+    margin: 0;
 }
 
 
