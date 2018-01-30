@@ -176,11 +176,6 @@ class AjaxController extends Controller
         //$savedMark->setImage($fileName);
         //$file->move($this->getParameter('uploads_directory'), $fileName);
         $sessionMarks = $session->get('savedMarksNames');
-        if(empty($sessionMarks))
-        {
-            $session->set('savedMarksNames', []);
-            $sessionMarks = [];
-        }
         // Avant de stocker en session il faut verifier que ça ne soit pas qu'un update d'un repère exisant dans le parcours
         if(!(in_array($savedMark->getName(), $sessionMarks)))
         {
@@ -207,14 +202,20 @@ class AjaxController extends Controller
         */
         parse_str($_POST['routeInfo'], $decodedJson);
         $arrayMarks = [];
-        $newRouteToSave = new \App\Entity\Route();
+        $newRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $_POST['name']]);
+        if($newRoute == null)
+        {
+            $newRouteToSave = new \App\Entity\Route();
+        }
+        else
+        {
+            $newRouteToSave = $newRoute;
+        }
         $newRouteToSave->setName($decodedJson['name']);
         $newRouteToSave->setDescription($decodedJson['description']);
-        $durationArrayToString = $decodedJson['hours']." ".$decodedJson['minutes'];
+        $durationArrayToString = $decodedJson['hours'].":".$decodedJson['minutes'];
         //$updatedRoute->setMap($_POST['fileName']);
-        $duration = new \DateTime();
-        $duration->createFromFormat('H i', $durationArrayToString);
-        //$duration = new \DateTime('now');
+        $duration = date_create_from_format('H:i', $durationArrayToString);
         $newRouteToSave->setDuration($duration);
         foreach($session->get('savedMarksNames') as $mark)
         {
@@ -222,12 +223,45 @@ class AjaxController extends Controller
         }
         $newRouteToSave->setMarks($arrayMarks);
         $newRouteToSave->setMap('123456.jpeg');
+        $newRouteToSave->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($session->get('museum')->getId()));
 
         $em = $this->getDoctrine()->getManager();
         $em->persist($newRouteToSave);
         $em->flush();
 
+        //On reinitialise le tableau en session pour permettre l'ajout d'un nouveau parcours
+        $session->set('savedMarksNames', []);
+
         return new Response("Ok");
 
+    }
+
+    /**
+     * @route("ajax/getMarkInfo", name="get_mark_info")
+     */
+    public function getMarkInfo()
+    {
+        $name = $_POST['name'];
+        $selectedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy($name);
+        $selectedMark->setImage(new File('C:\xampp\htdocs\musee\public\uploads\0edd4088464530b29746ca080b03244a.jpeg'));
+        foreach ($selectedMark->getQuestions() as $question)
+        {
+            $decodedAnswers = null;
+            json_decode($question->getAnswers(), $decodedAnswers);
+            $question->setAnswers($decodedAnswers);
+            if($question->getCategory() == 1)
+            {
+                $question->setCategory('adulte');
+            }
+            elseif($question->getCategory() == 2)
+            {
+                $question->setCategory('enfant');
+            }
+        }
+        $form = $this->createForm(AddMarkAddType::class, $selectedMark);
+
+        return $this->render('Back-Office/BackOffice-v2/mark-form.html.twig', [
+            'formMark' => $form->createView()
+        ]);
     }
 }

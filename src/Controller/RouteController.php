@@ -115,7 +115,9 @@ class RouteController extends Controller
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
+        $arrayRoutes['Choisir le parcours à modifier'] = null;
         $allMarks = [];
+        $session->set('savedMarksNames', []);
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
@@ -129,7 +131,7 @@ class RouteController extends Controller
             }
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
-            'choices' => $arrayRoutes
+            'choices' => $arrayRoutes,
         ]);
         $form2 = $formBuilder->getForm();
         $form2->handlerequest($request);
@@ -149,18 +151,18 @@ class RouteController extends Controller
          */
     public function getMarks(Request $request, SessionInterface $session)
     {
-        $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
+        $name = $_POST['name'];
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $name]);
         $allMarks = $currentRoute->getMarks();
         $duration = $currentRoute->getDuration();
         $arrayMarks = [];
-        $arrayId = [];
+        $arrayNames = [];
 
         foreach ($allMarks as $mark) {
             $arrayMarks[$mark->getName()] = $mark->getId();
-            $arrayId []= $mark->getId();
+            $arrayNames []= $mark->getName();
         }
-        $session->set('savedMarksId', $arrayId);
+        $session->set('savedMarksNames', $arrayNames);
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
             'marks' => $arrayMarks,
             'route' => $currentRoute,

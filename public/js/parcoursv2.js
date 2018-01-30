@@ -1,5 +1,26 @@
 $(function() {
 
+    // Ajout des sous formulaires de question et description
+    var $container = $('div#add_mark_add_descriptions');
+    var $containerQuestion = $('div#add_mark_add_questions');
+    for(var i = 0; i<2; i++)
+    {
+        var template = $container.attr('data-prototype')
+            .replace(/__name__label__/g, 'Description n°'+(i+1))
+            .replace(/__name__/g, i)
+        ;
+        var template2 = $containerQuestion.attr('data-prototype')
+            .replace(/__name__label__/g, 'Question n°'+(i+1))
+            .replace(/__name__/g, i)
+        ;
+        var $prototype = $(template);
+        var $prototype2 = $(template2);
+        $container.append($prototype);
+        $containerQuestion.append($prototype2);
+    }
+
+
+
     /**
      * Gestion des coordonnées des repères
      */
@@ -39,23 +60,44 @@ $(function() {
 
         //Affiche l'animation de chargment
         $('#animation').show();
-        $('#liste-reperes').fadeOut('slow');
+        $('#table-mark').fadeOut('slow');
 
-        var id = $('#form_route').val()
+        var name = $('#form_route option:selected').text();
+        console.log(name);
         $.ajax({
             url: 'http://localhost:8000/ajax/getMarks',
             type: 'POST',
-            data: {id : id}
+            data: {name : name}
         })
             .done(function( response ) {
                 //Masque l'animation et affiche le resultat dans un tableau
                 $('#animation').hide();
-                $('#liste-reperes').fadeIn('slow');
-                $('#liste-reperes').html(response);
+                $('#table-mark').fadeIn('slow');
+                $('#table-mark > tbody:last').html(response);
                 $('#name').val($('#route_name').val());
                 $('#description').val($('#route_description').val());
                 $('#hours').val($('#route_hours').val());
                 $('#minutes').val($('#route_minutes').val());
+                /**
+                 * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
+                 */
+                $('.deleteMark').click(function(e) {
+                    e.preventDefault();
+                    $(this).parent().parent().remove();
+                });
+                $('.editMark').click(function(e) {
+                    e.preventDefault();
+                    var id = $(this).attr('id');
+                    console.log(id);
+                    $.ajax({
+                        url: 'http://localhost:8000/ajax/getMarkInfo',
+                        type: 'POST',
+                        data: {id: id}
+                    })
+                        .done(function(response){
+                            $('#repere').html(response);
+                        });
+                });
 
             });
     });
@@ -86,21 +128,12 @@ $(function() {
         var newRow = "<tr>\n" +
             "        <th scope=\"row\">"+nbreRows+"</th>\n" +
             "        <td>"+newName+"</td>\n" +
-            "        <td><a href=\"#\" id=\"45\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-            "        <td><a href=\"#\" id=\"45\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+            "        <td><a href=\"#\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+            "        <td><a href=\"#\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
             "    </tr>";
         //Enfin on ajoute la nouvelle ligne au tableau
         $('#table-mark > tbody:last').append(newRow);
     });
-
-    /**
-     * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
-     */
-    $('table#table-mark td button.delete').click(function (event) {
-        event.preventDefault();
-        console.log("test");
-    })
-
 
     /**
      *  Ajout du parcours en BDD
@@ -109,32 +142,20 @@ $(function() {
     $('#submit-info-parcours').click(function(e){
         e.preventDefault();
         var $routeInfo = $('#add_route').serialize();
+        var name = $('#form_route option:selected').text();
         console.log($routeInfo);
         $.ajax({
             url: 'http://localhost:8000/ajax/saveRoutetoBDD',
             type: 'POST',
-            data: {routeInfo: $routeInfo},
+            data: {routeInfo: $routeInfo, name: name}
         });
     });
 
-
-
-    // Ajout des sous formulaires de question et description
-    var $container = $('div#add_mark_add_descriptions');
-    var $containerQuestion = $('div#add_mark_add_questions');
-    for(var i = 0; i<2; i++)
-    {
-        var template = $container.attr('data-prototype')
-            .replace(/__name__label__/g, 'Description n°'+(i+1))
-            .replace(/__name__/g, i)
-        ;
-        var template2 = $containerQuestion.attr('data-prototype')
-            .replace(/__name__label__/g, 'Question n°'+(i+1))
-            .replace(/__name__/g, i)
-        ;
-        var $prototype = $(template);
-        var $prototype2 = $(template2);
-        $container.append($prototype);
-        $containerQuestion.append($prototype2);
-    }
+    /**
+     * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
+     */
+    $('.deleteMark').click(function(e) {
+        console.log("fait chier");
+        $(this).parent("tr").remove();
+    });
 });
