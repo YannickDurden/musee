@@ -5,12 +5,16 @@
         <main class="container-fluid">
             <div class="wrapper">
                 <div class="row">
-                    <div id="map" class="col-md-6">
-                        <section class="map">
-                            <img class="img-map img-fluid"
-                                 src="{{ app.request.basepath }}/uploads/{{ map }}"
-                                 alt="map-museum"><!-- Carte du musée-->
-                        </section>
+                    <div id="museum-map" class="col-12 col-md-6">
+                        <img  id="map"
+                              class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                              alt="carte image">
+                        {% for id in idMark %}
+                            <a class="repere-map" id="repere-{{ id.id }}"
+                               data-coordx ="{{ id.coordinateX }}"
+                               data-coordy ="{{ id.coordinateY }}"
+                               href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                        {% endfor %}
                     </div>
 
                     <div class="col-md-6">
@@ -19,7 +23,8 @@
                                 <a class="nav-link active" href="#">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Retour carte</a>
+                                <a class="nav-link" href="{{ path("begin_route")
+                                }}">Retour carte</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path("quiz",{'id': id})
@@ -29,14 +34,14 @@
                         <section class="picture-artwork">
                             <img class="img-artwork img-fluid w-100" src="{{app.request
                             .basepath}}/uploads/{{ currentMark.image }}"
-                                 alt="le-penseur">
+                                 alt="image de l'oeuvre">
                             <h1 class="text-center">{{ currentMark.name }}<!--Titre de
                             l'oeuvre--></h1>
                         </section>
 
                         <section class="description-artwork">
                             <article>
-                                <p>{{ description.label }}<!-- Description de
+                                <p>{{ description }}<!-- Description de
                                 l'oeuvre--></p>
                             </article>
                         </section>
@@ -48,7 +53,9 @@
                                         <a class="nav-link active" href="#">Description</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="#">Retour carte</a>
+                                        <a class="nav-link" href="{{ path("begin_route")
+                                        }}">Retour
+                                            carte</a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ path("quiz",{'id': id })
@@ -63,3 +70,4 @@
         </main>
 
 {% endblock %}
+{% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}
