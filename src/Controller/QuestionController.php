@@ -94,8 +94,14 @@ class QuestionController extends Controller
                 $markCount++;
                 $session->set('markCount',$markCount);
             }
+
+            if(($session->get('markCount')) == ($session->get("totalMark"))){
+                return $this->redirectToRoute("end_results");
+            }
+
             return $this->redirectToRoute('score_quiz');
         }
+
 
         //Affichage de la carte avec l'id
         $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
@@ -129,12 +135,14 @@ class QuestionController extends Controller
             $message = 'Dommage, ce n\'était pas la bonne réponse';
         }
 
+        $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
 
         return $this->render("/Front-Office/score_quiz.html.twig",[
             'map' => $map,
             'idMark'=> $idMark,
             'message' => $message,
-            'progression' => $session->get('answeredQuestions'),
+            'progression' => $progression,
+            'answeredQuestions' => $session->get('answeredQuestions'),
             'score' => $session->get('correctAnswers'),
         ]);
     }

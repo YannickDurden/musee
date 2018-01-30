@@ -23,7 +23,7 @@
                         <div class="score text-center">
                             <h2 class="h4">Score</h2>
                             <p>{{ message }}</p>
-                            <p>Votre score : {{ score }} / {{ progression }}</p>
+                            <p>Votre score : {{ score }} / {{ answeredQuestions }}</p>
                         </div>
 
                         <div class="progression text-center">
@@ -31,16 +31,13 @@
                             <div class="progress">
                                 <div class="progress-bar bg-success"
                                      role="progressbar"
-                                     style="width: 25%"
-                                     aria-valuenow="{{ progression }}"
-                                     aria-valuemin="0"
-                                     aria-valuemax="100">
+                                     style="width: {{ progression }}%">
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="return-btn">
+                    <div class="text">
                         <p>Sélectionnez un point suivant sur la carte pour continuer votre
                            visite</p>
                     </div>

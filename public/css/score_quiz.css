@@ -31,7 +31,7 @@ body {
     font-size: 50px;
 }
 
-.return-btn, .score, .progression {
+.score, .progression {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -45,11 +45,6 @@ body {
 
 .progress {
     background-color: lightgray;
-}
-
-.return-btn a{
-    text-decoration: none;
-    color: white;
 }
 
 @media screen and (max-width: 760px) {
