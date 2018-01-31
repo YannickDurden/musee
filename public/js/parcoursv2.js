@@ -83,16 +83,22 @@ $(function() {
                  */
                 $('.deleteMark').click(function(e) {
                     e.preventDefault();
+                    var name = $(this).attr('id');
                     $(this).parent().parent().remove();
+                    console.log(name);
+                    $.ajax({
+                        url: 'http://localhost:8000/ajax/deleteMarkFromSession',
+                        type: 'POST',
+                        data: {name: name}
+                    })
                 });
                 $('.editMark').click(function(e) {
                     e.preventDefault();
-                    var id = $(this).attr('id');
-                    console.log(id);
+                    var name = $(this).attr('id');
                     $.ajax({
                         url: 'http://localhost:8000/ajax/getMarkInfo',
                         type: 'POST',
-                        data: {id: id}
+                        data: {name: name}
                     })
                         .done(function(response){
                             $('#repere').html(response);
@@ -123,16 +129,40 @@ $(function() {
 
         //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
         var nbreRows = $('#table-mark tbody tr').length;
-        console.log(nbreRows);
         nbreRows++;
         var newRow = "<tr>\n" +
             "        <th scope=\"row\">"+nbreRows+"</th>\n" +
             "        <td>"+newName+"</td>\n" +
-            "        <td><a href=\"#\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-            "        <td><a href=\"#\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+            "        <td><a href=\"#\" id=\""+newName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+            "        <td><a href=\"#\" id=\""+newName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
             "    </tr>";
         //Enfin on ajoute la nouvelle ligne au tableau
         $('#table-mark > tbody:last').append(newRow);
+
+        $('.editMark').click(function(e) {
+            e.preventDefault();
+            var name = $(this).attr('id');
+            $.ajax({
+                url: 'http://localhost:8000/ajax/getMarkInfo',
+                type: 'POST',
+                data: {name: name}
+            })
+                .done(function(response){
+                    $('#repere').html(response);
+                });
+        });
+
+        $('.deleteMark').click(function(e) {
+            e.preventDefault();
+            var name = $(this).attr('id');
+            $(this).parent().parent().remove();
+            console.log(name);
+            $.ajax({
+                url: 'http://localhost:8000/ajax/deleteMarkFromSession',
+                type: 'POST',
+                data: {name: name}
+            })
+        });
     });
 
     /**
@@ -155,7 +185,9 @@ $(function() {
      * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
      */
     $('.deleteMark').click(function(e) {
-        console.log("fait chier");
+        e.preventDefault();
         $(this).parent("tr").remove();
     });
+
+
 });

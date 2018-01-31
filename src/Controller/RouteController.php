@@ -115,7 +115,6 @@ class RouteController extends Controller
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
-        $arrayRoutes['Choisir le parcours à modifier'] = null;
         $allMarks = [];
         $session->set('savedMarksNames', []);
 
@@ -132,6 +131,7 @@ class RouteController extends Controller
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
             'choices' => $arrayRoutes,
+            'placeholder' => 'Choisir le parcours à modifier'
         ]);
         $form2 = $formBuilder->getForm();
         $form2->handlerequest($request);

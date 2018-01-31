@@ -19,22 +19,10 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class AjaxController extends Controller
 {
-    /**
-     * @Route("/ajax", name="ajax")
-     */
-    public function index()
-    {
-        // replace this line with your own code!
-        return $this->render('@Maker/demoPage.html.twig', [ 'path' => str_replace($this->getParameter('kernel.project_dir').'/', '', __FILE__) ]);
-    }
-
-    /**
+     /**
      * @Route("ajax/edit-route", name="ajax_edit_route")
      */
 
-    /*
-     * Route permettant
-     */
     public function ajaxEditRoute(Request $request)
     {
         $id = $_POST['id'];
@@ -74,7 +62,7 @@ class AjaxController extends Controller
         $updatedRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($_POST['id']);
         $updatedRoute->setName($arrayObject['add_route']['name']);
         $updatedRoute->setDescription($arrayObject['add_route']['description']);
-        $durationArrayToString = $arrayObject['add_route']['duration']['hour']." ".$arrayObject['add_route']['duration']['minute'];
+        $durationArrayToString = strval($arrayObject['add_route']['duration']['hour'])." ".strval($arrayObject['add_route']['duration']['minute']);
         //$updatedRoute->setMap($_POST['fileName']);
         $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
         $duration = new \DateTime('now');
@@ -213,9 +201,10 @@ class AjaxController extends Controller
         }
         $newRouteToSave->setName($decodedJson['name']);
         $newRouteToSave->setDescription($decodedJson['description']);
-        $durationArrayToString = $decodedJson['hours'].":".$decodedJson['minutes'];
+        $durationArrayToString = strval($decodedJson['hours']).":".strval($decodedJson['minutes']);
         //$updatedRoute->setMap($_POST['fileName']);
         $duration = date_create_from_format('H:i', $durationArrayToString);
+        //$duration = new \DateTime('now');
         $newRouteToSave->setDuration($duration);
         foreach($session->get('savedMarksNames') as $mark)
         {
@@ -242,7 +231,7 @@ class AjaxController extends Controller
     public function getMarkInfo()
     {
         $name = $_POST['name'];
-        $selectedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy($name);
+        $selectedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name' => $name]);
         $selectedMark->setImage(new File('C:\xampp\htdocs\musee\public\uploads\0edd4088464530b29746ca080b03244a.jpeg'));
         foreach ($selectedMark->getQuestions() as $question)
         {
@@ -263,5 +252,25 @@ class AjaxController extends Controller
         return $this->render('Back-Office/BackOffice-v2/mark-form.html.twig', [
             'formMark' => $form->createView()
         ]);
+    }
+
+    /**
+     * @route("ajax/deleteMarkFromSession", name="delete_mark_form_session")
+     */
+    public function deleteMarkSession(SessionInterface $session)
+    {
+     $name = $_POST['name'];
+     $arrayMarks = $session->get('savedMarksNames');
+     foreach($arrayMarks as $key => $currentMark)
+     {
+         if($currentMark = $name)
+         {
+             unset($arrayMarks[$key]);
+             $session->set('savedMarksNames', $arrayMarks);
+             return new Response("Done");
+         }
+     }
+     return new Response("Not Found In Session");
+
     }
 }
