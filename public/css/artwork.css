@@ -36,7 +36,7 @@ header li{
 
 .repere-map{
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-100%,-100%);
     text-decoration: none;
     color : dodgerblue;
 }
@@ -67,10 +67,10 @@ article p{
 }
 
 #btn-tablet a{
-    font-size: 0.9em;
+    font-size: 0.8em;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgb(78, 255, 176);
+    color: white;
     background-color: rgb(1, 32, 86);
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
@@ -79,10 +79,10 @@ article p{
 
 /* MENU MOBILE */
 #btn-footer a{
-    font-size: 0.9em;
+    font-size: 0.8em;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: rgb(78, 255, 176);
+    color: white;
     background-color: rgb(1, 32, 86);
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
@@ -91,7 +91,8 @@ article p{
 
 /* AFFICHAGE TABLETTE */
 @media screen and (min-width: 768px ){
-    #btn-footer{
+    #btn-footer,
+    .picture-artwork{
         display: none;
     }
     .col-md-6 {
@@ -104,7 +105,8 @@ article p{
 }
 
 @media screen and (max-width: 768px){
-    #museum-map{
+    #museum-map,
+    .image-oeuvre{
         display:none;
     }
 }

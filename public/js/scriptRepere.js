@@ -9,8 +9,8 @@ $(function () {
 
             var coordX = $(this).data('coordx');
             var coordY = $(this).data('coordy');
-            var calcX = coordX * width;
-            var calcY = coordY * height;
+            var calcX = coordX * 100 + "%";
+            var calcY = coordY * 100 + "%";
 
             console.log("X : " + calcX + " - Y : " + calcY);
 

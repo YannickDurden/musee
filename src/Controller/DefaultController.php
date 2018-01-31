@@ -86,7 +86,7 @@ class DefaultController extends Controller
         {
             $id = $form->getData();
             $session->set('selectedRoute',$id['route']->getMarks());
-            //$session->set('nameRoute', $id['route']->getName());
+            $session->set('nameRoute', $id['route']->getName());
             $session->set('markCount',0);
 
             $visitedMarkArray = [];
