@@ -110,9 +110,10 @@ class DefaultController extends Controller
     {
         $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
         $idMark = $session->get('selectedRoute');
-        return $this->render('Front-Office/begin-route.html.twig',[
+        return $this->render('Front-Office/newBeginRoute.html.twig',[
             'idMark' => $idMark,
             'map'=> $map,
+            'nameRoute' => $session->get("nameRoute")
         ]);
     }
 

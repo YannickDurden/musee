@@ -3,9 +3,8 @@
     <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">{%
     endblock %}
 {% block body %}
-<section class="picture-museum">
-    <div class="section-route container-fluid">
-        
+<main class="container-fluid">
+    <div class="section-route">
         <!-- Affichage de la carte et des points de reperes -->
         <div class="row">
             <div id="museum-map" class="col-12">
@@ -47,7 +46,7 @@
             </div> <!-- wrapper col -->
         </div> <!-- row  -->
     </div>  <!-- container -->
-</section>
+</main>
 
 {% endblock %}
 {% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}

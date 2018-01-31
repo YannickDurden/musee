@@ -5,31 +5,34 @@
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="{{app.request.basepath}}/css/newArtwork.css">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/newQuiz.css">
 {% endblock %}
 {% block body %}
     <main class="container-fluid">
-            <div id="banner" class="row">
-                <div class="calque">
-                    <nav id="brand" class="navbar">
-                        <span class="navbar-brand mb-0 h1">MyMuseum</span>
-                    </nav>
-                    <nav id="breadcrumb" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="hide-li breadcrumb-item">
-                                <a href="{{ path('my_museum') }}">Accueil</a>
-                            </li>
-                            <li class="hide-li breadcrumb-item"><a
-                                        href="{{ path("begin_route") }}">{{ nameRoute }}</a>
-                            </li>
-                            <li class="hide-li breadcrumb-item">
-                                <a href="#">{{ currentMark.name }}</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Description</li>
-                        </ol>
-                    </nav>
-                </div>
+        <div id="banner" class="row">
+            <div class="calque">
+                <nav id="brand" class="navbar">
+                    <span class="navbar-brand mb-0 h1">MyMuseum</span>
+                </nav>
+                <nav id="breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path('my_museum') }}">Accueil</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path("begin_route")}}">{{ nameRoute }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">{{ currentMark.name }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path("artwork",{'id' : id})}}">Description</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item active">Quiz</li>
+                    </ol>
+                </nav>
             </div>
+        </div>
 
         <div id="artwork-name" class="row">
             <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
@@ -47,15 +50,14 @@
                 <!-- Menu tablette -->
                 <ul id="btn-tablet" class="nav nav-tabs nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ path("artwork",{'id':id})
-                        }}">Description</a>
+                        <a class="nav-link" href="{{ path("artwork",{'id' : id})}}">Description</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path("begin_route")
                         }}">Retour carte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("quiz",{'id': id})
+                        <a class="nav-link active" href="{{ path("quiz",{'id': id})
                         }}">Quiz</a>
                     </li>
                 </ul>
@@ -68,10 +70,26 @@
                     <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
                 </section>
 
-                <section class="description-artwork">
-                    <article>
-                        <p>{{ description }}<!-- Description de l'oeuvre--></p>
-                    </article>
+                <section id="quiz">
+                    <p>{{ question.label }}<!-- Ici la question--></p>
+                    <!-- Début du formulaire -->
+                    {{ form_start(formQ) }}
+                    <div class="form-group row">
+                        <div class="form-check">
+                            <div class="form-check-input">
+                                {{ form_widget(formQ.answers
+                                ) }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="submit" class="form-group">
+                        {{ form_widget(formQ.submit,
+                            {'attr': {'class': 'btn'}}
+                        ) }}
+                    </div>
+                    {{ form_end(formQ) }}
+                    <!-- fin du formulaire -->
                 </section>
 
                 <div id="btn-footer" class="row"><!-- btn mobile -->

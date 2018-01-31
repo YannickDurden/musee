@@ -1,0 +1,80 @@
+{% extends 'front-base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/newScoreQuiz.css">
+{% endblock %}
+{% block body %}
+    <main class="container-fluid">
+        <div id="banner" class="row">
+            <div class="calque">
+                <nav id="brand" class="navbar">
+                    <span class="navbar-brand mb-0 h1">MyMuseum</span>
+                </nav>
+                <nav id="breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path('my_museum') }}">Accueil</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path("begin_route")}}">{{ nameRoute }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">bla</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">Description</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">Quiz</li>
+                        <li class="hide-li breadcrumb-item active">Score du quiz</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="section-route container-fluid">
+            <div class="row">
+                <div id="museum-map" class="col-12 col-md-6">
+                    <img  id="map"
+                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                          alt="carte image">
+                    {% for id in idMark %}
+                        <a class="repere-map" id="repere-{{ id.id }}"
+                           data-coordx ="{{ id.coordinateX }}"
+                           data-coordy ="{{ id.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    {% endfor %}
+                </div>
+
+                <div class="museum-wrapper col col-md-6 text-center">
+                    <div class="museum-stats">
+                        <div class="score text-center">
+                            <h2 class="h4">Score</h2>
+                            <p>{{ message }}</p>
+                            <p>Votre score actuel sur le parcours est de : {{ correctAnswers }} sur {{ totalMark }}</p>
+                        </div>
+
+                        <div class="progression text-center">
+                            <h2 class="h4">Progression</h2>
+                            <div class="progress">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ progression }}%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text">
+                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
+                           visite</p>
+                    </div>
+                </div><!-- museum-wrapper-->
+            </div>
+        </div>
+    </main>
+{% endblock %}
+{% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}

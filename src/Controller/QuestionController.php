@@ -107,12 +107,13 @@ class QuestionController extends Controller
         $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
         $map = $mapRespository->find(1);
 
-        return $this->render('Front-Office/quiz.html.twig',[
+        return $this->render('Front-Office/newQuiz.html.twig',[
             'map' => $map->getMap(),
             'question' => $question[0],
             'currentMark' => $currentMark,
             'formQ'=> $formBuilder->createView(),
             'id' => $id,
+            'nameRoute' => $session->get('nameRoute'),
         ]);
 
     }
@@ -137,7 +138,7 @@ class QuestionController extends Controller
 
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
 
-        return $this->render("/Front-Office/score_quiz.html.twig",[
+        return $this->render("/Front-Office/newScoreQuiz.html.twig",[
             'map' => $map,
             'idMark'=> $idMark,
             'message' => $message,
@@ -145,6 +146,7 @@ class QuestionController extends Controller
             'totalMark' => $session->get('totalMark'),
             'answeredQuestions' => $session->get('answeredQuestions'),
             'correctAnswers' => $session->get('correctAnswers'),
+            'nameRoute' => $session->get('nameRoute')
         ]);
     }
 }
