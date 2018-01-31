@@ -57,3 +57,8 @@
     </div>
 </div>
 {{ form_start(formMark) }}
+{% if name is defined %}
+    <input type="hidden" id="previousName" value="{{ name }}">
+{% else %}
+    <input type="hidden" id="previousName" value="false">
+{% endif %}

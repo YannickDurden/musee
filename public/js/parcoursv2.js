@@ -19,8 +19,6 @@ $(function() {
         $containerQuestion.append($prototype2);
     }
 
-
-
     /**
      * Gestion des coordonnées des repères
      */
@@ -78,31 +76,19 @@ $(function() {
                 $('#description').val($('#route_description').val());
                 $('#hours').val($('#route_hours').val());
                 $('#minutes').val($('#route_minutes').val());
-                /**
-                 * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
-                 */
+
+
                 $('.deleteMark').click(function(e) {
                     e.preventDefault();
                     var name = $(this).attr('id');
                     $(this).parent().parent().remove();
-                    console.log(name);
-                    $.ajax({
-                        url: 'http://localhost:8000/ajax/deleteMarkFromSession',
-                        type: 'POST',
-                        data: {name: name}
-                    })
+                    removeMark(name);
                 });
                 $('.editMark').click(function(e) {
                     e.preventDefault();
                     var name = $(this).attr('id');
-                    $.ajax({
-                        url: 'http://localhost:8000/ajax/getMarkInfo',
-                        type: 'POST',
-                        data: {name: name}
-                    })
-                        .done(function(response){
-                            $('#repere').html(response);
-                        });
+                    editMark(name);
+
                 });
 
             });
@@ -111,57 +97,22 @@ $(function() {
     /**
      * Ajout d'un repère au parcours
      */
-    $('#add_mark_add_save').click(function(e){
+    $('#add_mark_add_save').click(function(e, update){
         e.preventDefault();
-        var $markInfo = $('[name =add_mark_add]').serialize();
-        var file = new FormData(document.getElementById('add_mark_form'));
-        $.ajax({
-            url: 'http://localhost:8000/ajax/saveMarkToSession',
-            type: 'POST',
-            //processData: false,
-            //cache: false,
-            //dataType: false,
-            data: {markInfo : $markInfo}
-        });
-
-        //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
-        var newName = $('#add_mark_add_name').val();
-
-        //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
-        var nbreRows = $('#table-mark tbody tr').length;
-        nbreRows++;
-        var newRow = "<tr>\n" +
-            "        <th scope=\"row\">"+nbreRows+"</th>\n" +
-            "        <td>"+newName+"</td>\n" +
-            "        <td><a href=\"#\" id=\""+newName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-            "        <td><a href=\"#\" id=\""+newName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
-            "    </tr>";
-        //Enfin on ajoute la nouvelle ligne au tableau
-        $('#table-mark > tbody:last').append(newRow);
+        addMarkToBdd();
 
         $('.editMark').click(function(e) {
             e.preventDefault();
             var name = $(this).attr('id');
-            $.ajax({
-                url: 'http://localhost:8000/ajax/getMarkInfo',
-                type: 'POST',
-                data: {name: name}
-            })
-                .done(function(response){
-                    $('#repere').html(response);
-                });
+            editMark(name);
+
         });
 
         $('.deleteMark').click(function(e) {
             e.preventDefault();
             var name = $(this).attr('id');
             $(this).parent().parent().remove();
-            console.log(name);
-            $.ajax({
-                url: 'http://localhost:8000/ajax/deleteMarkFromSession',
-                type: 'POST',
-                data: {name: name}
-            })
+            removeMark(name);
         });
     });
 
@@ -184,10 +135,90 @@ $(function() {
     /**
      * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
      */
-    $('.deleteMark').click(function(e) {
-        e.preventDefault();
-        $(this).parent("tr").remove();
-    });
+    function removeMark(name)
+    {
+        $.ajax({
+            url: 'http://localhost:8000/ajax/deleteMarkFromSession',
+            type: 'POST',
+            data: {name: name}
+        })
+    }
+
+    /**
+     * Modification d'un repère deja ajouté
+     */
+    function editMark(name)
+    {
+        $("#previousName").val(name);
+        $.ajax({
+            url: 'http://localhost:8000/ajax/getMarkInfo',
+            type: 'POST',
+            data: {name: name}
+        })
+            .done(function(response){
+                //$('#repere').html(response);
+                console.log(response);
+                $('#add_mark_add_name').val(response.name);
+                $('#add_mark_add_coordinateX').val(response.coordinateX);
+                $('#add_mark_add_coordinateY').val(response.coordinateY);
+
+                $('#add_mark_add_descriptions_0_label').val(response.description1.label);
+                $('#add_mark_add_descriptions_0_category').val(response.description1.category);
+                $('#add_mark_add_descriptions_1_label').val(response.description2.label);
+                $('#add_mark_add_descriptions_1_category').val(response.description2.category);
+
+                $('#add_mark_add_questions_0_label').val(response.question1.label);
+                $('#add_mark_add_questions_0_category').val(response.question1.category);
+                $('#add_mark_add_questions_0_answers_goodAnswer').val(response.question1.answers.goodAnswer);
+                $('#add_mark_add_questions_0_answers_answer1').val(response.question1.answers.answer1);
+                $('#add_mark_add_questions_0_answers_answer2').val(response.question1.answers.answer2);
+                $('#add_mark_add_questions_0_answers_answer3').val(response.question1.answers.answer3);
+
+                $('#add_mark_add_questions_1_label').val(response.question2.label);
+                $('#add_mark_add_questions_1_category').val(response.question2.category);
+                $('#add_mark_add_questions_1_answers_goodAnswer').val(response.question2.answers.goodAnswer);
+                $('#add_mark_add_questions_1_answers_answer1').val(response.question2.answers.answer1);
+                $('#add_mark_add_questions_1_answers_answer2').val(response.question2.answers.answer2);
+                $('#add_mark_add_questions_1_answers_answer3').val(response.question2.answers.answer3);
+
+
+            });
+    }
+
+    /**
+     *
+     */
+    function addMarkToBdd()
+    {
+        console.log("addMarkToBdd");
+        var $markInfo = $('[name =add_mark_add]').serialize();
+        var file = new FormData(document.getElementById('add_mark_form'));
+        var previousName = $("#previousName").val();
+        $.ajax({
+            url: 'http://localhost:8000/ajax/saveMarkToSession',
+            type: 'POST',
+            //processData: false,
+            //cache: false,
+            //dataType: false,
+            data: {markInfo : $markInfo, update: previousName}
+        });
+
+        //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
+        var newName = $('#add_mark_add_name').val();
+        $('[name =add_mark_add]')[0].reset();
+        $("#previousName").val('false');
+        //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
+        var nbreRows = $('#table-mark tbody tr').length;
+        nbreRows++;
+        var newRow = "<tr>\n" +
+            "        <th scope=\"row\">"+nbreRows+"</th>\n" +
+            "        <td>"+newName+"</td>\n" +
+            "        <td><a href=\"#\" id=\""+newName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+            "        <td><a href=\"#\" id=\""+newName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+            "    </tr>";
+        //Enfin on ajoute la nouvelle ligne au tableau
+        $('#table-mark > tbody:last').append(newRow);
+    }
 
 
 });
