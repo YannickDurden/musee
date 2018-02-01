@@ -4,9 +4,12 @@ namespace App\Form;
 
 use App\Entity\Media;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddMediaType extends AbstractType
@@ -19,12 +22,16 @@ class AddMediaType extends AbstractType
                 new NotBlank()
             ]
         ]);
-        $builder->add('file', TextType::class, [
-            'label' => 'Fichier du média',
+        $builder->add('file', FileType::class, [
+            'label' => 'Choisir une image',
             'constraints' => [
-                new NotBlank()
+                new NotBlank(),
+                new Image(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']])
             ]
         ]);
+        $builder->add('submit', SubmitType::class, ['label' => 'Ajouter l\'image']);
+
+
     }
 
     public function configureOptions(OptionsResolver $resolver)

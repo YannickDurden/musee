@@ -28,7 +28,6 @@ class DefaultController extends Controller
     {
         return new Response("Bienvenue sur le panel admin");
     }
-
     /**
      * @Route("/admin/home", name="admin_home")
      */
@@ -64,12 +63,14 @@ class DefaultController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $session->set('firstname', $user->getFirstName());
+            $session->set('correctAnswers', 0);
+            $session->set('answeredQuestions',0);
+            $session->set('lastQuestion',null);
             return $this->redirectToRoute("my_museum_session");
         }
         return $this->render('Front-Office/home-front.html.twig', [
             'formFirstname' => $form->createView(),
         ]);
-
     }
 
     /**
@@ -79,38 +80,43 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
-
+        $user = $session->get('firstname');
 
         if($form->isSubmitted() && $form->isValid())
         {
-            return $this->render('Front-Office/select-route.html.twig', [
-                'formSelectRoute' => $form->createView()
-            ]);
+            $id = $form->getData();
+            $session->set('selectedRoute',$id['route']->getMarks());
+            $session->set('nameRoute', $id['route']->getName());
+            $session->set('markCount',0);
+
+            $visitedMarkArray = [];
+            $session->set('visitedMarkArray',$visitedMarkArray);
+
+            $totalMark = count($id['route']->getMarks());
+            $session->set('totalMark', $totalMark);
+
+            return $this->redirectToRoute('begin_route');
         }
 
         return $this->render('Front-Office/select-route.html.twig', [
             'formSelectRoute' => $form->createView(),
+            'userName' => $user
         ]);
     }
     /**
      * @Route("/mymuseum/begin-route", name="begin_route")
      */
-    public function beginRoute()
+    public function beginRoute(SessionInterface $session)
     {
-        return $this->render('Front-Office/begin-route.html.twig');
-    }
+        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $idMark = $session->get('selectedRoute');
+        $startRouteTime = new \DateTime('now');
+        $session->set('startTime', $startRouteTime);
 
-
-    /**
-     * @Route("/mymuseum/end-results", name="end_results")
-     */
-
-    public function results(SessionInterface $session)
-    {
-        /*$session->getMetadataBag()->getLastUsed();
-        $dateTime = $session->getMetadataBag()->getLifetime();
-        $session->get('dateTime', $dateTime);*/
-        return $this->render('Front-Office/end-results.html.twig');
+        return $this->render('Front-Office/begin-route.html.twig',[
+            'idMark' => $idMark,
+            'map'=> $map,
+        ]);
     }
 
     /**
@@ -128,6 +134,8 @@ class DefaultController extends Controller
 
             $em = $this->getDoctrine()->getManager();
             $register->setRole(['ROLE_USER']);
+            $register->setUsername($mail);
+            $register->setPassword('visiteur');
             $em->persist($register);
             $em->flush();
 
@@ -152,7 +160,6 @@ class DefaultController extends Controller
     /**
      * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */
-
     public function ajaxDescription($action, $param)
     {
         /**
@@ -164,13 +171,10 @@ class DefaultController extends Controller
             $info = $getInfo->find(intval($param));
             $description = $info->getDescription();
             $duration = $info->getDuration();
-
-
         }
         return $this->render('Front-Office/ajax.html.twig', [
             'description' => $description,
             'duration' => $duration,
         ]);
-
     }
 }

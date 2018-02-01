@@ -3,85 +3,72 @@
     {% block title %}Récapitulatif: résultats de votre visite{% endblock %}
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
         <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-recap.css">
     {% endblock %}
 
 {% block body %}
-<section>
-    <div class="section-recap container-fluid">
-        <div class="row">
-            <div id="museum-img" class="col col-md-6">
-                <img src="http://lorempicsum.com/nemo/627/300/4" class="img-fluid" alt="museum">
-            </div>
+<section id="jumbotron" class="picture-museum">
+    <div id="bg-jumbotron">
+        <h1>{{ userName }}, les résultats de votre visite: {{ nameRoute }}</h1>
+        <div class="section-recap container-fluid">
+            <div class="row">
+                <div id="results" class="col-12 col-md-12 text-center">
+                    <div class="museum-best">
+                        <div class="score-icon">
+                            <i class="fa fa-clock-o fa-3x" aria-hidden="true"></i>
+                        </div>
 
+                        <div class="stats text-center">
+                            <h2 class="h4">Durée de votre parcours</h2>
+                            <p id="durate">{{ duration.h }} heure et {{ duration.i }} minutes.</p>
+                        </div>
+                    </div>
+                    <div class="museum-best">
+                        <div class="score-icon">
+                            <i class="fa fa-pie-chart fa-3x" aria-hidden="true"></i>
+                        </div>
 
-            <div class="museum-wrapper col col-md-6 text-center">
-                <div class="title-route">
-                    <h1>Nom du parcours</h1>
-                </div>
-                <div class="museum-best">
-                    <div class="score-icon">
-                        <i class="fa fa-clock-o fa-3x" aria-hidden="true"></i>
-                    </div>
-
-                    <div class="stats text-center">
-                        <h2 class="h4">Durée de votre parcours</h2>
-                        <p>1h30</p>
-                    </div>
-                </div>
-                <div class="museum-best">
-                    <div class="score-icon">
-                        <i class="fa fa-pie-chart fa-3x" aria-hidden="true"></i>
-                    </div>
-
-                    <div class="stats text-center">
-                        <h2 class="h4">Votre score total</h2>
-                        <p>70/100</p>
-                    </div>
-                </div>
-                <div class="museum-best">
-                    <div class="score-icon">
-                        <i class="fa fa-pie-chart fa-3x" aria-hidden="true"></i>
+                        <div class="stats text-center">
+                            <h2 class="h4">Votre score total</h2>
+                            <p id="score">{{ score }} / {{ totalMark }} </p>
+                        </div>
                     </div>
 
-                    <div class="stats text-center">
-                        <h2 class="h4">Votre meilleur score</h2>
-                        <p>75/100</p>
+                    <div class="return-btn">
+                        <button type="button" class="btn-submit btn btn-lg">
+                            <a href="{{ path("newsletter") }}">Recevoir mes scores <br> par mail</a>
+                        </button>
                     </div>
-                </div>
-                <div class="return-btn">
-                    <button type="button" class="btn btn-primary btn-lg">
-                        <a href="{{ path("newsletter") }}">Recevoir mes scores par mail</a>
-                    </button>
-                </div>
-                <div class="return-btn">
-                    <!-- START SCRIPT MODAL -->
-                    <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#modalHome">
-                        Retour à l'accueil
-                    </button>
-                    <!-- Modal -->
-                    <div class="modal fade" id="modalHome" tabindex="-1" role="dialog">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="popup-result">Retour à l'accueil</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Nous espérons que votre visite avec MyMuseum vous a plu. Merci et à bientôt.
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" id="btn-modal" class="btn btn-primary">
-                                        <a href="{{ path("my_museum") }}">Retour à la page d'accueil</a>
-                                    </button>
+                    <div class="return-btn">
+                        <!-- START SCRIPT MODAL -->
+                        <!-- Button trigger modal -->
+                        <button type="button" id="btn-home" class="btn-submit btn btn-lg" data-toggle="modal" data-target="#modalHome">
+                            Retour à l'accueil
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" id="modalHome" tabindex="-1" role="dialog">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="popup-result">Retour à l'accueil</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Nous espérons que votre visite avec MyMuseum vous a plu. Merci et à bientôt.
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" id="btn-modal" class="btn btn-submit">
+                                            <a href="{{ path("my_museum") }}">Retour à la page d'accueil</a>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- END SCRIPT MODAL -->
                     </div>
-                    <!-- END SCRIPT MODAL -->
                 </div>
             </div>
         </div>

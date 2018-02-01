@@ -1,34 +1,41 @@
 {% extends 'front-base.html.twig' %}
 
     {% block title %}Select route MyMuseum{% endblock %}
-    {% block stylesheets %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/style-select.css">{% endblock %}
+    {% block stylesheets %}
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-select.css">
+    {% endblock %}
 
 {% block body %}
-<section class="picture-museum">
-    <div class="section-route container-fluid">
-        <div class="row">
-            <div id="museum-img" class="col-12 col-md-6">
-                <img src="http://lorempicsum.com/nemo/627/300/4" class="img-fluid" alt="museum">
-            </div>
-            <div id="route-info" class="col-12 col-md-6">
-                <h1 class="h2 text-center">Je sélectionne mon parcours</h1>
-                {#{{ form(formSelect, {'attr': {'novalidate': 'novalidate'}}) }}#}
-                {{ form_start(formSelectRoute, {'method': 'GET', 'attr': {'class': 'form-route'}}) }}
-                <div id="select-route"class="form-group">
-                    {{ form_widget(formSelectRoute.route, {'attr': {'class': 'select-route form-control'}}) }}
-                </div>
+    <section id="jumbotron" class="picture-museum">
+        <div id="bg-jumbotron">
+            <h1>Bienvenue {{ userName }}, sélectionnez votre parcours</h1>
+            <div class="section-route container-fluid">
+                <div class="row">
+                    <div id="col-route" class="col-12">
 
-                <div id="display-route" class="text-center" data-spy="scroll" data-target="#select-route" data-offset="0">
-                   <p class="border-desc">
-                       <!-- affichage de la description -->
-                   </p>
+                        {#{{ form(formSelect, {'attr': {'novalidate': 'novalidate'}}) }}#}
+                        {{ form_start(formSelectRoute, {'attr': {'class': 'form-route'}}) }}
+                        <div id="select-route" class="form-group">
+                            {{ form_widget(formSelectRoute.route, {'attr': {'class': 'select-route form-control'}}) }}
+                        </div>
+
+                        <div id="display-route" class="text-center" data-spy="scroll"
+                             data-target="#select-route" data-offset="0">
+                            <p class="border-desc">
+                                <!-- affichage de la description -->
+                            </p>
+                        </div>
+                        {{ form_widget(formSelectRoute.submit,
+                            {'attr':{'class':'btn btn-lg btn-start
+                            btn-block'}}
+                        ) }}
+                        {{ form_end(formSelectRoute) }}
+                    </div>
                 </div>
-                <button type="button" id="btn-start" class="btn btn-primary btn-lg route-btn btn-block"><a class="link-route" href="{{ path('begin_route') }}">Démarrer</a></button>
-                {{ form_end(formSelectRoute) }}
             </div>
         </div>
-    </div>
-
-</section>
+    </section>
 {% endblock %}
-{% block javascripts %}<script src="{{ app.request.basepath }}/js/ajax2.js">{% endblock %}
+{% block javascripts %}
+    <script src="{{ app.request.basepath }}/js/ajax2.js">{% endblock %}

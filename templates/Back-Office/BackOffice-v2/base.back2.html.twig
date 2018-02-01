@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Alegreya:400i|Roboto" rel="stylesheet">
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-back2.css">
+    {% block stylesheet %}{% endblock %}
+    <title>{% block title %}Hello World !{% endblock %}</title>
+</head>
+<body>
+    <div class="container-fluid bg-light">
+        <div class="row" id="content">
+            <!-- Menu latéral de navigation-->
+            <div class="col col-2" id="col-nav">
+                <nav class="nav flex-column" id="nav">
+                    <div class="nav-item">
+                        <h1><a class="nav-link active text-light" href="{{ path('museum_edit')}}">Musée</a></h1>
+                    </div>
+                    <div class="nav-item">
+                        <h1 class="mb-0"><a class="nav-link text-light" href="{{ path('list_routes') }}">Parcours</a></h1>
+                        <nav class="nav flex-column pl-3">
+                            <a class="nav-link text-light" href="{{ path('edit_routev2') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('edit_routev2') }}">Modifier</a>
+                        </nav>
+                    </div>
+                    <div class="nav-item">
+                        <h1 class="mb-0"><a class="nav-link text-light" href="{{ path('new_route') }}">Quizz</a></h1>
+                        <nav class="nav flex-column pl-3">
+                            <a class="nav-link text-light" href="{{ path('new_route') }}">Ajouter</a>
+                            <a class="nav-link text-light" href="{{ path('edit_route') }}">Modifier</a>
+                        </nav>
+                    </div>
+                    <div class="nav-item" id="logout">
+                        <h1><a class="nav-link" href="{{ app.request.basepath }}/logout">Déconnexion <i class="fa fa-power-off" aria-hidden="true"></i></a></h1>
+                    </div>
+                </nav>
+            </div>
+            <!-- Fin du menu de navigation latéral -->
+
+            {% block body %}{% endblock %}
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4" crossorigin="anonymous"></script>
+    {% block scriptJavascript %}{% endblock %}
+</body>
+</html>

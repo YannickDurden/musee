@@ -1,58 +1,21 @@
-<!doctype html>
-<html lang="fr">
-
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy"
-          crossorigin="anonymous">
-    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">
-
-    <title>Begin route MyMuseum</title>
-
-</head>
-
-<body>
-
-<header>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <a class="navbar-brand" href="#">MyMuseum</a>
-
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="#">Accueil</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Contact</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="#">Accès admin</a>
-                            </li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <!-- col -->
-        </div>
-        <!-- row -->
-    </div>
-</header>
+{% extends 'front-base.html.twig'  %}
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">{%
+    endblock %}
+{% block body %}
 <section class="picture-museum">
     <div class="section-route container-fluid">
         <div class="row">
-
             <div id="museum-map" class="col-12 col-md-6">
+                <img  id="map"
+                      class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                      alt="carte image">
+                {% for id in idMark %}
+                <a class="repere-map" id="repere-{{ id.id }}"
+                   data-coordx ="{{ id.coordinateX }}"
+                   data-coordy ="{{ id.coordinateY }}"
+                   href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                {% endfor %}
             </div>
 
             <div class="museum-wrapper col col-md-6 text-center">
@@ -71,24 +34,18 @@
                     </div> <!-- progression -->
                 </div> <!-- museum stats -->
 
-                <div class="return-btn">
-                    <button type="button" class="btn btn-primary btn-lg">
-                        <a href="select-parcours.html">Retour à mon parcours</a>
-                    </button>
-                </div> <!-- button -->
+                <div class="text">
+                    <p>Sélectionnez un point suivant sur la carte pour continuer votre
+                       visite
+                    </p>
+                </div>
             </div> <!-- wrapper col -->
         </div> <!-- row  -->
     </div>  <!-- container -->
 </section>
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/js/bootstrap.min.js" integrity="sha384-a5N7Y/aK3qNeh15eJKGWxsqtnX/wWdSZSKp+81YjTmS15nvnvxKHuzaWwXHDli+4"
-        crossorigin="anonymous"></script>
-</body>
+{% endblock %}
+{% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}
 
-</html>
+
+

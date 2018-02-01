@@ -38,7 +38,8 @@ class Mark
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     private $medias;
 
