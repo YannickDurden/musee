@@ -1,9 +1,9 @@
 {% for key, mark in marks %}
 <tr>
     <th scope="row">{{ loop.index }}</th>
-    <td>{{ key }}</td>
-    <td><a href="#" id="{{ key }}" class="editMark"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-    <td><a href="#" id="{{ key }}" class="deleteMark"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+    <td name="{{ key }}">{{ key }}</td>
+    <td><a href="#" name="{{ key }}" class="editMark"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+    <td><a href="#" name="{{ key }}" class="deleteMark"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
 </tr>
 {% endfor %}
 {% if route is defined %}

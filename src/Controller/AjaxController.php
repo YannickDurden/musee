@@ -116,10 +116,10 @@ class AjaxController extends Controller
             $arrayMarks = $session->get('savedMarksNames');
             foreach ($arrayMarks as $key => $currentMark) {
                 if ($currentMark = $_POST['update']) {
-                    unset($arrayMarks[$key]);
-                    $session->set('savedMarksNames', $arrayMarks);
+                    array_splice($arrayMarks,$key,1);
                 }
             }
+            $session->set('savedMarksNames', $arrayMarks);
         }
 
         $savedMark->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($session->get('museum')->getId()));
