@@ -44,10 +44,23 @@ class QuestionController extends Controller
            $jsonFinal[$a] = $a;
         }
 
+        function randomAnswers($array = []) {
+            $newArray = [];
+            while (count($array)) {
+                // takes a rand array elements by its key
+                $element = array_rand($array);
+                // assign the array and its value to an another array
+                $newArray[$element] = $array[$element];
+                //delete the element from source array
+                unset($array[$element]);
+            }
+            return $newArray;
+        }
+
         //Formulaire
         $formBuilder = $this->createFormBuilder()
             ->add('answers',ChoiceType::class,[
-                'choices' => $jsonFinal,
+                'choices' => randomAnswers($jsonFinal),
                 'expanded' => true,
                 'multiple' => false,
             ])
