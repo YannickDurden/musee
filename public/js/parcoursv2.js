@@ -138,10 +138,11 @@ $(function() {
      */
     function removeMark(name)
     {
+        var decodedName = decodeURI(name);
         $.ajax({
             url: 'http://localhost:8000/ajax/deleteMarkFromSession',
             type: 'POST',
-            data: {name: name}
+            data: {name: decodedName}
         })
     }
 
@@ -151,10 +152,11 @@ $(function() {
     function editMark(name)
     {
         $("#previousName").val(name);
+        var decodedName = decodeURI(name);
         $.ajax({
             url: 'http://localhost:8000/ajax/getMarkInfo',
             type: 'POST',
-            data: {name: name}
+            data: {name: decodedName}
         })
             .done(function(response){
                 //$('#repere').html(response);
@@ -193,6 +195,7 @@ $(function() {
         var $markInfo = $('[name =add_mark_add]').serialize();
         var file = new FormData(document.getElementById('add_mark_form'));
         var previousName = $("#previousName").val();
+        var previousNameEncoded = encodeURI(previousName);
         $.ajax({
             url: 'http://localhost:8000/ajax/saveMarkToSession',
             type: 'POST',
@@ -204,8 +207,9 @@ $(function() {
 
         //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
         var newName = $('#add_mark_add_name').val();
+        var encodedNewName = encodeURI(newName);
         $('[name =add_mark_add]')[0].reset();
-        if(previousName == 'false')
+        if(previousNameEncoded == 'false')
         {
             $("#previousName").val('false');
             //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
@@ -213,18 +217,18 @@ $(function() {
             nbreRows++;
             var newRow = "<tr>\n" +
                 "        <th scope=\"row\">"+nbreRows+"</th>\n" +
-                "        <td name=\""+newName+"\">"+newName+"</td>\n" +
-                "        <td><a href=\"#\" name=\""+newName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-                "        <td><a href=\"#\" name=\""+newName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+                "        <td name=\""+encodedNewName+"\">"+newName+"</td>\n" +
+                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
                 "    </tr>";
             //Enfin on ajoute la nouvelle ligne au tableau
             $('#table-mark > tbody:last').append(newRow);
         }
         else
         {
-            $('#table-mark td[name='+previousName+']').html(newName).attr('name', newName);
-            $('#table-mark a[name='+previousName+']').each(function(){
-                $(this).attr('name', newName);
+            $('#table-mark td[name='+previousNameEncoded+']').html(newName).attr('name', encodedNewName);
+            $('#table-mark a[name='+previousNameEncoded+']').each(function(){
+                $(this).attr('name', encodedNewName);
             });
 
         }
