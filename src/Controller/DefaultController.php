@@ -86,7 +86,7 @@ class DefaultController extends Controller
         {
             $id = $form->getData();
             $session->set('selectedRoute',$id['route']->getMarks());
-            //$session->set('nameRoute', $id['route']->getName());
+            $session->set('nameRoute', $id['route']->getName());
             $session->set('markCount',0);
 
             $visitedMarkArray = [];
@@ -110,6 +110,9 @@ class DefaultController extends Controller
     {
         $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
         $idMark = $session->get('selectedRoute');
+        $startRouteTime = new \DateTime('now');
+        $session->set('startTime', $startRouteTime);
+
         return $this->render('Front-Office/begin-route.html.twig',[
             'idMark' => $idMark,
             'map'=> $map,

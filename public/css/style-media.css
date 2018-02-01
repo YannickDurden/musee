@@ -1,0 +1,26 @@
+#col-media {
+    top: 2vh;
+    left: 17vw;
+}
+
+.btn {
+    background-color: rgb(1, 32, 86);
+    color: #f8f9fa;
+}
+
+.btn-museum {
+    margin-top: 1vh;
+}
+
+.btn-img {
+    margin-top: 2vh;
+}
+
+.col-select-img {
+    top: 2vh;
+}
+
+.media-ajax {
+    width: 100px;
+    height: 100px;
+}
