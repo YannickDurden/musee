@@ -60,39 +60,47 @@ class QuestionController extends Controller
         if($formBuilder->isSubmitted() && $formBuilder->isValid())
         {
             $userAnswer = $formBuilder->getData();
-            /*$answer = new Answer();
-            $answer->setValue($userAnswer['answers']);
-            $answer->setQuestion($question[0]);*/
-
             $answeredQuestions = $session->get('answeredQuestions');
             $answeredQuestions++;
             $session->set('answeredQuestions',$answeredQuestions);
 
+            /*
             if($json['goodAnswer'] == $userAnswer['answers'])
             {
-                //$answer->setCorrect(true);
                 $session->set('lastQuestion', true);
                 $currentReponsePositive = $session->get('correctAnswers');
                 $currentReponsePositive++ ;
                 $session->set('correctAnswers',$currentReponsePositive);
 
             } else {
-                //$answer->setCorrect(false);
                 $session->set('lastQuestion', false);
             }
+            */
 
-            /*$em = $this->getDoctrine()->getManager();
-            $em->persist($answer);
-            $em->flush();*/
 
-            if(!(array_search($id,$session->get('visitedMarkArray'))))
+            if((!(in_array($id,$session->get('visitedMarkArray')))) && ($json['goodAnswer'] == $userAnswer['answers']))
             {
                 $visitedMarkArray = $session->get('visitedMarkArray');
                 array_push($visitedMarkArray,$id);
+
                 $session->set('visitedMarkArray',$visitedMarkArray);
+
                 $markCount = $session->get('markCount');
                 $markCount++;
                 $session->set('markCount',$markCount);
+
+                $session->set('lastQuestion', true);
+                $currentReponsePositive = $session->get('correctAnswers');
+                $currentReponsePositive++ ;
+                $session->set('correctAnswers',$currentReponsePositive);
+
+            } else {
+                $session->set('lastQuestion', false);
+
+                $this->addFlash(
+                    'erreur',
+                    'Vous avez déjà répondu à ce quiz.'
+                );
             }
 
             if(($session->get('markCount')) == ($session->get("totalMark"))){
@@ -146,7 +154,8 @@ class QuestionController extends Controller
             'totalMark' => $session->get('totalMark'),
             'answeredQuestions' => $session->get('answeredQuestions'),
             'correctAnswers' => $session->get('correctAnswers'),
-            'nameRoute' => $session->get('nameRoute')
+            'nameRoute' => $session->get('nameRoute'),
+            'currentMark' => $session->get('currentMark'),
         ]);
     }
 }

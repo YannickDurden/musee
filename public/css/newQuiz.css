@@ -216,6 +216,9 @@ h1{
         display:none;
     }
 
+    form{
+        margin-bottom: 50px;
+    }
     #quiz #submit{
         margin-top: 0;
     }

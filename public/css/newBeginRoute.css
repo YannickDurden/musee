@@ -83,21 +83,20 @@ body{
 .text, .score, .progression {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     padding: 15px;
+}
 
+.score h2{
+    font-family: 'Playfair Display', serif;
 }
 
 .progression h2 {
+    font-family: 'Playfair Display', serif;
     margin-bottom: 1rem;
 }
 
 .progress {
     background-color: lightgray;
-}
-
-.museum-wrapper{
-    background-color: rgba(255,255,255,0.8);
 }
 
 .museum-stats {
@@ -109,7 +108,11 @@ body{
 .museum-wrapper {
     display: flex;
     flex-direction: column;
-    margin-top: 20%;
+    background-color: rgba(255,255,255,0.8);
+}
+
+.museum-wrapper p{
+    font-family: 'Raleway', sans-serif;
 }
 
 .progress {
@@ -131,8 +134,11 @@ body{
         margin-top: 0;
     }
 
-    .text,
-    .score{
+    .score p{
+        font-size: 20px;
+    }
+
+    .text p{
         font-size: 25px;
     }
 }

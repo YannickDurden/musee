@@ -109,11 +109,17 @@ class DefaultController extends Controller
     public function beginRoute(SessionInterface $session)
     {
         $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+
+        $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
         $idMark = $session->get('selectedRoute');
+
         return $this->render('Front-Office/newBeginRoute.html.twig',[
             'idMark' => $idMark,
             'map'=> $map,
-            'nameRoute' => $session->get("nameRoute")
+            'progression' => $progression,
+            'nameRoute' => $session->get("nameRoute"),
+            'correctAnswers' => $session->get('correctAnswers'),
+            'totalMark' => $session->get('totalMark'),
         ]);
     }
 

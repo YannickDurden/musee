@@ -79,20 +79,50 @@ body{
     font-size: 50px;
 }
 
+/* Message flash */
+
+#message-flash{
+    margin-top: 30px ;
+    font-size: 30px;
+}
+
+/****/
+
 .score, .progression {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     padding: 15px;
 
+}
+.score h2{
+    font-family: 'Playfair Display', serif;
 }
 
 .progression h2 {
     margin-bottom: 1rem;
+    font-family: 'Playfair Display', serif;
 }
 
 .progress {
     background-color: lightgray;
+}
+.museum-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.museum-wrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.museum-wrapper p{
+    font-family: 'Raleway', sans-serif;
+}
+
+.progress {
+    width: 50vw;
 }
 
 @media screen and (max-width: 760px) {
@@ -105,7 +135,7 @@ body{
     .museum-wrapper {
         display: flex;
         flex-direction: column;
-        margin-top: 20%;
+        /*margin-top: 20%;*/
     }
 
     .progress {
@@ -121,14 +151,18 @@ body{
         height: 50%;
     }
 
-    .section-route {
-        margin-top: 15%
-    }
     .col-md-6 {
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-self: center;
         padding: 15px;
+    }
+
+    .score p{
+        font-size: 20px;
+    }
+    .text p{
+        font-size: 25px;
     }
 }

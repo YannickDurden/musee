@@ -30,6 +30,31 @@
         <div class="section-route">
             <!-- Affichage de la carte et des points de reperes -->
             <div class="row">
+                <div class="museum-wrapper col-12 text-center">
+                    <div class="museum-stats">
+                        <div class="score text-center">
+                            <h2 class="h4">Score actuel</h2>
+                            <p>{{ correctAnswers }} / {{ totalMark }}</p>
+                        </div>
+
+                        <div class="progression text-center">
+                            <h2 class="h4">Progression</h2>
+                            <div class="progress">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ progression }}%">
+                                </div>
+                            </div> <!-- progress -->
+                        </div> <!-- progression -->
+                    </div>  <!--  museum stats -->
+
+                    <div class="text">
+                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
+                           visite
+                        </p>
+                    </div>
+                </div> <!-- wrapper col -->
+
                 <div id="museum-map" class="col-12">
                     <img  id="map"
                           class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
@@ -45,28 +70,6 @@
                 </div>
                 <!-- Fin Affichage de la carte et des points de reperes -->
 
-                <div class="museum-wrapper col-12 text-center">
-                    <div class="museum-stats">
-                        <div class="score text-center">
-                            <h2 class="h4">Score</h2>
-                            <p>0/100</p>
-                        </div>
-
-                        <div class="progression text-center">
-                            <h2 class="h4">Progression</h2>
-                            <div class="progress">
-                                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
-                                </div>
-                            </div> <!-- progress -->
-                        </div> <!-- progression -->
-                    </div>  <!--  museum stats -->
-
-                    <div class="text">
-                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
-                           visite
-                        </p>
-                    </div>
-                </div> <!-- wrapper col -->
             </div> <!-- row  -->
         </div>  <!-- container -->
     </main>

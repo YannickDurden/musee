@@ -23,7 +23,7 @@
                             <a href="{{ path("begin_route")}}">{{ nameRoute }}</a>
                         </li>
                         <li class="hide-li breadcrumb-item">
-                            <a href="#">bla</a>
+                            <a href="#">{{ currentMark }}</a>
                         </li>
                         <li class="hide-li breadcrumb-item">
                             <a href="#">Description</a>
@@ -37,24 +37,22 @@
 
         <div class="section-route container-fluid">
             <div class="row">
-                <div id="museum-map" class="col-12 col-md-6">
-                    <img  id="map"
-                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
-                          alt="carte image">
-                    {% for id in idMark %}
-                        <a class="repere-map" id="repere-{{ id.id }}"
-                           data-coordx ="{{ id.coordinateX }}"
-                           data-coordy ="{{ id.coordinateY }}"
-                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
-                    {% endfor %}
-                </div>
+                <div class="museum-wrapper col-12 text-center">
 
-                <div class="museum-wrapper col col-md-6 text-center">
+                    <!-- Message flash -->
+                    {% for message in app.flashes('erreur') %}
+                        <div id="message-flash" class="flash-notice alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <!-- Message flash -->
+
                     <div class="museum-stats">
                         <div class="score text-center">
                             <h2 class="h4">Score</h2>
                             <p>{{ message }}</p>
-                            <p>Votre score actuel sur le parcours est de : {{ correctAnswers }} sur {{ totalMark }}</p>
+                            <p>Votre score actuel sur le parcours est de : <br> {{
+                                correctAnswers }} sur {{ totalMark }}</p>
                         </div>
 
                         <div class="progression text-center">
@@ -73,6 +71,19 @@
                            visite</p>
                     </div>
                 </div><!-- museum-wrapper-->
+
+                <div id="museum-map" class="col-12">
+                    <img  id="map"
+                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                          alt="carte image">
+                    {% for id in idMark %}
+                        <a class="repere-map" id="repere-{{ id.id }}"
+                           data-coordx ="{{ id.coordinateX }}"
+                           data-coordy ="{{ id.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </main>

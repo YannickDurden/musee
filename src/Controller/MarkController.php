@@ -32,6 +32,8 @@ class MarkController extends Controller
         $currentMark = $repository->find($id);
         $descriptions = $currentMark->getDescriptions();
 
+        $session->set('currentMark', $currentMark->getName());
+
         foreach( $descriptions as $description)
         {
             if($description->getCategory() == 'adulte')
