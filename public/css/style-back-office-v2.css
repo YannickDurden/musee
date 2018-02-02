@@ -82,7 +82,7 @@ html, body, #content {
     height: 100%;
     width: 100%;
 }
-<<<<<<< HEAD
+
 .pointeur
 {
     position: absolute;
@@ -98,8 +98,6 @@ html, body, #content {
 
 }
 
-=======
->>>>>>> dev
 
 #repereMap {
     position: absolute;
@@ -155,14 +153,6 @@ html, body, #content {
     margin-bottom: 30px;
 }
 
-<<<<<<< HEAD
-#repere {
-    padding: 0;
-}
-#pills-tab
-{
-
-=======
 /*
  * Formulaire d'ajout des repères
  */
