@@ -2,12 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\Media;
 use App\Entity\Score;
 use App\Entity\User;
 use App\Form\AddMapType;
 use App\Form\AddMediaType;
 use App\Form\MuseumType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +19,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 class FrontController extends Controller
 {
     /**
-     * @Route("/mymuseum/end-results", name="end_results")
+     * @route("/mymuseum/end-results", name="end_results")
      */
 
     public function results(SessionInterface $session)
@@ -51,7 +53,7 @@ class FrontController extends Controller
     }
 
     /**
-     * @Route("/back-office/museum/edit", name="museum_edit")
+     * @route("/back-office/museum/edit", name="museum_edit")
      */
 
     public function museumEdit(Request $request, SessionInterface $session)
@@ -109,11 +111,10 @@ class FrontController extends Controller
     }
 
     /**
-     * @Route("/back-office/media", name="media_edit")
+     * @route("/back-office/media", name="media_edit")
      */
     public function media(Request $request, SessionInterface $session)
     {
-        //$museum = $session->get('museum');
         $form = $this->createForm(AddMediaType::class);
         $form->handleRequest($request);
 
@@ -140,10 +141,14 @@ class FrontController extends Controller
             $em->persist($media);
             $em->flush();
 
+            $currentMedia = $this->getDoctrine()->getRepository(\App\Entity\Media::class)->findBy([], ['id' => 'DESC'], 1);
+
+            return $this->render('Back-Office/BackOffice-v2/media.html.twig', [
+                'formMedia' => $form->createView(),
+                'currentMedia' => $currentMedia[0],
+            ]);
             //addFlash ne fonctionne pas: faire afficher un message sur la page existante "modif enregistrées"
             //$this->addFlash('notice', 'Vos modifications ont bien été enregistrées.');
-
-            return new Response('okkk');
         }
 
 
@@ -151,27 +156,6 @@ class FrontController extends Controller
         return $this->render('Back-Office/BackOffice-v2/media.html.twig', [
             'formMedia' => $form->createView(),
         ]);
-    }
-
-    /**
-     * @Route("/mymuseum/ajax-media", name="ajax_media", methods={"GET", "HEAD"})
-     */
-    public function ajaxDescription($action, $param)
-    {
-        /**
-         * retourne l'image chargée
-         */
-        /*if($action == 'getdescription' && $param) {
-
-            $getInfo = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
-            $info = $getInfo->find(intval($param));
-            $description = $info->getDescription();
-            $duration = $info->getDuration();
-        }
-        return $this->render('Front-Office/ajax.html.twig', [
-            'description' => $description,
-            'duration' => $duration,
-        ]);*/
     }
 
 }
