@@ -22,33 +22,21 @@ var markerWidth =47,
  * @param mapId [string] a valid DOM element ID
  */
 
-function mousehover(mapId)
+function mousehover(MarkID)
 {
-    var inside =$("<div><div>",
+    var info =$("<div><div>",
         {
-            "class":"inside"
+            "class":"info"
         }
-        ).css(
-
-    );
-    $("#map").on
-    (
-        'click',function ()
-        {
-            $(this).toggleClass("acive");
-        },
-        'onmouseenter()',function()
-        {
-            $(this).toggleClass("inside");
-
-        },
-        'mouseleave', function()
-        {
-            $(this).removeClass("inside");
-        }
-    );
+        ).css
+        (
+            {
+                "width": 200,
+                "height": 200,
+            }
+        ).html("hello");
+    MarkID.append(info);
 }
-
 /**
  * delete_icon
  *  @param MapID [string] a valid DOM element ID
@@ -62,7 +50,6 @@ function delete_icon(MarkID,RouteID,ValMarkId)
     /**
      *  appel de la fonction pph pour suppirmer en seesion
      */
-
     $.ajax
     (
         {
@@ -77,14 +64,10 @@ function delete_icon(MarkID,RouteID,ValMarkId)
      .done(function(data)
      {
 
-                  console.log(data.name);
-
-
+                  console.log(data);
      });
 
 }
-
-
 /**
  * Display a map marker on a specific map
  * @param mapId [string] a valid DOM element ID
@@ -111,10 +94,20 @@ function Display_map_marker (mapId, x, y, number,RouteID,ValMarkId)
         {
             "id" :"New_pointer_" + number,
             "class" :"pointeur"
-    }).on('click',function ()
+    }).on(
+       /**
+        'mouseover',function()
         {
-              var MarkId=$(this);
+            var MarkID=$(this);
+            mousehover(MarkID);
+        },
+        **/
+
+        'click',function ()
+        {
+               var MarkId=$(this);
                delete_icon(MarkId,RouteID,ValMarkId);
+               mousehover(MarkId);
         }).css(
         {
             "width": markerWidth,
@@ -131,7 +124,6 @@ function Display_map_marker (mapId, x, y, number,RouteID,ValMarkId)
  *  Route on page load
  */
 function ajax_load_map_route(RouteID) {
-
     $.ajax({
         url: '/Mark/LoadIcon',
         type: 'POST',

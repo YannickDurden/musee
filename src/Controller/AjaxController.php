@@ -160,9 +160,7 @@ class AjaxController extends Controller
     /**
      *    CRUD AJAX MARKER
      *
-     *
      */
-
 
 
     /**
@@ -192,6 +190,35 @@ class AjaxController extends Controller
 
 
     /**
+     * @Route("/Mark/UpdateIcon", name="update_icon")
+     */
+    public function UpdateIcon(Request $request)
+    {
+        $RouteID = $request->request->get('RouteID');
+
+        $ValMarkId = $request->request->get('ValMarkId');
+        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
+
+        $dataMark=$routes->getMarks();
+        foreach ($dataMark as $data)
+        {
+            if($data->getID() == $ValMarkId)
+            {
+                $temp=array
+                (
+                    "id" => $data->getId(),
+                    "name" => $data->getName(),
+                    "CoordinateX" => $data->getCoordinateX(),
+                    "CoordinateY"=>$jsonData[]=$data->getCoordinateY()
+                );
+                return new JsonResponse($temp);
+            }
+        }
+        return new Response('Data Delete');
+    }
+
+
+    /**
      * @Route("/Mark/DeleteIcon", name="delete_icon")
      */
     public function DeleteIcon(Request $request)
@@ -211,7 +238,7 @@ class AjaxController extends Controller
                            "id" => $data->getId(),
                            "name" => $data->getName(),
                            "CoordinateX" => $data->getCoordinateX(),
-                           "CoordinateY"=>$jsonData[]=$data->getCoordinateY()
+                           "CoordinateY"=>$data->getCoordinateY()
                        );
                 return new JsonResponse($temp);
             }
