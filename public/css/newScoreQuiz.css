@@ -81,9 +81,17 @@ body{
 
 /* Message flash */
 
-#message-flash{
+#message-erreur,
+#message-redirection{
     margin-top: 30px ;
     font-size: 30px;
+}
+
+#message-redirection a{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    text-align: center;
 }
 
 /****/

@@ -1,3 +1,8 @@
 $(function () {
-    $('#message-flash').delay(5000).fadeOut(600);
+    $('#message-erreur').delay(4000).fadeOut(800);
+
+    $('#btn-no').click(function(){
+            $('#message-redirection').fadeOut(800);
+        }
+    );
 });

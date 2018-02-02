@@ -39,13 +39,32 @@
             <div class="row">
                 <div class="museum-wrapper col-12 text-center">
 
-                    <!-- Message flash -->
+                    <!-- Message flash Erreur -->
                     {% for message in app.flashes('erreur') %}
-                        <div id="message-flash" class="flash-notice alert alert-danger">
+                        <div id="message-erreur" class="flash-notice alert alert-danger">
                             {{ message }}
                         </div>
                     {% endfor %}
-                    <!-- Message flash -->
+                    <!-- Message flash Erreur-->
+
+                    <!-- Message flash  Redirection -->
+                    {% for message in app.flashes('redirection') %}
+                        <div id="message-redirection" flash-notice alert alert-info">
+                            {{ message }}
+                            <br>
+                            <button type="button"
+                                    class="btn btn-lg btn-success">
+                                <a href="{{ path('end_results')}}">Oui</a>
+                            </button>
+
+                            <button id="btn-no"
+                                    type="button"
+                                    class="btn btn-lg btn-danger">
+                                <a href="#">Non</a>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <!-- Message flash  Redirection-->
 
                     <div class="museum-stats">
                         <div class="score text-center">
@@ -80,7 +99,9 @@
                         <a class="repere-map" id="repere-{{ id.id }}"
                            data-coordx ="{{ id.coordinateX }}"
                            data-coordy ="{{ id.coordinateY }}"
-                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
+                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}">
+                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                        </a>
                     {% endfor %}
                 </div>
 

@@ -44,23 +44,20 @@ class QuestionController extends Controller
            $jsonFinal[$a] = $a;
         }
 
-        function randomAnswers($array = []) {
-            $newArray = [];
-            while (count($array)) {
+        $newArray = [];
+        while (count($jsonFinal)) {
                 // takes a rand array elements by its key
-                $element = array_rand($array);
+                $element = array_rand($jsonFinal);
                 // assign the array and its value to an another array
-                $newArray[$element] = $array[$element];
+                $newArray[$element] = $jsonFinal[$element];
                 //delete the element from source array
-                unset($array[$element]);
+                unset($jsonFinal[$element]);
             }
-            return $newArray;
-        }
 
         //Formulaire
         $formBuilder = $this->createFormBuilder()
             ->add('answers',ChoiceType::class,[
-                'choices' => randomAnswers($jsonFinal),
+                'choices' => $newArray,
                 'expanded' => true,
                 'multiple' => false,
             ])
@@ -73,11 +70,11 @@ class QuestionController extends Controller
         if($formBuilder->isSubmitted() && $formBuilder->isValid())
         {
             $userAnswer = $formBuilder->getData();
+            /*
             $answeredQuestions = $session->get('answeredQuestions');
             $answeredQuestions++;
             $session->set('answeredQuestions',$answeredQuestions);
 
-            /*
             if($json['goodAnswer'] == $userAnswer['answers'])
             {
                 $session->set('lastQuestion', true);
@@ -90,34 +87,60 @@ class QuestionController extends Controller
             }
             */
 
-
-            if((!(in_array($id,$session->get('visitedMarkArray')))) && ($json['goodAnswer'] == $userAnswer['answers']))
+            if(!(in_array($id,$session->get('visitedMarkArray'))))
             {
+                /**
+                 * Ajoute dans un tableau l'id du repère si celui-ci n'est pas dans le tableau
+                 */
                 $visitedMarkArray = $session->get('visitedMarkArray');
                 array_push($visitedMarkArray,$id);
-
                 $session->set('visitedMarkArray',$visitedMarkArray);
 
+                /**
+                 * Incrémente la variable de session qui recupère le nombre de quiz réalisé
+                 */
                 $markCount = $session->get('markCount');
                 $markCount++;
                 $session->set('markCount',$markCount);
 
-                $session->set('lastQuestion', true);
-                $currentReponsePositive = $session->get('correctAnswers');
-                $currentReponsePositive++ ;
-                $session->set('correctAnswers',$currentReponsePositive);
+                /**
+                 * Recupère le nombre de question auquelle on a répondu et incrémente si
+                 * c'est la première fois
+                 */
+                $answeredQuestions = $session->get('answeredQuestions');
+                $answeredQuestions++;
+                $session->set('answeredQuestions',$answeredQuestions);
+
+                    if($json['goodAnswer'] == $userAnswer['answers'])
+                    {
+                        /**
+                         * Incrémente la variable de session qui stock les bonnes réponses
+                         */
+                        $session->set('lastQuestion', true);
+                        $currentReponsePositive = $session->get('correctAnswers');
+                        $currentReponsePositive++ ;
+                        $session->set('correctAnswers',$currentReponsePositive);
+
+                    } else {
+                        $session->set('lastQuestion', false);
+                    }
 
             } else {
-                $session->set('lastQuestion', false);
-
                 $this->addFlash(
                     'erreur',
                     'Vous avez déjà répondu à ce quiz.'
                 );
             }
 
+            /**
+             * Si le nombre de quiz répondu est égale au nombre total de repères,
+             * redirige sur la page récapitulative du parcours.
+             */
             if(($session->get('markCount')) == ($session->get("totalMark"))){
-                return $this->redirectToRoute("end_results");
+                $this->addFlash(
+                    'redirection',
+                    'Vous avez répondu à tous les quiz, souhaitez vous être redirigez ?'
+                );
             }
 
             return $this->redirectToRoute('score_quiz');
