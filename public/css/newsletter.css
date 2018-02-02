@@ -39,6 +39,12 @@ body {
     width: 100vw;
 }
 
+#bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
 
 /* mise en forme formulaire */
 
