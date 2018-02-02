@@ -60,7 +60,7 @@ class AddMarkAddType extends AbstractType
         $builder->add('image', FileType::class, [
             'constraints' => [
                 new NotBlank(),
-                new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
+                new File(['mimeTypes' => ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
       

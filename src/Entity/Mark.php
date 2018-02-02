@@ -23,12 +23,12 @@ class Mark
     private $name;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=4)
      */
     private $coordinateX;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=4)
      */
     private $coordinateY;
 
@@ -38,7 +38,8 @@ class Mark
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
      */
     private $medias;
 

@@ -27,13 +27,6 @@ class Media
     private $file;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="medias")
-     */
-    private $mark;
-
-
-
-    /**
      * @return mixed
      */
     public function getId()
@@ -79,22 +72,6 @@ class Media
     public function setFile($file): void
     {
         $this->file = $file;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMark()
-    {
-        return $this->mark;
-    }
-
-    /**
-     * @param mixed $mark
-     */
-    public function setMark($mark): void
-    {
-        $this->mark = $mark;
     }
 
 

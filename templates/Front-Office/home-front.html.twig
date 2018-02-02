@@ -5,6 +5,7 @@
 {% block title %}MyMuseum{% endblock %}
 {% block stylesheets %}
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-home.css">
 {% endblock %}
 
@@ -17,8 +18,7 @@
                     <div class="row">
                         <div class="col-12 col-md-12 text-home">
                             <div id="start">
-                                <button type="button" class="btn btn-success btn-lg" id="btn-start">Let's
-                                    go</button>
+                                <button type="button" class="btn btn-lg" id="btn-start">Bienvenue</button>
                             </div>
                             <p class="text-center">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -31,6 +31,7 @@
                                     {{ form_start(formFirstname, {'attr': {'class': 'form-home'}}) }}
                                 <div class="form-group">
                                     {{ form_label(formFirstname.firstName, "Votre prénom") }}
+                                    {{ form_errors(formFirstname.firstName) }}
                                     {{ form_widget(formFirstname.firstName, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                     {{ form_widget(formFirstname.submit, {'attr': {'class': 'btn btn-lg'}}) }}

@@ -1,6 +1,9 @@
 {% extends 'front-base.html.twig' %}
 
-{% block stylesheets %}<link rel="stylesheet" href="{{app.request.basepath}}/css/quiz.css">{% endblock %}
+{% block stylesheets %}
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/quiz.css">
+{% endblock %}
 
 {% block body %}
     <div class="container-fluid">
@@ -8,13 +11,14 @@
             <div id="map" class="col-md-6">
                 <section class="map">
                     <img class="img-map img-fluid"
-                         src="{{ app.request.basepath }}/uploads/{{ map }}" alt="map-museum">    
+                         src="{{ app.request.basepath }}/uploads/{{ map }}" alt="map-museum">
                 </section>
             </div>
 
             <div id="form" class="col col-md-6">
                 <section class="picture-quiz">
-                    <img class="w-100 img-fluid" src="{{app.request.basepath}}/uploads/{{ currentMark.image }}"
+                    <img class="w-100 img-fluid" src="{{app.request
+                    .basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#{ currentMark.image }#}"
                          alt="image de l'oeuvre">
                     <h1 class="text-center">Quiz</h1>
                 </section>
@@ -36,7 +40,7 @@
 
                     <div class="form-group">
                         {{ form_widget(formQ.submit,
-                            {'attr': {'class': 'btn btn-primary'}}
+                            {'attr': {'class': 'btn'}}
                         ) }}
                     </div>
                     {{ form_end(formQ) }}

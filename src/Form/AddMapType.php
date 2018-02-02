@@ -29,7 +29,7 @@ class AddMapType extends AbstractType
                 new Image(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']])
             ]
         ]);
-        $builder->add('save', SubmitType::class, ['label' => 'Ajouter la map']);
+        $builder->add('save', SubmitType::class, ['label' => 'Ajouter l\'image']);
 
     }
 
