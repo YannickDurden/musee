@@ -95,12 +95,18 @@
                     <img  id="map"
                           class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
                           alt="carte image">
-                    {% for id in idMark %}
-                        <a class="repere-map" id="repere-{{ id.id }}"
-                           data-coordx ="{{ id.coordinateX }}"
-                           data-coordy ="{{ id.coordinateY }}"
-                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {% for mark in marksArray %}
+                        <a class="repere-map" id="repere-{{ mark.id }}"
+                           data-coordx ="{{ mark.coordinateX }}"
+                           data-coordy ="{{ mark.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ mark.id }}">
+
+                            <i class="fa fa-map-marker {% for idMark in
+                                visitedMarkArray %}
+                                {% if idMark == mark.id %}
+                                    markVisited
+                                {% endif %}
+                                {% endfor %}" aria-hidden="true"></i>
                         </a>
                     {% endfor %}
                 </div>

@@ -79,6 +79,10 @@ body{
     font-size: 50px;
 }
 
+.markVisited{
+    color: red;
+}
+
 /* Message flash */
 
 #message-erreur,

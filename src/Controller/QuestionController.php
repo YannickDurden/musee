@@ -169,7 +169,7 @@ class QuestionController extends Controller
     public function scoreQuiz(SessionInterface $session)
     {
         $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
-        $idMark = $session->get('selectedRoute');
+        $marksArray = $session->get('selectedRoute');
 
         //Affichage du score
         if($session->get('lastQuestion') == true )
@@ -184,9 +184,10 @@ class QuestionController extends Controller
 
         return $this->render("/Front-Office/newScoreQuiz.html.twig",[
             'map' => $map,
-            'idMark'=> $idMark,
+            'marksArray'=> $marksArray,
             'message' => $message,
             'progression' => $progression,
+            'visitedMarkArray' => $session->get('visitedMarkArray'),
             'totalMark' => $session->get('totalMark'),
             'answeredQuestions' => $session->get('answeredQuestions'),
             'correctAnswers' => $session->get('correctAnswers'),
