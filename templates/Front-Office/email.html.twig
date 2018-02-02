@@ -183,6 +183,11 @@
             display: block !important;
         }
 
+        #nameRoute{
+            font-size: 18px;
+            font-weight: bold;
+        }
+
         /* Force Hotmail to display emails at full width */
 
         .gmail {
@@ -539,11 +544,21 @@
                                                 <tr>
                                                     <td class="w580" width="580">
                                                         <p align="left" class="article-title">
-                                                            <singleline label="Title">Votre score</singleline>
+                                                            <singleline
+                                                                    label="Title">Bonjour {{ firstname }}</singleline>
                                                         </p>
+                                                        <p>Votre score sur le parcours est de : <br> {{
+                                                            correctAnswers }} sur {{ totalMark }}</p>
                                                         <div align="left" class="article-content">
                                                             <multiline label="Description">
-                                                                Bravo, vous êtes arrivé au bout du parcours ...
+                                                                Bravo, vous êtes arrivé
+                                                                au bout du parcours
+                                                                <span id="nameRoute">{{
+                                                                    nameRoute }}
+                                                                </span>
+                                                                , nous
+                                                                espèrons
+                                                                que la visite vous à plu
                                                             </multiline>
                                                         </div>
                                                     </td>
@@ -554,44 +569,6 @@
                                                 </tbody>
                                             </table>
                                         </layout>
-
-
-                                        <layout label="Text with full-width image">
-                                            <table class="w580" width="580" cellpadding="0" cellspacing="0" border="0">
-                                                <tbody>
-                                                <tr>
-                                                    <td class="w580" width="580">
-                                                        <p align="left" class="article-title">
-                                                            <singleline label="Title">Votre score</singleline>
-                                                        </p>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w580" width="580">
-                                                        <img editable="true" label="Image" class="w580" width="580"
-                                                             border="0">
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w580" width="580" height="15"></td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w580" width="580">
-                                                        <div align="left" class="article-content">
-                                                            <multiline label="Description">
-                                                                Votre moyenne au quiz est de ...
-                                                            </multiline>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="w580" width="580" height="10"></td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </layout>
-                                    </repeater>
-                                </td>
                                 <td class="w30" width="30"></td>
                             </tr>
                             </tbody>
