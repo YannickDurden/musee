@@ -1,5 +1,7 @@
 $(function() {
 
+    //Ajout de la classe active dans le menu de navigation pour la page en cours
+    $('#add-route').addClass( "active" );
     // Ajout des sous formulaires de question et description
     var $container = $('div#add_mark_add_descriptions');
     var $containerQuestion = $('div#add_mark_add_questions');
@@ -163,6 +165,7 @@ $(function() {
                 $('#add_mark_add_name').val(response.name);
                 $('#add_mark_add_coordinateX').val(response.coordinateX);
                 $('#add_mark_add_coordinateY').val(response.coordinateY);
+                $('#add_mark_add_medias').val(response.medias);
 
                 $('#add_mark_add_descriptions_0_label').val(response.description1.label);
                 $('#add_mark_add_descriptions_0_category').val(response.description1.category);
@@ -196,6 +199,13 @@ $(function() {
         var file = new FormData(document.getElementById('add_mark_form'));
         var previousName = $("#previousName").val();
         var previousNameEncoded = encodeURI(previousName);
+        $("#hideForm").css('z-index', 3000);
+
+        $("#hideForm").show();
+        $("#hideForm").delay(3000).fadeOut( 800 );
+
+
+
         $.ajax({
             url: 'http://localhost:8000/ajax/saveMarkToSession',
             type: 'POST',
@@ -203,35 +213,52 @@ $(function() {
             //cache: false,
             //dataType: false,
             data: {markInfo : $markInfo, update: previousName}
-        });
+        }).done(function (){
+            $("#validationMessage").css('z-index', 3001);
+            $("#validationMessage").show();
+            $("#validationMessage").delay(3000).fadeOut( 800 );
+            setTimeout(function(){
+                $("#hideForm").css('z-index', -1);
+                $("#validationMessage").css('z-index', -1);
+            }, 3800);
+            //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
+            var newName = $('#add_mark_add_name').val();
+            var encodedNewName = encodeURI(newName);
+            $('[name =add_mark_add]')[0].reset();
+            if(previousNameEncoded == 'false')
+            {
+                $("#previousName").val('false');
+                //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
+                var nbreRows = $('#table-mark tbody tr').length;
+                nbreRows++;
+                var newRow = "<tr>\n" +
+                    "        <th scope=\"row\">"+nbreRows+"</th>\n" +
+                    "        <td name=\""+encodedNewName+"\">"+newName+"</td>\n" +
+                    "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+                    "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+                    "    </tr>";
+                //Enfin on ajoute la nouvelle ligne au tableau
+                $('#table-mark > tbody:last').append(newRow);
+            }
+            else
+            {
+                $('#table-mark td[name='+previousNameEncoded+']').html(newName).attr('name', encodedNewName);
+                $('#table-mark a[name='+previousNameEncoded+']').each(function(){
+                    $(this).attr('name', encodedNewName);
+                });
 
-        //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
-        var newName = $('#add_mark_add_name').val();
-        var encodedNewName = encodeURI(newName);
-        $('[name =add_mark_add]')[0].reset();
-        if(previousNameEncoded == 'false')
-        {
-            $("#previousName").val('false');
-            //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
-            var nbreRows = $('#table-mark tbody tr').length;
-            nbreRows++;
-            var newRow = "<tr>\n" +
-                "        <th scope=\"row\">"+nbreRows+"</th>\n" +
-                "        <td name=\""+encodedNewName+"\">"+newName+"</td>\n" +
-                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
-                "    </tr>";
-            //Enfin on ajoute la nouvelle ligne au tableau
-            $('#table-mark > tbody:last').append(newRow);
-        }
-        else
-        {
-            $('#table-mark td[name='+previousNameEncoded+']').html(newName).attr('name', encodedNewName);
-            $('#table-mark a[name='+previousNameEncoded+']').each(function(){
-                $(this).attr('name', encodedNewName);
-            });
+            }
+        }).fail(function() {
+            $("#errorMessage").css('z-index', 3001);
+            $("#errorMessage").show();
+            $("#errorMessage").delay(3000).fadeOut( 800 );
+            setTimeout(function(){
+                $("#hideForm").css('z-index', -1);
+                $("#errorMessage").css('z-index', -1);
+            }, 3800);
+        })
 
-        }
+
 
     }
 
