@@ -75,12 +75,31 @@ html, body, #content {
 
 #map {
     position: relative;
+
 }
 
 #map img {
     height: 100%;
     width: 100%;
 }
+<<<<<<< HEAD
+.pointeur
+{
+    position: absolute;
+    background-image: url("../uploads/p2-m1.png");
+    background-repeat: no-repeat;
+}
+#delete_icon_map{
+
+    background-image: url("../uploads/delete-m1.png");
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+
+}
+
+=======
+>>>>>>> dev
 
 #repereMap {
     position: absolute;
@@ -136,11 +155,20 @@ html, body, #content {
     margin-bottom: 30px;
 }
 
+<<<<<<< HEAD
+#repere {
+    padding: 0;
+}
+#pills-tab
+{
+
+=======
 /*
  * Formulaire d'ajout des repères
  */
 
 #pills-tab {
+>>>>>>> dev
     background-color: #e9ecef;
     display: flex;
     justify-content: space-between;

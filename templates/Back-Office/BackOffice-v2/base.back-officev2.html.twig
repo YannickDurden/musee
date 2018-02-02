@@ -4,6 +4,7 @@
 {% endblock %}
 {% block body %}
             <!-- Fin du menu de navigation latéral -->
+
             <div class="col col-10" id="col-content">
                 <!-- Breadcrumb pour le repère visuel de la page courante -->
                 <ol class="breadcrumb">
@@ -55,12 +56,25 @@
                 </div>
                 <!-- Fin du menu depliable d'info parcours -->
 
-                <div class="row" id="map-mark">
-                    <div class="col col-6">
+                     <div class="row" id="map-mark">
+
+                        <div class="col col-6" id="map-contain">
                         <!-- Affichage de la map du parcours -->
+<<<<<<< HEAD
+
+                        {% for m in map %}
+
+                             <div class="col" id="map" style=" width:800px; height:531px; background-image: url('{{app.request.basepath}}/uploads/{{m.map}}')" >
+                             </div>
+                        
+
+                        {% endfor %}
+
+=======
                         <div class="col" id="map">
                         <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="image en dur">
                         </div>
+>>>>>>> dev
                         <!-- Fin d'affichage de la map du parcours -->
 
                         <!-- Divs de l'animation de chargement pendant les requètes AJAX -->
@@ -86,8 +100,14 @@
                             </thead>
                             <tbody>
 
+<<<<<<< HEAD
+                        <div class="col" id="liste-reperes">
+
+                        </div>
+=======
                             </tbody>
                         </table>
+>>>>>>> dev
                         <div class="col" id="selectedMark">
                         </div>
                     </div>

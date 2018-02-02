@@ -38,7 +38,11 @@
             $builder->add('map', FileType::class, [
                 'constraints' => [
                     new NotBlank(['message' => 'route.map.not_blank']),
-                    new Image(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']])
+                    new Image(
+                        ['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']
+
+
+                        ])
                 ]
             ]);
             $builder->add('duration', TimeType::class, [
