@@ -118,6 +118,7 @@ class RouteController extends Controller
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
         $allMarks = [];
+        $session->set('savedMarksNames', []);
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
@@ -130,7 +131,8 @@ class RouteController extends Controller
             }
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
-            'choices' => $arrayRoutes
+            'choices' => $arrayRoutes,
+            'placeholder' => 'Choisir le parcours à modifier'
         ]);
 
         $form2 = $formBuilder->getForm();
@@ -146,22 +148,7 @@ class RouteController extends Controller
             'map' => $map
         ]);
     }
-    /**
-     * @Route("/ajax/getMarks", name="getMarks")
-     */
-    public function getMarks(Request $request, SessionInterface $session,$currentRoute)
-    {
-        $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);$allMarks = $currentRoute->getMarks();
-        $arrayMarks = [];
-        foreach ($allMarks as $mark) {
 
-            $arrayMarks[$mark->getName()] = $mark->getId();
-        }
-        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
-            'marks' => $arrayMarks
-        ]);
-    }
     /**
      * @Route("route/list", name="list_routes")
      */

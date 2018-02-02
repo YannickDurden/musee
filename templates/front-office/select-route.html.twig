@@ -3,16 +3,18 @@
     {% block title %}Select route MyMuseum{% endblock %}
     {% block stylesheets %}
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
         <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-select.css">
     {% endblock %}
 
 {% block body %}
-    <section class="picture-museum">
+    <section id="jumbotron" class="picture-museum">
         <div id="bg-jumbotron">
-            <h1>Je sélectionne mon parcours</h1>
+            <h1>My Museum</h1>
+            <h2>Bienvenue {{ userName }}, sélectionnez votre parcours</h2>
             <div class="section-route container-fluid">
                 <div class="row">
-                    <div id="route-info" class="col-12">
+                    <div id="col-route" class="col-12">
 
                         {#{{ form(formSelect, {'attr': {'novalidate': 'novalidate'}}) }}#}
                         {{ form_start(formSelectRoute, {'attr': {'class': 'form-route'}}) }}
@@ -27,7 +29,7 @@
                             </p>
                         </div>
                         {{ form_widget(formSelectRoute.submit,
-                            {'attr':{'class':'btn btn-primary btn-lg route-btn btn-start
+                            {'attr':{'class':'btn btn-lg btn-start
                             btn-block'}}
                         ) }}
                         {{ form_end(formSelectRoute) }}

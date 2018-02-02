@@ -13,10 +13,24 @@ body {
 
 /* Debut parcours */
 
+/* MAP ET REPERES */
+#museum-map{
+    position: relative;
+}
+
+.repere-map{
+    position: absolute;
+    transform: translate(-100%,-100%);
+    text-decoration: none;
+    color : dodgerblue;
+}
+
+.fa{
+    font-size: 50px;
+}
+
 /* CONTAINER */
-
-
-.return-btn, .score, .progression {
+.text, .score, .progression {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,45 +46,56 @@ body {
     background-color: lightgray;
 }
 
-.return-btn a{
-    text-decoration: none;
-    color: white;
+.museum-wrapper{
+    background-color: rgba(255,255,255,0.8);
 }
 
-@media screen and (max-width: 760px) {
-    .museum-stats {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
+.museum-stats {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
 
-    .museum-wrapper {
-        display: flex;
-        flex-direction: column;
-        margin-top: 20%;
-    }
+.museum-wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20%;
+}
 
-    .progress {
-        width: 50vw;
-    } 
+.progress {
+    width: 50vw;
 }
 
 /* mise en forme à la vue tablette en paysage */
 
-@media screen and (min-width: 760px) { 
-    #museum-img {
-        width: 100%;
-        height: 50%; 
-    }
-
-    .section-route {
-        margin-top: 15%
-    }
-    .col-md-6 {
+@media screen and (min-width: 760px) {
+    .col-12{
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-self: center;
         padding: 15px;
+    }
+
+    .museum-wrapper{
+        margin-top: 0;
+    }
+
+    .text,
+    .score{
+        font-size: 25px;
+    }
+}
+
+@media screen and (min-width: 992px){
+    #museum-map{
+        height: 75vh;
+        width: 75vw;
+        margin: 0 auto;
+    }
+
+    #map{
+        height: 100%;
+        width: 100%;
     }
 }

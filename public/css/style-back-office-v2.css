@@ -1,22 +1,78 @@
 html, body, #content {
     min-height: 100vh;
 }
+
+.container-fluid {
+    min-height: 100vh;
+}
+
+#col-content {
+    padding: 0;
+    left: 17vw;
+}
+
+/*
+ *Breadcrumb
+ */
+.breadcrumb {
+    width: 100%;
+}
+
+.breadcrumb li:after {
+    content: "/";
+    padding-right: 3px;
+    padding-left: 3px;
+}
+
+.breadcrumb a:after {
+    padding-right: 3px;
+}
+
+.breadcrumb li:last-child:after {
+    content: '';
+}
+
+.breadcrumb li:last-child {
+    color: rgba(1, 74, 238, 0.68);
+}
+
+.breadcrumb li a {
+
+    color: rgb(1, 32, 86);
+}
+
+/*
+ * Navigation
+ */
+
 #col-nav {
     position: relative;
 
 }
+
 #col-nav {
     position: fixed;
     top: 0;
     left: 0;
     bottom: 0;
 }
+
+#nav .nav-link.active {
+    text-decoration: underline;
+    text-underline-position: under;
+    text-underline-color: rgb(1, 74, 238);
+    color: white;
+    border-radius: 5px;
+}
+
+/*
+ * Map
+ */
+
 #map-mark {
     margin-right: 0;
 }
-.container-fluid {
-    min-height: 100vh;
-}
+
 #map {
     position: relative;
 
@@ -26,6 +82,7 @@ html, body, #content {
     height: 100%;
     width: 100%;
 }
+<<<<<<< HEAD
 .pointeur
 {
     position: absolute;
@@ -41,11 +98,17 @@ html, body, #content {
 
 }
 
+=======
+>>>>>>> dev
 
 #repereMap {
     position: absolute;
     transform: translate(-50%, -50%);
 }
+
+/*
+ * Formulaire info générales du parcours
+ */
 
 #info-parcours {
     display: flex;
@@ -56,14 +119,26 @@ html, body, #content {
     width: 90%;
 }
 
+#info-parcours #timepicker {
+    margin-left: 10px;
+    width: 100px;
+}
+
+#info-parcours #description {
+    margin-bottom: 10px;
+}
+
 #submit-info-parcours {
-    width: 30%;
+    width: 35%;
     margin-top: 20px;
     align-self: flex-end;
     justify-self: end;
 }
 
-#liste-reperes {
+/*
+ * Tableau des repères
+ */
+#table-mark {
     margin-top: 30px;
     text-align: center;
 }
@@ -71,61 +146,119 @@ html, body, #content {
 #liste-reperes ul li {
     list-style: none;
 }
+
 #liste-reperes ul li span {
     margin-right: 50px;
 }
+
 #liste-reperes h3 {
     margin-bottom: 30px;
 }
 
+<<<<<<< HEAD
 #repere {
     padding: 0;
 }
 #pills-tab
 {
 
+=======
+/*
+ * Formulaire d'ajout des repères
+ */
+
+#pills-tab {
+>>>>>>> dev
     background-color: #e9ecef;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
+
 [name=add_mark_add] {
     margin: 20px;
 }
-#col-content {
+
+.nav-item {
+    overflow: hidden;
+}
+
+#repere {
     padding: 0;
 }
+
+#repere .nav-pills .nav-link.active {
+    text-decoration: underline;
+    text-underline-position: under;
+    color: rgb(1, 32, 86);
+    background-color: rgba(0, 105, 217, 0)
+
+}
+
+#repere .nav-pills .nav-link.active a {
+    background-size: unset;
+}
+
+#repere .nav-pills .nav-link:hover {
+    background-color: rgb(1, 74, 238);
+    color: white;
+    transform: scale(1.2);
+}
+
+#repere a.nav-link {
+    color: gray;
+}
+
+/*
+ * Formulaire nom du repere + coordonnées
+ */
+#pills-general input {
+    width: 50%;
+    margin-bottom: 10px;
+}
+
+/*
+ * Formulaire ajout description
+ */
+#pills-descriptions label {
+    margin-right: 10px;
+}
+
+#pills-descriptions div {
+    margin-bottom: 10px;
+}
+
+/*
+ *Formulaire ajout question
+ */
+
+#add_mark_add_questions input {
+    margin-left: 20px;
+}
+
+#validationMessage, #errorMessage {
+    z-index: -1;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    box-shadow: 4px 4px 30px black;
+}
+
+#hideForm {
+    background-color: rgba(173, 173, 173, 0.25);
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
 #show-route {
     margin-left: 10px;
 }
-.breadcrumb {
-    width: 100%;
-}
-.breadcrumb li:after
-{
-    content: "/";
-    padding-right: 3px;
-    padding-left: 3px;
-}
-.breadcrumb a:after
-{
-    padding-right: 3px;
-}
-.breadcrumb li:last-child:after
-{
-    content: '';
-}
-#logout {
-    position: absolute;
-    bottom: 0;
-    left: 0%;
-    right:0;
-    transform: translate(0,50%);
-    margin-bottom: 15px;
-}
-#logout a {
-    font-size: 20px;
-    background-color: #0069D9;
-}
+
 #animation {
     transform: translate(40%, 10%);
     width: 100%;
@@ -133,6 +266,16 @@ html, body, #content {
     min-height: 100px;
 }
 
+.btn.focus, .btn:focus {
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(4, 69, 138, 0.25);
+}
+
+.btn:hover, .nav-link:hover {
+    background-color: rgb(1, 74, 238);
+    color: white;
+    border-radius: 5px;
+}
 
 /* Animation CSS
     Credits : http://www.alessioatzeni.com/blog/css3-loading-animation-loop

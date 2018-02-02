@@ -80,11 +80,13 @@ class DefaultController extends Controller
     {
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
+        $user = $session->get('firstname');
 
         if($form->isSubmitted() && $form->isValid())
         {
             $id = $form->getData();
             $session->set('selectedRoute',$id['route']->getMarks());
+            $session->set('nameRoute', $id['route']->getName());
             $session->set('markCount',0);
 
             $visitedMarkArray = [];
@@ -98,6 +100,7 @@ class DefaultController extends Controller
 
         return $this->render('Front-Office/select-route.html.twig', [
             'formSelectRoute' => $form->createView(),
+            'userName' => $user
         ]);
     }
     /**
@@ -105,16 +108,28 @@ class DefaultController extends Controller
      */
     public function beginRoute(SessionInterface $session)
     {
+        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+
+        $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
         $idMark = $session->get('selectedRoute');
-        return $this->render('Front-Office/begin-route.html.twig',[
+
+        $startRouteTime = new \DateTime('now');
+        $session->set('startTime',$startRouteTime);
+
+        return $this->render('Front-Office/newBeginRoute.html.twig',[
             'idMark' => $idMark,
+            'map'=> $map,
+            'progression' => $progression,
+            'nameRoute' => $session->get("nameRoute"),
+            'correctAnswers' => $session->get('correctAnswers'),
+            'totalMark' => $session->get('totalMark'),
         ]);
     }
 
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
-    public function newsletter(Request $request, \Swift_Mailer $mailer)
+    public function newsletter(SessionInterface $session, Request $request, \Swift_Mailer $mailer)
     {
         $newUser = $this->createForm(UserRegisterType::class);
 
@@ -135,7 +150,12 @@ class DefaultController extends Controller
                 ->setFrom('mymuseumwf3@gmail.com')
                 ->setTo($mail)
                 ->setBody(
-                    $this->renderView('Front-Office/email.html.twig'),
+                    $this->renderView('Front-Office/email.html.twig',[
+                        'firstname' => $session->get('firstname'),
+                        'nameRoute' => $session->get('nameRoute'),
+                        'correctAnswers' => $session->get('correctAnswers'),
+                        'totalMark' => $session->get('totalMark'),
+                    ]),
                     'text/html'
                 );
 
@@ -148,6 +168,10 @@ class DefaultController extends Controller
             'formRegister' => $newUser->createView(),
         ]);
     }
+
+    /**
+     * @Route("/mymuseum
+     */
 
     /**
      * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})

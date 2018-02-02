@@ -2,57 +2,59 @@
 
 {% block stylesheets %}
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,600" rel="stylesheet">
     <link rel="stylesheet" href="{{ app.request.basepath }}/css/newsletter.css">
 {% endblock %}
 
 {% block body %}
 
-<section class="picture-museum">
-    <div class="section-email container-fluid">
-        <div class="row">
-            <div class="col col-md-12">
-                    <!-- form class form-email -->
-                    {{ form_start(formRegister,{'attr':{'class': 'form-email'}}) }}
-                        <div class="form-group">
-                            {{ form_errors(formRegister.firstname) }}
-                            {{ form_widget(formRegister.firstname,
-                                {'attr': {'class':'form-control',
-                                    'placeholder':'Votre prénom'}}) }}
-                        </div>
+<section id="jumbotron" class="picture-museum">
+    <div id="bg-jumbotron">
+        <h1>My Museum</h1>
+        <div class="section-email container-fluid">
+            <div class="row">
+                <div id="col-email" class="col col-md-12">
+                        <!-- form class form-email -->
+                        {{ form_start(formRegister,{'attr':{'class': 'form-email'}}) }}
+                            <div class="form-group">
+                                {{ form_errors(formRegister.firstname) }}
+                                {{ form_widget(formRegister.firstname,
+                                    {'attr': {'class':'form-control',
+                                        'placeholder':'Votre prénom'}}) }}
+                            </div>
 
-                        <div class="form-group">
-                            {{ form_errors(formRegister.lastname) }}
-                            {{ form_widget(formRegister.lastname,
-                                {'attr': {'class':'form-control',
-                                    'placeholder':'Votre nom'}}) }}
-                        </div>
+                            <div class="form-group">
+                                {{ form_errors(formRegister.lastname) }}
+                                {{ form_widget(formRegister.lastname,
+                                    {'attr': {'class':'form-control',
+                                        'placeholder':'Votre nom'}}) }}
+                            </div>
 
-                        <div class="form-group">
-                            {{ form_errors(formRegister.email) }}
-                            {{ form_widget(formRegister.email,
-                                {'attr': {'class':'form-control',
-                                        'placeholder':'Votre adresse email'}}) }}
-                        </div>
+                            <div class="form-group">
+                                {{ form_errors(formRegister.email) }}
+                                {{ form_widget(formRegister.email,
+                                    {'attr': {'class':'form-control',
+                                            'placeholder':'Votre adresse email'}}) }}
+                            </div>
 
-                        <div class="form-check">
-                            {{ form_widget(formRegister.newsletter,
-                                {'attr': {'class':'form-check-input', 'id':'conditions'}}
-                            ) }}
-                            {{ form_label(formRegister.newsletter)}}
-                        </div>
+                            <div class="form-check">
+                                {{ form_widget(formRegister.newsletter,
+                                    {'attr': {'class':'form-check-input', 'id':'conditions'}}
+                                ) }}
+                                {{ form_label(formRegister.newsletter)}}
+                            </div>
 
-                            {{ form_widget(formRegister.submit,
-                                {'attr': {'class': 'btn btn-lg'}}
-                            ) }}
+                                {{ form_widget(formRegister.submit,
+                                    {'attr': {'class': 'btn btn-lg'}}
+                                ) }}
 
-                    {{ form_end(formRegister) }}
-                    <!-- /form -->
-
+                        {{ form_end(formRegister) }}
+                        <!-- /form -->
+                </div>
             </div>
         </div>
     </div>
-
 </section>
 
 {% endblock %}

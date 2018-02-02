@@ -1,0 +1,64 @@
+/* mise en forme base barre nav */
+body {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Alegreya', serif;
+}
+
+.h1, h1 {
+   font-size:  30px;
+}
+.h2, h2 {
+    font-size: 22px;
+}
+.h3, h3 {
+    font-size: 18px;
+}
+
+
+html, body, #content {
+    min-height: 100vh;
+
+}
+
+.btn {
+    background-color: rgb(1, 32, 86);
+    color: #f8f9fa;
+}
+
+#col-nav {
+    position: relative;
+}
+
+#col-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    background-color: rgb(1, 32, 86);
+}
+.container-fluid {
+    min-height: 100vh;
+}
+
+#logout {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right:0;
+    transform: translate(0,50%);
+    margin-bottom: 15px;
+}
+#logout a {
+    font-size: 20px;
+    text-align: center;
+    background-color: rgb(50, 76, 118);
+    color: #f8f9fa;
+    font-family: 'Roboto', sans-serif;
+}
+
+#logout a:hover {
+    color: gray;
+}

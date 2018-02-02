@@ -26,7 +26,7 @@ class AddDescriptionType extends AbstractType
             ]
         ]);
         $builder->add('category', ChoiceType::class, [
-            'label' => 'Categorie de la description :',
+            'label' => 'Categorie:',
             'choices' => [
                 'Choisir la categorie' => null,
                 'Adulte' => 'adulte',
