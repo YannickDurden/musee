@@ -112,7 +112,7 @@ class DefaultController extends Controller
 
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
         $idMark = $session->get('selectedRoute');
-
+      
         return $this->render('Front-Office/newBeginRoute.html.twig',[
             'idMark' => $idMark,
             'map'=> $map,

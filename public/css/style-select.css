@@ -30,6 +30,13 @@ body {
 }
 
 #bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
+
+#bg-jumbotron h2 {
     color: rgb(78, 255, 176);
     font-size: 30px;
     text-align: center;

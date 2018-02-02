@@ -39,13 +39,13 @@ html, body, #content {
 }
 
 #submit-info-parcours {
-    width: 30%;
+    width: 35%;
     margin-top: 20px;
     align-self: flex-end;
     justify-self: end;
 }
 
-#liste-reperes {
+#table-mark {
     margin-top: 30px;
     text-align: center;
 }

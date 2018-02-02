@@ -10,7 +10,7 @@
 {% block body %}
 <section id="jumbotron" class="picture-museum">
     <div id="bg-jumbotron">
-        <h1>Nom parcours</h1>
+        <h1>{{ userName }}, les résultats de votre visite: {{ nameRoute }}</h1>
         <div class="section-recap container-fluid">
             <div class="row">
                 <div id="results" class="col-12 col-md-12 text-center">
@@ -21,7 +21,7 @@
 
                         <div class="stats text-center">
                             <h2 class="h4">Durée de votre parcours</h2>
-                            <p id="durate">{{ duration | date('G') }} heure et {{ duration | date('i') }} minutes.</p>
+                            <p id="durate">{{ duration.h }} heure et {{ duration.i }} minutes.</p>
                         </div>
                     </div>
                     <div class="museum-best">
@@ -31,7 +31,7 @@
 
                         <div class="stats text-center">
                             <h2 class="h4">Votre score total</h2>
-                            <!--<p id="score">{#{ score }#}/10</p>-->
+                            <p id="score">{{ score }} / {{ totalMark }} </p>
                         </div>
                     </div>
 
