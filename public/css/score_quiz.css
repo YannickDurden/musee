@@ -22,9 +22,9 @@ body {
 
 .repere-map{
     position: absolute;
-    transform: translate(-50%,-50%);
+    transform: translate(-100%,-100%);
     text-decoration: none;
-    color : #7e7e7e;
+    color : dodgerblue;
 }
 
 .fa{

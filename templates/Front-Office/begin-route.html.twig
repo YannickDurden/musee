@@ -3,12 +3,15 @@
     <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-route.css">{%
     endblock %}
 {% block body %}
-<section class="picture-museum">
-    <div class="section-route container-fluid">
+<main class="container-fluid">
+    <div class="section-route">
+        <!-- Affichage de la carte et des points de reperes -->
         <div class="row">
-            <div id="museum-map" class="col-12 col-md-6">
+            <div id="museum-map" class="col-12">
                 <img  id="map"
-                      class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                      class="img-fluid" src="{{ app.request.basepath
+                }}/uploads/{{ map
+                }}"
                       alt="carte image">
                 {% for id in idMark %}
                 <a class="repere-map" id="repere-{{ id.id }}"
@@ -17,8 +20,9 @@
                    href="http://localhost:8000/mymuseum/artwork/{{ id.id }}"><i class="fa fa-map-marker" aria-hidden="true"></i></a>
                 {% endfor %}
             </div>
+            <!-- Fin Affichage de la carte et des points de reperes -->
 
-            <div class="museum-wrapper col col-md-6 text-center">
+            <div class="museum-wrapper col-12 text-center">
                 <div class="museum-stats">
                     <div class="score text-center">
                         <h2 class="h4">Score</h2>
@@ -32,7 +36,7 @@
                             </div>
                         </div> <!-- progress -->
                     </div> <!-- progression -->
-                </div> <!-- museum stats -->
+                   </div>  <!--  museum stats -->
 
                 <div class="text">
                     <p>Sélectionnez un point suivant sur la carte pour continuer votre
@@ -42,7 +46,7 @@
             </div> <!-- wrapper col -->
         </div> <!-- row  -->
     </div>  <!-- container -->
-</section>
+</main>
 
 {% endblock %}
 {% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}

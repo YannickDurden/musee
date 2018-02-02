@@ -44,10 +44,20 @@ class QuestionController extends Controller
            $jsonFinal[$a] = $a;
         }
 
+        $newArray = [];
+        while (count($jsonFinal)) {
+                // takes a rand array elements by its key
+                $element = array_rand($jsonFinal);
+                // assign the array and its value to an another array
+                $newArray[$element] = $jsonFinal[$element];
+                //delete the element from source array
+                unset($jsonFinal[$element]);
+            }
+
         //Formulaire
         $formBuilder = $this->createFormBuilder()
             ->add('answers',ChoiceType::class,[
-                'choices' => $jsonFinal,
+                'choices' => $newArray,
                 'expanded' => true,
                 'multiple' => false,
             ])
@@ -60,43 +70,77 @@ class QuestionController extends Controller
         if($formBuilder->isSubmitted() && $formBuilder->isValid())
         {
             $userAnswer = $formBuilder->getData();
-            /*$answer = new Answer();
-            $answer->setValue($userAnswer['answers']);
-            $answer->setQuestion($question[0]);*/
-
+            /*
             $answeredQuestions = $session->get('answeredQuestions');
             $answeredQuestions++;
             $session->set('answeredQuestions',$answeredQuestions);
 
             if($json['goodAnswer'] == $userAnswer['answers'])
             {
-                //$answer->setCorrect(true);
                 $session->set('lastQuestion', true);
                 $currentReponsePositive = $session->get('correctAnswers');
                 $currentReponsePositive++ ;
                 $session->set('correctAnswers',$currentReponsePositive);
 
             } else {
-                //$answer->setCorrect(false);
                 $session->set('lastQuestion', false);
             }
+            */
 
-            /*$em = $this->getDoctrine()->getManager();
-            $em->persist($answer);
-            $em->flush();*/
-
-            if(!(array_search($id,$session->get('visitedMarkArray'))))
+            if(!(in_array($id,$session->get('visitedMarkArray'))))
             {
+                /**
+                 * Ajoute dans un tableau l'id du repère si celui-ci n'est pas dans le tableau
+                 */
                 $visitedMarkArray = $session->get('visitedMarkArray');
                 array_push($visitedMarkArray,$id);
                 $session->set('visitedMarkArray',$visitedMarkArray);
+
+                /**
+                 * Incrémente la variable de session qui recupère le nombre de quiz réalisé
+                 */
                 $markCount = $session->get('markCount');
                 $markCount++;
                 $session->set('markCount',$markCount);
+
+                /**
+                 * Recupère le nombre de question auquelle on a répondu et incrémente si
+                 * c'est la première fois
+                 */
+                $answeredQuestions = $session->get('answeredQuestions');
+                $answeredQuestions++;
+                $session->set('answeredQuestions',$answeredQuestions);
+
+                    if($json['goodAnswer'] == $userAnswer['answers'])
+                    {
+                        /**
+                         * Incrémente la variable de session qui stock les bonnes réponses
+                         */
+                        $session->set('lastQuestion', true);
+                        $currentReponsePositive = $session->get('correctAnswers');
+                        $currentReponsePositive++ ;
+                        $session->set('correctAnswers',$currentReponsePositive);
+
+                    } else {
+                        $session->set('lastQuestion', false);
+                    }
+
+            } else {
+                $this->addFlash(
+                    'erreur',
+                    'Vous avez déjà répondu à ce quiz.'
+                );
             }
 
+            /**
+             * Si le nombre de quiz répondu est égale au nombre total de repères,
+             * redirige sur la page récapitulative du parcours.
+             */
             if(($session->get('markCount')) == ($session->get("totalMark"))){
-                return $this->redirectToRoute("end_results");
+                $this->addFlash(
+                    'redirection',
+                    'Vous avez répondu à tous les quiz, souhaitez vous être redirigez ?'
+                );
             }
 
             return $this->redirectToRoute('score_quiz');
@@ -107,12 +151,13 @@ class QuestionController extends Controller
         $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
         $map = $mapRespository->find(1);
 
-        return $this->render('Front-Office/quiz.html.twig',[
+        return $this->render('Front-Office/newQuiz.html.twig',[
             'map' => $map->getMap(),
             'question' => $question[0],
             'currentMark' => $currentMark,
             'formQ'=> $formBuilder->createView(),
             'id' => $id,
+            'nameRoute' => $session->get('nameRoute'),
         ]);
 
     }
@@ -124,7 +169,7 @@ class QuestionController extends Controller
     public function scoreQuiz(SessionInterface $session)
     {
         $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
-        $idMark = $session->get('selectedRoute');
+        $marksArray = $session->get('selectedRoute');
 
         //Affichage du score
         if($session->get('lastQuestion') == true )
@@ -137,14 +182,17 @@ class QuestionController extends Controller
 
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
 
-        return $this->render("/Front-Office/score_quiz.html.twig",[
+        return $this->render("/Front-Office/newScoreQuiz.html.twig",[
             'map' => $map,
-            'idMark'=> $idMark,
+            'marksArray'=> $marksArray,
             'message' => $message,
             'progression' => $progression,
+            'visitedMarkArray' => $session->get('visitedMarkArray'),
             'totalMark' => $session->get('totalMark'),
             'answeredQuestions' => $session->get('answeredQuestions'),
             'correctAnswers' => $session->get('correctAnswers'),
+            'nameRoute' => $session->get('nameRoute'),
+            'currentMark' => $session->get('currentMark'),
         ]);
     }
 }

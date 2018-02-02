@@ -5,15 +5,14 @@ $(function () {
         var height = $('#museum-map').height();
         var width = $('#museum-map').width();
 
-        //console.log(reperes.data('coordx'));
         $.each(reperes, function () {
 
             var coordX = $(this).data('coordx');
             var coordY = $(this).data('coordy');
-            var calcX = coordX * width;
-            var calcY = coordY * height;
+            var calcX = coordX * 100 + "%";
+            var calcY = coordY * 100 + "%";
 
-            console.log(calcX);
+            console.log("X : " + calcX + " - Y : " + calcY);
 
             $(this).css('left', calcX);
             $(this).css('top', calcY);

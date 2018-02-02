@@ -31,6 +31,7 @@
                                     {{ form_start(formFirstname, {'attr': {'class': 'form-home'}}) }}
                                 <div class="form-group">
                                     {{ form_label(formFirstname.firstName, "Votre prénom") }}
+                                    {{ form_errors(formFirstname.firstName) }}
                                     {{ form_widget(formFirstname.firstName, {'attr': {'class': 'form-control'}}) }}
                                 </div>
                                     {{ form_widget(formFirstname.submit, {'attr': {'class': 'btn btn-lg'}}) }}
