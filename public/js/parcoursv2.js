@@ -1,16 +1,18 @@
-$(function() {
+$(function () {
+
+    //Ajout de la classe active dans le menu de navigation pour la page en cours
+    $('#add-route').addClass("active");
 
     // Ajout des sous formulaires de question et description
     var $container = $('div#add_mark_add_descriptions');
     var $containerQuestion = $('div#add_mark_add_questions');
-    for(var i = 0; i<2; i++)
-    {
+    for (var i = 0; i < 2; i++) {
         var template = $container.attr('data-prototype')
-            .replace(/__name__label__/g, 'Description n°'+(i+1))
+            .replace(/__name__label__/g, 'Description n°' + (i + 1))
             .replace(/__name__/g, i)
         ;
         var template2 = $containerQuestion.attr('data-prototype')
-            .replace(/__name__label__/g, 'Question n°'+(i+1))
+            .replace(/__name__label__/g, 'Question n°' + (i + 1))
             .replace(/__name__/g, i)
         ;
         var $prototype = $(template);
@@ -22,7 +24,7 @@ $(function() {
     /**
      * Gestion des coordonnées des repères
      */
-    $('#map').click(function(e){
+    $('#map').click(function (e) {
 
         //Recupere les coordonnées du clique par rapport a la div #map
         var coordX = e.pageX - $(this).offset().left;
@@ -41,33 +43,32 @@ $(function() {
 
         //Affiche le repere sur la map
         var p = document.createElement("div");
-        p.setAttribute("id","repereMap");
+        p.setAttribute("id", "repereMap");
         p.style.width = 10 + "px";
         p.style.height = 10 + "px";
-        p.style.backgroundColor ="red";
+        p.style.backgroundColor = "red";
         //Sans oublier de convertir le % en valeur en pixel
-        p.style.left= (coordX*mapWidth) + 'px';
-        p.style.top= (coordY*mapHeight) + 'px';
+        p.style.left = (coordX * mapWidth) + 'px';
+        p.style.top = (coordY * mapHeight) + 'px';
         $('#map').append(p);
     });
 
     /**
      * Gestion de l'affichage de la liste des repères si un parcours pré-existant est selectionné
      */
-    $('#form_route').change(function(){
+    $('#form_route').change(function () {
 
         //Affiche l'animation de chargment
         var name = $('#form_route option:selected').text();
-        if(name != 'Choisir le parcours à modifier')
-        {
+        if (name != 'Choisir le parcours à modifier') {
             $('#animation').show();
             $('#table-mark').fadeOut('slow');
             $.ajax({
                 url: 'http://localhost:8000/ajax/getMarks',
                 type: 'POST',
-                data: {name : name}
+                data: {name: name}
             })
-                .done(function( response ) {
+                .done(function (response) {
                     //Masque l'animation et affiche le resultat dans un tableau
                     $('#animation').hide();
                     $('#table-mark').fadeIn('slow');
@@ -78,13 +79,13 @@ $(function() {
                     $('#minutes').val($('#route_minutes').val());
 
 
-                    $('.deleteMark').click(function(e) {
+                    $('.deleteMark').click(function (e) {
                         e.preventDefault();
                         var name = $(this).attr('name');
                         $(this).parent().parent().remove();
                         removeMark(name);
                     });
-                    $('.editMark').click(function(e) {
+                    $('.editMark').click(function (e) {
                         e.preventDefault();
                         var name = $(this).attr('name');
                         editMark(name);
@@ -99,18 +100,18 @@ $(function() {
     /**
      * Ajout d'un repère au parcours
      */
-    $('#add_mark_add_save').click(function(e, update){
+    $('#add_mark_add_save').click(function (e, update) {
         e.preventDefault();
         addMarkToBdd();
 
-        $('.editMark').click(function(e) {
+        $('.editMark').click(function (e) {
             e.preventDefault();
             var name = $(this).attr('name');
             editMark(name);
 
         });
 
-        $('.deleteMark').click(function(e) {
+        $('.deleteMark').click(function (e) {
             e.preventDefault();
             var name = $(this).attr('name');
             $(this).parent().parent().remove();
@@ -122,7 +123,7 @@ $(function() {
      *  Ajout du parcours en BDD
      */
 
-    $('#submit-info-parcours').click(function(e){
+    $('#submit-info-parcours').click(function (e) {
         e.preventDefault();
         var $routeInfo = $('#add_route').serialize();
         var name = $('#form_route option:selected').text();
@@ -136,8 +137,7 @@ $(function() {
     /**
      * Suppression d'une ligne du tableau et de sa correspondance dans le tableau d'id en session
      */
-    function removeMark(name)
-    {
+    function removeMark(name) {
         var decodedName = decodeURI(name);
         $.ajax({
             url: 'http://localhost:8000/ajax/deleteMarkFromSession',
@@ -149,8 +149,7 @@ $(function() {
     /**
      * Modification d'un repère deja ajouté
      */
-    function editMark(name)
-    {
+    function editMark(name) {
         $("#previousName").val(name);
         var decodedName = decodeURI(name);
         $.ajax({
@@ -158,11 +157,13 @@ $(function() {
             type: 'POST',
             data: {name: decodedName}
         })
-            .done(function(response){
-                //$('#repere').html(response);
+            .done(function (response) {
+
+                //Remplissage manuel des differents champs sur les 3 onglets
                 $('#add_mark_add_name').val(response.name);
                 $('#add_mark_add_coordinateX').val(response.coordinateX);
                 $('#add_mark_add_coordinateY').val(response.coordinateY);
+                $('#add_mark_add_medias').val(response.medias);
 
                 $('#add_mark_add_descriptions_0_label').val(response.description1.label);
                 $('#add_mark_add_descriptions_0_category').val(response.description1.category);
@@ -183,55 +184,88 @@ $(function() {
                 $('#add_mark_add_questions_1_answers_answer2').val(response.question2.answers.answer2);
                 $('#add_mark_add_questions_1_answers_answer3').val(response.question2.answers.answer3);
 
-
             });
     }
 
     /**
-     *
+     * Ajout ou modification d'un repère en BDD
      */
-    function addMarkToBdd()
-    {
+    function addMarkToBdd() {
         var $markInfo = $('[name =add_mark_add]').serialize();
-        var file = new FormData(document.getElementById('add_mark_form'));
+        //On recupere la valeur de l'input caché qui determine si on a affaire
+        // à une modification ou un nouvel ajout
         var previousName = $("#previousName").val();
+
+        //Dans le but de le comparer à un nom encodé il faut encoder cette variable
         var previousNameEncoded = encodeURI(previousName);
+
+        //On affiche la div permettant de desactiver le formulaire
+        //Elle reste active 3s avant de fadeOut
+        $("#hideForm").css('z-index', 3000);
+        $("#hideForm").show();
+        $("#hideForm").delay(3000).fadeOut(800);
+
+
         $.ajax({
             url: 'http://localhost:8000/ajax/saveMarkToSession',
             type: 'POST',
             //processData: false,
             //cache: false,
             //dataType: false,
-            data: {markInfo : $markInfo, update: previousName}
-        });
+            data: {markInfo: $markInfo, update: previousName}
+        }).done(function () {
 
-        //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
-        var newName = $('#add_mark_add_name').val();
-        var encodedNewName = encodeURI(newName);
-        $('[name =add_mark_add]')[0].reset();
-        if(previousNameEncoded == 'false')
-        {
-            $("#previousName").val('false');
-            //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
-            var nbreRows = $('#table-mark tbody tr').length;
-            nbreRows++;
-            var newRow = "<tr>\n" +
-                "        <th scope=\"row\">"+nbreRows+"</th>\n" +
-                "        <td name=\""+encodedNewName+"\">"+newName+"</td>\n" +
-                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
-                "        <td><a href=\"#\" name=\""+encodedNewName+"\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
-                "    </tr>";
-            //Enfin on ajoute la nouvelle ligne au tableau
-            $('#table-mark > tbody:last').append(newRow);
-        }
-        else
-        {
-            $('#table-mark td[name='+previousNameEncoded+']').html(newName).attr('name', encodedNewName);
-            $('#table-mark a[name='+previousNameEncoded+']').each(function(){
-                $(this).attr('name', encodedNewName);
-            });
+            //En cas de réussite on affiche le message de succès
+            $("#validationMessage").css('z-index', 3001);
+            $("#validationMessage").show();
+            $("#validationMessage").delay(3000).fadeOut(800);
 
-        }
+            //Puis on "recache" les divs
+            setTimeout(function () {
+                $("#hideForm").css('z-index', -1);
+                $("#validationMessage").css('z-index', -1);
+            }, 3800);
+
+
+            //On recupere le nom du nouveau repère pour le stocker dans le tableau de repères
+            var newName = $('#add_mark_add_name').val();
+
+            //Pour pouvoir ajouter ce nom dans un attribut [name] il faut encoder le nouveau nom pour convertir
+            // les espaces et caractères spéciaux
+            var encodedNewName = encodeURI(newName);
+
+            $('[name =add_mark_add]')[0].reset();
+            if (previousNameEncoded == 'false') {
+                $("#previousName").val('false');
+                //Recupère le nombre de ligne actuel pour numeroter la nouvelle insertion
+                var nbreRows = $('#table-mark tbody tr').length;
+                nbreRows++;
+                var newRow = "<tr>\n" +
+                    "        <th scope=\"row\">" + nbreRows + "</th>\n" +
+                    "        <td name=\"" + encodedNewName + "\">" + newName + "</td>\n" +
+                    "        <td><a href=\"#\" name=\"" + encodedNewName + "\" class=\"editMark\"><i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a></td>\n" +
+                    "        <td><a href=\"#\" name=\"" + encodedNewName + "\" class=\"deleteMark\"><i class=\"fa fa-trash\" aria-hidden=\"true\"></i></a></td>\n" +
+                    "    </tr>";
+                //Enfin on ajoute la nouvelle ligne au tableau
+                $('#table-mark > tbody:last').append(newRow);
+            }
+            else {
+                $('#table-mark td[name=' + previousNameEncoded + ']').html(newName).attr('name', encodedNewName);
+                $('#table-mark a[name=' + previousNameEncoded + ']').each(function () {
+                    $(this).attr('name', encodedNewName);
+                });
+
+            }
+        }).fail(function () {
+            $("#errorMessage").css('z-index', 3001);
+            $("#errorMessage").show();
+            $("#errorMessage").delay(3000).fadeOut(800);
+            setTimeout(function () {
+                $("#hideForm").css('z-index', -1);
+                $("#errorMessage").css('z-index', -1);
+            }, 3800);
+        })
+
 
     }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\DescriptionRepository")
@@ -18,16 +20,19 @@ class Description
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $label;
 
     /**
      * @ORM\Column(type="string", length=20)
+     * @Assert\NotBlank()
      */
     private $category;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="descriptions")
+     * @Assert\NotBlank()
      */
     private $mark;
 
