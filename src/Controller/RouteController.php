@@ -1,12 +1,10 @@
 <?php
 
 namespace App\Controller;
-
-use App\Entity\Mark;
 use App\Entity\Museum;
-use App\Entity\User;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
+use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -14,12 +12,14 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RouteController extends Controller
 {
     /**
-     * @route("/route/add", name="new_route", methods="GET")
+     * @Route("/route/add", name="new_route", methods="GET")
      */
     public function newRoute(Request $request, SessionInterface $session)
     {
@@ -34,10 +34,8 @@ class RouteController extends Controller
             'museum' => $museum
         ]);
     }
-
-
     /**
-     * @route("/route/add", name="create_route", methods="POST")
+     * @Route("/route/add", name="create_route", methods="POST")
      */
     public function createRoute(Request $request, SessionInterface $session)
     {
@@ -47,17 +45,19 @@ class RouteController extends Controller
         $form = $this->generateCreateForm($newRoute);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $currentMuseumId = $museum->getId();
             $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($currentMuseumId));
 
             $file = $form->get('map')->getData();
+
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
             $file->move(
                 $this->getParameter('uploads_directory'),
                 $fileName
             );
+
+
             $newRoute->setMap($fileName);
 
             $em2->persist($newRoute);
@@ -82,16 +82,16 @@ class RouteController extends Controller
 
 
     /**
-     * @route("/route/edit", name="edit_route")
+     * @Route("/route/edit", name="edit_route")
      */
+
     public function editAjax(Request $request, SessionInterface $session)
     {
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         //Conversion du tableau d'objet en tableau associatif id => nom
         $arrayRoutes = [];
-        foreach ($allRoutes as $route)
-        {
+        foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
@@ -108,10 +108,12 @@ class RouteController extends Controller
     }
 
     /**
-     * @route("/back-office/route/edit", name="edit_routev2")
+     * @Route("/back-office/route/edit", name="edit_routev2")
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
+        $em = $this->getDoctrine()->getManager();
+        $map = $em->getRepository(Museum::class)->findBy([], ['id' => 'desc'], 1);
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
@@ -119,18 +121,18 @@ class RouteController extends Controller
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
+
             $marksInRoute = $route->getMarks();
-            foreach($marksInRoute as $currentMark)
-            {
-                if(array_search($currentMark->getName(), $allMarks)=== false)
-                {
-                    $allMarks[$currentMark->getName()]=['X'=>$currentMark->getCoordinateX(), 'Y'=>$currentMark->getCoordinateY()];
+            foreach ($marksInRoute as $currentMark) {
+                if (array_search($currentMark->getName(), $allMarks) === false) {
+                    $allMarks[$currentMark->getName()] = ['X' => $currentMark->getCoordinateX(), 'Y' => $currentMark->getCoordinateY()];
                 }
             }
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
             'choices' => $arrayRoutes
         ]);
+
         $form2 = $formBuilder->getForm();
         $form2->handlerequest($request);
         $formMark = $this->createForm(AddMarkAddType::class);
@@ -140,31 +142,28 @@ class RouteController extends Controller
             'allMarks' => $allMarks,
             'formList' => $form2->createView(),
             'formMark' => $formMark->createView(),
-            'museum' => $museum
+            'museum' => $museum,
+            'map' => $map
         ]);
     }
-
-        /**
-         * @route("/ajax/getMarks", name="getMarks")
-         */
-    public function getMarks(Request $request, SessionInterface $session)
+    /**
+     * @Route("/ajax/getMarks", name="getMarks")
+     */
+    public function getMarks(Request $request, SessionInterface $session,$currentRoute)
     {
         $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
-        $allMarks = $currentRoute->getMarks();
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);$allMarks = $currentRoute->getMarks();
         $arrayMarks = [];
-
         foreach ($allMarks as $mark) {
+
             $arrayMarks[$mark->getName()] = $mark->getId();
         }
-
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
             'marks' => $arrayMarks
         ]);
     }
-
     /**
-     * @route("route/list", name="list_routes")
+     * @Route("route/list", name="list_routes")
      */
     public function listRoutes(SessionInterface $session)
     {
@@ -177,4 +176,8 @@ class RouteController extends Controller
     }
 
 
+
 }
+
+
+
