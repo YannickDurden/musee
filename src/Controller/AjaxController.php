@@ -274,6 +274,7 @@ class AjaxController extends Controller
         $session->set('savedMarksNames', $arrayNames);
         print_r($arrayNames);
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
+            'allMarks' => $allMarks,
             'marks' => $arrayMarks,
             'route' => $currentRoute,
             'duration' => $duration

@@ -92,6 +92,27 @@ $(function () {
 
                     });
 
+                    $.each($('.coordinates'), function () {
+
+                        var mapWidth = $('#map').width();
+                        var mapHeight = $('#map').height();
+                        //Recupere les coordonnées dans les data du tableau
+                        var coordX = $(this).data('coordx');
+                        var coordY = $(this).data("coordy");
+                        var name = encodeURI($(this).text());
+                        console.log(coordY);
+                        //Affiche le repere sur la map
+                        var p = document.createElement("div");
+                        p.setAttribute("id", "repereMap");
+                        p.setAttribute("name", name);
+                        p.style.width = 10 + "px";
+                        p.style.height = 10 + "px";
+                        p.style.backgroundColor = "red";
+                        //Sans oublier de convertir le % en valeur en pixel
+                        p.style.left = coordX*100 + '%';
+                        p.style.top = coordY*100  + '%';
+                        $('#map').append(p);
+                    });
                 });
         }
 
@@ -139,11 +160,13 @@ $(function () {
      */
     function removeMark(name) {
         var decodedName = decodeURI(name);
+        var receivedName = name;
         $.ajax({
             url: 'http://localhost:8000/ajax/deleteMarkFromSession',
             type: 'POST',
             data: {name: decodedName}
         })
+        $("#repereMap[name='"+receivedName+"']").remove();
     }
 
     /**
