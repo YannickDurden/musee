@@ -112,21 +112,29 @@ class RouteController extends Controller
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
+        //Récuperation en session du musée connecté pour les requètes en BDD
         $museum = $session->get('museum');
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
+
+        //Dans un second temps on récupère la liste complete des repères car en partant de $allRoutes nous n'aurions pas les repères orphelins
+        $allMuseumMarks = $this->getDoctrine()->getRepository(Mark::class)->findBy(['museum' => $museum->getId()]);
         $allMarks = [];
+        //Création du tableau de session qui se remplira lors de l'ajout d'un repère au parcours par l'user
         $session->set('savedMarksNames', []);
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
-            $marksInRoute = $route->getMarks();
-            foreach($marksInRoute as $currentMark)
+        }
+        foreach ($allMuseumMarks as $currentMark)
+        {
+            //Avant d'ajouter le repère au tableau on verifie que celui ci n'est pas deja présent pour eviter les doublons
+            if(array_search($currentMark->getName(), $allMarks)=== false)
             {
-                if(array_search($currentMark->getName(), $allMarks)=== false)
-                {
-                    $allMarks[$currentMark->getName()]=['X'=>$currentMark->getCoordinateX(), 'Y'=>$currentMark->getCoordinateY()];
-                }
+                //Ajout au format tableau associatif 'name' => ['X=> coordonnéeX, 'Y'=> coordonnéeY]
+                //Les coordonnées sont multipliées par 100 pour les avoir en %
+                $currentNameEncode = str_replace(" ","%20", $currentMark->getName());
+                $allMarks[$currentNameEncode]=['X'=>($currentMark->getCoordinateX()*100), 'Y'=>($currentMark->getCoordinateY()*100)];
             }
         }
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
