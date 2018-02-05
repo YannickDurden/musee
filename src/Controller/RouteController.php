@@ -155,25 +155,6 @@ class RouteController extends Controller
         ]);
     }
 
-        /**
-         * @route("/ajax/getMarks", name="getMarks")
-         */
-    public function getMarks(Request $request, SessionInterface $session)
-    {
-        $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
-        $allMarks = $currentRoute->getMarks();
-        $arrayMarks = [];
-
-        foreach ($allMarks as $mark) {
-            $arrayMarks[$mark->getName()] = $mark->getId();
-        }
-
-        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
-            'marks' => $arrayMarks
-            'map' => $map
-        ]);
-    }
 
     /**
      * @Route("route/list", name="list_routes")

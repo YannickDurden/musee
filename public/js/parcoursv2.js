@@ -13,8 +13,8 @@
 var height = $("#map").height();
 var width = $("#map").width();
 var mapId = $("#map");
-var markerWidth = 47,
-    markerHeight = 75;
+var markerWidth = 10,
+    markerHeight = 10
 
 
 /**
@@ -64,9 +64,7 @@ function delete_icon(MarkID, RouteID, ValMarkId) {
 
             console.log(data);
         });
-
 }
-
 /**
  * Display a map marker on a specific map
  * @param mapId [string] a valid DOM element ID
@@ -76,9 +74,9 @@ function delete_icon(MarkID, RouteID, ValMarkId) {
  *
  */
 function Display_map_marker(mapId, x, y, number, RouteID, ValMarkId) {
+    $(mapId).unbind();
     var x;
     var y;
-
     var delete_icon_map = $("<div></div>",
         {
             "id": "delete_icon_map",
@@ -92,16 +90,10 @@ function Display_map_marker(mapId, x, y, number, RouteID, ValMarkId) {
             "id": "New_pointer_" + number,
             "class": "pointeur"
         }).on(
-        /**
-         'mouseover',function()
-         {
-             var MarkID=$(this);
-             mousehover(MarkID);
-         },
-         **/
 
         'click', function () {
             var MarkId = $(this);
+
             delete_icon(MarkId, RouteID, ValMarkId);
             mousehover(MarkId);
         }).css(
@@ -110,8 +102,8 @@ function Display_map_marker(mapId, x, y, number, RouteID, ValMarkId) {
             "height": markerHeight,
             "left": x,
             "top": y,
+            "background-color":"green"
         }).append(delete_icon_map);
-
     $(mapId).append(point);
 
 }
@@ -130,9 +122,8 @@ function ajax_load_map_route(RouteID) {
                 count++;
                 var mark = data[i];
                 var ValMarkId = mark.id;
-                var coordX = mark.coordinateX * height;
-                var coordY = mark.coordinateY * width;
-
+                var coordX = mark.coordinateX * 100 + '%';
+                var coordY = mark.coordinateY * 100 + '%';
                 Display_map_marker(mapId, coordX, coordY, i, RouteID, ValMarkId);
             }
         },
@@ -145,31 +136,35 @@ function ajax_load_map_route(RouteID) {
 
 /**
  * Create repere
- * @param num [integer] the count number of the point ID
+ * @param mapId mapId [string] a valid DOM element ID
+ * @param number [integer] the count number of the point ID
  */
-function Create_Map_Marker(mapId, number) {
+function Create_Map_Marker(mapId, number)
+{
     //Recupere les coordonnées du clique par rapport a la div #map
 
-    var coordX = e.pageX - mapId.offset().left;
-    var coordY = e.pageY - mapId.offset().top;
+    var coordX = e.pageX - $(this).offset().left;
+    var coordY = e.pageY - $(this).offset().top;
 
     //Pour les afficher plus facilement par la suite on stock les coordonnées
     //en % de la hauteur et largeur
-
-    coordX = (coordX / width);
-    coordY = (coordY / height);
+    coordX = (coordX / width).toFixed(3);
+    coordY = (coordY / height).toFixed(3);
 
     //Affiche les coordonnées dans le formulaire
-
     $('#add_mark_add_coordinateX').val(coordX);
     $('#add_mark_add_coordinateY').val(coordY);
 
-    //Affichage du pointeur en fonction de l'incone de pointeur
-
-    var pointeurX = (coordX * width) - (markerWidth / 2);
-    var pointeurY = (coordY * height) - (markerHeight);
-
-    Display_map_marker(mapId, pointeurX, pointeurY, number);
+    //Affiche le repere sur la map
+    var p = document.createElement("div");
+    p.setAttribute("id", "repereMap");
+    p.style.width = 10 + "px";
+    p.style.height = 10 + "px";
+    p.style.backgroundColor = "red";
+    //Sans oublier de convertir le % en valeur en pixel
+    p.style.left = (coordX * mapWidth) + 'px';
+    p.style.top = (coordY * mapHeight) + 'px';
+    $('#map').append(p);
 }
 
 /**
@@ -177,14 +172,49 @@ function Create_Map_Marker(mapId, number) {
  */
 
 $(function () {
-
-    //var count;
     //$('#map').click(function (e) {
     //  count++;
     // Create_Map_Marker('$(this)',count);
     //});
 
+
+    // Gestion des coordonnées des repères
+
+    $('#map').bind('click',(function (e) {
+
+        //Recupere les coordonnées du clique par rapport a la div #map
+        var coordX = e.pageX - $(this).offset().left;
+        var coordY = e.pageY - $(this).offset().top;
+        var mapWidth = $('#map').width();
+        var mapHeight = $('#map').height();
+
+        //Pour les afficher plus facilement par la suite on stock les coordonnées
+        //en % de la hauteur et largeur
+        coordX = (coordX / mapWidth).toFixed(3);
+        coordY = (coordY / mapHeight).toFixed(3);
+
+        //Affiche les coordonnées dans le formulaire
+        $('#add_mark_add_coordinateX').val(coordX);
+        $('#add_mark_add_coordinateY').val(coordY);
+
+        //Affiche le repere sur la map
+        var p = document.createElement("div");
+        p.setAttribute("id", "repereMap");
+        p.style.width = 10 + "px";
+        p.style.height = 10 + "px";
+        p.style.backgroundColor = "red";
+        //Sans oublier de convertir le % en valeur en pixel
+        p.style.left = (coordX * mapWidth) + 'px';
+        p.style.top = (coordY * mapHeight) + 'px';
+        $('#map').append(p);
+    }));
+
+
     //Ajout de la classe active dans le menu de navigation pour la page en cours
+
+    $('#errorMessage').hide();
+    $('#validationMessage').hide();
+
     $('#add-route').addClass("active");
 
     // Ajout des sous formulaires de question et description
@@ -210,7 +240,7 @@ $(function () {
      */
 
     $('#form_route').change(function () {
-        $("#map").html("");
+        //$("#map").html("");
         var RouteID = $(this).val();
 
         ajax_load_map_route(RouteID);
@@ -364,7 +394,6 @@ function addMarkToBdd() {
     $("#hideForm").css('z-index', 3000);
     $("#hideForm").show();
     $("#hideForm").delay(3000).fadeOut(800);
-
 
     $.ajax({
         url: 'http://localhost:8000/ajax/saveMarkToSession',

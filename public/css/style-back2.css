@@ -18,9 +18,12 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 
-html, body, #content {
+html, body, #content, .container-fluid {
     min-height: 100vh;
+}
 
+#bg-container {
+    background-color: #f8f9fa;
 }
 
 .btn {
@@ -38,9 +41,6 @@ html, body, #content {
     left: 0;
     bottom: 0;
     background-color: rgb(1, 32, 86);
-}
-.container-fluid {
-    min-height: 100vh;
 }
 
 #logout {
@@ -62,3 +62,9 @@ html, body, #content {
 #logout a:hover {
     color: gray;
 }
+
+#col-base {
+    top: 2vh;
+    left: 16vw;
+}
+
