@@ -91,7 +91,6 @@ class FrontController extends Controller
             $em->merge($museum);
             $em->flush();
 
-            return new Response('okkkk');
         }
 
         return $this->render('Back-Office/BackOffice-v2/museum-edit.html.twig', [

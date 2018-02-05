@@ -4,9 +4,6 @@
 {% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/style-museum-edit.css">{% endblock %}
 
 {% block body %}
-    <div id="museum-edit" class="col col-9">
-
-        {#{{ form(formEditMuseum, {'attr': {'novalidate': 'novalidate'}}) }}#}
         {{ form_start(formEditMuseum) }}
 
 
@@ -97,6 +94,6 @@
         </div>
         {{ form_end(formAdd) }}
         </div>
-    </div>
+
 
 {% endblock %}
