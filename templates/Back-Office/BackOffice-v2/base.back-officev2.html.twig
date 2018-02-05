@@ -63,7 +63,12 @@
                             <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="image en dur">
                             <!--Création des repères visuels sur la map dont les coordonnées seront modifiées en JS -->
                             {% for name, mark in allMarks %}
-                                <div id="repereMap" name="{{ name }}" style="height: 10px; width: 10px; left: {{ mark.X }}%; top: {{ mark.Y }}%; background-color: red"></div>
+
+                                <a href="#" name="{{ name }}" class="tableAdd">
+                                    <div id="repereMap" name="{{ name }}" style="height: 10px; width: 10px; left: {{ mark.X }}%; top: {{ mark.Y }}%; background-color: red">
+                                    </div>
+                                </a>
+
                             {% endfor %}
                         </div>
                         <!-- Fin d'affichage de la map du parcours -->

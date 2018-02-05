@@ -63,10 +63,17 @@ class AjaxController extends Controller
         $updatedRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($_POST['id']);
         $updatedRoute->setName($arrayObject['add_route']['name']);
         $updatedRoute->setDescription($arrayObject['add_route']['description']);
-        $durationArrayToString = strval($arrayObject['add_route']['duration']['hour']) . " " . strval($arrayObject['add_route']['duration']['minute']);
+        if($arrayObject['add_route']['duration']['minute'] < 10)
+        {
+            $minutes = "0".strval($arrayObject['add_route']['duration']['minute']);
+        }
+        else
+        {
+            $minutes = strval($arrayObject['add_route']['duration']['minute']);
+        }
+        $durationArrayToString = strval($arrayObject['add_route']['duration']['hour']) . " " . $minutes;
         //$updatedRoute->setMap($_POST['fileName']);
         $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
-        $duration = new \DateTime('now');
         $updatedRoute->setDuration($duration);
         $arrayMarks = new ArrayCollection();
         //Boucle permettant de récuperer tout les repères associés a une route pour update les modif de la route
@@ -83,7 +90,7 @@ class AjaxController extends Controller
 
     /**
      * @route("ajax/saveMarkToSession", name="add_mark_session")
-     * Créé un objet de type Mark avec les info envoyées et le stock en session
+     * Créé un objet de type Mark avec les info envoyées l'ajoute en BDD et le stock en session
      */
     public function addMarkSession(SessionInterface $session)
     {
@@ -170,11 +177,17 @@ class AjaxController extends Controller
         }
         $newRouteToSave->setName($decodedJson['name']);
         $newRouteToSave->setDescription($decodedJson['description']);
-        $durationArrayToString = strval($decodedJson['hours']) . ":" . strval($decodedJson['minutes']);
-        print_r($durationArrayToString);
+        if($decodedJson['minutes'] < 10)
+        {
+            $minutes = "0".strval($decodedJson['minutes']);
+        }
+        else
+        {
+            $minutes = strval($decodedJson['minutes']);
+        }
+        $durationArrayToString = strval($decodedJson['hours']) . ":" . $minutes;
         //$updatedRoute->setMap($_POST['fileName']);
         $duration = \DateTime::createFromFormat('G:i', $durationArrayToString);
-        var_dump($duration);
         //$duration = new \DateTime('now');
         $newRouteToSave->setDuration($duration);
         foreach ($session->get('savedMarksNames') as $mark) {
@@ -304,5 +317,18 @@ class AjaxController extends Controller
             'description' => $description,
             'duration' => $duration,
         ]);*/
+    }
+
+    /**
+     * @route("ajax/addToSession", name="add_mark_to_session")
+     */
+    public function addMarkToSession(SessionInterface $session)
+    {
+        $arrayMarks = [];
+        $arrayMarks = $session->get('savedMarksNames');
+        $arrayMarks []= $_POST['newMarkName'];
+        $session->set('savedMarksNames', $arrayMarks);
+
+        return new Response("Ajout en session effectué");
     }
 }
