@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="{{app.request.basepath}}/css/newArtwork.css">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/style-artwork.css">
 {% endblock %}
 {% block body %}
     <main class="container-fluid">
@@ -79,7 +79,8 @@
                         <!-- Menu mobile -->
                         <ul class="fixed-bottom nav nav-tabs nav-fill">
                             <li class="nav-item">
-                                <a class="nav-link active" href="#">Description</a>
+                                <a class="nav-link active" href="{{ path("artwork",{'id':id})
+                                }}">Description</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ path("begin_route")

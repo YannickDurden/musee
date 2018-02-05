@@ -23,6 +23,11 @@ html, body, #content {
 
 }
 
+.btn {
+    background-color: rgb(1, 32, 86);
+    color: #f8f9fa;
+}
+
 #col-nav {
     position: relative;
 }

@@ -1,10 +1,13 @@
 <!DOCTYPE>
 <html>
+<!-- Template https://templates.campaignmonitor.com/ -->
 
 <head>
     <title>MyMuseum</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=320, target-densitydpi=device-dpi">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
     <style type="text/css">
         /* Mobile-specific Styles */
 
@@ -183,10 +186,15 @@
             display: block !important;
         }
 
-        #nameRoute{
-            font-size: 18px;
+        #nameRoute {
+            font-size: 16px;
             font-weight: bold;
         }
+
+        #main-title {
+            font-family: 'Great Vibes', cursive;
+        }
+
 
         /* Force Hotmail to display emails at full width */
 
@@ -328,7 +336,7 @@
 
         body,
         td {
-            font-family: HelveticaNeue, sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .header-content,
@@ -353,7 +361,7 @@
 
         #headline p {
             color: #c9c1c1;
-            font-family: HelveticaNeue, sans-serif;
+            font-family: 'Montserrat', sans-serif;
             font-size: 36px;
             text-align: center;
             margin-top: 0px;
@@ -372,7 +380,7 @@
             font-weight: bold;
             margin-top: 0px;
             margin-bottom: 18px;
-            font-family: HelveticaNeue, sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .article-title a {
@@ -398,7 +406,7 @@
             color: #444444;
             margin-top: 0px;
             margin-bottom: 18px;
-            font-family: HelveticaNeue, sans-serif;
+            font-family: 'Montserrat', sans-serif;
         }
 
         .article-content a {
@@ -514,7 +522,7 @@
                                         <p>
                                             <strong>
                                                 <a href="http://mymuseum.fr">
-                                                    <singleline label="Title">MyMuseum</singleline>
+                                                    <singleline id="main-title" label="Title">MyMuseum</singleline>
                                                 </a>
                                             </strong>
                                         </p>
@@ -544,21 +552,18 @@
                                                 <tr>
                                                     <td class="w580" width="580">
                                                         <p align="left" class="article-title">
-                                                            <singleline
-                                                                    label="Title">Bonjour {{ firstname }}</singleline>
+                                                            <singleline label="Title">Bonjour {{ firstname }},</singleline>
                                                         </p>
-                                                        <p>Votre score sur le parcours est de : <br> {{
-                                                            correctAnswers }} sur {{ totalMark }}</p>
+                                                        <p>Votre score sur le parcours est de :
+                                                            <br> {{ correctAnswers }} sur {{ totalMark }}</p>
                                                         <div align="left" class="article-content">
                                                             <multiline label="Description">
-                                                                Bravo, vous êtes arrivé
-                                                                au bout du parcours
-                                                                <span id="nameRoute">{{
-                                                                    nameRoute }}
-                                                                </span>
-                                                                , nous
-                                                                espèrons
-                                                                que la visite vous à plu
+                                                                Bravo, vous êtes arrivé au bout du parcours
+                                                                <span id="nameRoute">{{ nameRoute }}
+                                                                                    </span>
+                                                                , nous espèrons que la visite vous à plu.
+                                                                <br>
+                                                                A bientôt :)
                                                             </multiline>
                                                         </div>
                                                     </td>
@@ -599,9 +604,6 @@
                                                                 votre score par email.</span>
                                                         </p>
                                                     </span>
-                                    <p align="left" class="footer-content-left">
-                                        <unsubscribe>Se d&eacute;sinscrire</unsubscribe>
-                                    </p>
                                 </td>
                                 <td class="hide w0" width="60"></td>
                                 <td class="hide w0" width="160" valign="top">

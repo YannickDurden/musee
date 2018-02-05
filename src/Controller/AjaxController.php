@@ -4,19 +4,23 @@ namespace App\Controller;
 
 use App\Entity\Description;
 use App\Entity\Mark;
+use App\Entity\Media;
 use App\Entity\Museum;
 use App\Entity\Question;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
+use App\Entity\Route as r;
+
+
 
 class AjaxController extends Controller
 {
@@ -47,11 +51,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @route("ajax/route/add", name="ajax_add_BDD")
-     */
-
-    /*
-     * Route permettant d'ajouter en BDD une route via AJAX
+     * @Route("ajax/route/add", name="ajax_add_BDD")
      */
     public function addAjaxBdd()
     {
@@ -81,33 +81,11 @@ class AjaxController extends Controller
     }
 
     /**
-     * @route("ajax/saveMarkToSession", name="add_mark_session")
+     * @Route("ajax/saveMarkToSession", name="add_mark_session")
      * Créé un objet de type Mark avec les info envoyées et le stock en session
      */
-    public function addMarkSession(SessionInterface $session, Request $request)
+    public function addMarkSession(SessionInterface $session)
     {
-        /*
-        $newMark = new Mark();
-        $form = $this->createForm(AddMarkAddType::class, $newMark);
-        $form->handleRequest($request);
-
-        $newMark = $form->getData();
-        print_r($newMark);
-        exit;
-
-        $file =$newMark->getImage();
-        // Générer le nom de fichier
-        $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        // Déplacer le fichier temporaire vers le dossier uploads/
-        $newMark->setImage($fileName);
-        $file->move($this->getParameter('uploads_directory'), $fileName);
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($newMark);
-        $em->flush();
-        return  new Response("Ok");
-        */
-
-
         parse_str($_POST['markInfo'], $decodedJson);
         if ($_POST['update'] === 'false') {
             $savedMark = new Mark();
@@ -155,15 +133,11 @@ class AjaxController extends Controller
         }
         $savedMark->setDescriptions($descriptions);
         $savedMark->setQuestions($questions);
+
+        $savedMark->setMedias($this->getDoctrine()->getRepository(Media::class)->find($decodedJson['add_mark_add']['medias']));
         $savedMark->setImage('123456.jpeg');
-        //$savedMark->setImage($decodedJson['add_mark_add']['image']);
-        //$file =$savedMark->getImage();
-        // Générer le nom de fichier
-        //$fileName = md5(uniqid()) . '.' . $file->guessExtension();
-        // Déplacer le fichier temporaire vers le dossier uploads/
-        //$savedMark->setImage($fileName);
-        //$file->move($this->getParameter('uploads_directory'), $fileName);
         $sessionMarks = $session->get('savedMarksNames');
+
         // Avant de stocker en session il faut verifier que ça ne soit pas qu'un update d'un repère exisant dans le parcours
         if (!(in_array($savedMark->getName(), $sessionMarks))) {
             $sessionMarks [] = $savedMark->getName();
@@ -198,8 +172,10 @@ class AjaxController extends Controller
         $newRouteToSave->setName($decodedJson['name']);
         $newRouteToSave->setDescription($decodedJson['description']);
         $durationArrayToString = strval($decodedJson['hours']) . ":" . strval($decodedJson['minutes']);
+        print_r($durationArrayToString);
         //$updatedRoute->setMap($_POST['fileName']);
-        $duration = date_create_from_format('H:i', $durationArrayToString);
+        $duration = \DateTime::createFromFormat('G:i', $durationArrayToString);
+        var_dump($duration);
         //$duration = new \DateTime('now');
         $newRouteToSave->setDuration($duration);
         foreach ($session->get('savedMarksNames') as $mark) {
@@ -227,11 +203,11 @@ class AjaxController extends Controller
     {
         $name = $_POST['name'];
         $selectedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name' => $name]);
-        $selectedMark->setImage(new File('C:\xampp\htdocs\musee\public\uploads\0edd4088464530b29746ca080b03244a.jpeg'));
         $jsonReturn = [];
         $jsonReturn['name'] = $selectedMark->getName();
         $jsonReturn['coordinateX'] = $selectedMark->getCoordinateX();
         $jsonReturn['coordinateY'] = $selectedMark->getCoordinateY();
+        $jsonReturn['medias'] = $selectedMark->getMedias()->getId();
         $description1 = $selectedMark->getDescriptions()[0];
         $description2 = $selectedMark->getDescriptions()[1];
         if ($description1->getCategory() == 'adulte') {
@@ -267,9 +243,11 @@ class AjaxController extends Controller
     {
         $name = $_POST['name'];
         $arrayMarks = $session->get('savedMarksNames');
+
         foreach ($arrayMarks as $key => $currentMark) {
-            if ($currentMark = $name) {
+            if ($currentMark == $name) {
                 array_splice($arrayMarks,$key,1);
+                break;
             }
         }
         $session->set('savedMarksNames', $arrayMarks);
@@ -302,4 +280,96 @@ class AjaxController extends Controller
             'duration' => $duration
         ]);
     }
+
+    /**
+     *    CRUD AJAX MARKER
+     *
+     */
+
+
+    /**
+     * @Route("/Mark/LoadIcon", name="load_icon")
+     */
+    public function CreateIcon(Request $request)
+    {
+        $RouteID = $request->request->get('RouteID');
+        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
+        $dataMark=$routes->getMarks();
+        $jsonData = array();
+        $idx = 0;
+        foreach($dataMark as $mark)
+        {
+            $temp = array(
+                'id' =>$mark->getId(),
+                'name' => $mark->getName(),
+                'coordinateX'=>$mark->getCoordinateX(),
+                'coordinateY'=>$mark->getCoordinateY(),
+                'image'=>$mark->getImage(),
+            );
+            $jsonData[$idx++] = $temp;
+        }
+
+        return new JsonResponse($jsonData);
+    }
+
+
+    /**
+     * @Route("/Mark/UpdateIcon", name="update_icon")
+     */
+    public function UpdateIcon(Request $request)
+    {
+        $RouteID = $request->request->get('RouteID');
+
+        $ValMarkId = $request->request->get('ValMarkId');
+        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
+
+        $dataMark=$routes->getMarks();
+        foreach ($dataMark as $data)
+        {
+            if($data->getID() == $ValMarkId)
+            {
+                $temp=array
+                (
+                    "id" => $data->getId(),
+                    "name" => $data->getName(),
+                    "CoordinateX" => $data->getCoordinateX(),
+                    "CoordinateY"=>$jsonData[]=$data->getCoordinateY()
+                );
+                return new JsonResponse($temp);
+            }
+        }
+        return new Response('Data Delete');
+    }
+
+
+    /**
+     * @Route("/Mark/DeleteIcon", name="delete_icon")
+     */
+    public function DeleteIcon(Request $request)
+    {
+        $RouteID = $request->request->get('RouteID');
+
+        $ValMarkId = $request->request->get('ValMarkId');
+        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
+
+        $dataMark=$routes->getMarks();
+        foreach ($dataMark as $data)
+        {
+            if($data->getID() == $ValMarkId)
+            {
+                $temp=array
+                       (
+                           "id" => $data->getId(),
+                           "name" => $data->getName(),
+                           "CoordinateX" => $data->getCoordinateX(),
+                           "CoordinateY"=>$data->getCoordinateY()
+                       );
+                return new JsonResponse($temp);
+            }
+        }
+        return new Response('Data Delete');
+    }
+
+
+
 }
