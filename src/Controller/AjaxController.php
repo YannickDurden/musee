@@ -101,7 +101,7 @@ class AjaxController extends Controller
             $savedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name' => $_POST['update']]);
             $arrayMarks = $session->get('savedMarksNames');
             foreach ($arrayMarks as $key => $currentMark) {
-                if ($currentMark = $_POST['update']) {
+                if ($currentMark == $_POST['update']) {
                     array_splice($arrayMarks,$key,1);
                 }
             }
@@ -328,6 +328,7 @@ class AjaxController extends Controller
         $arrayMarks = $session->get('savedMarksNames');
         $arrayMarks []= $_POST['newMarkName'];
         $session->set('savedMarksNames', $arrayMarks);
+        print_r($session->get('savedMarksNames'));
 
         return new Response("Ajout en session effectué");
     }
