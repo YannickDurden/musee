@@ -3,7 +3,8 @@
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -28,6 +29,7 @@ body {
 #bg-jumbotron {
     overflow-x: hidden;
     overflow-y: auto;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
     height: 100vh;
     width: 100vw;
@@ -67,8 +69,13 @@ body {
 }
 
 .form-home {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     margin-top: 3vh;
 }
 
@@ -127,7 +134,8 @@ BOUTON START QUI CACHE LA DIV
     position: relative;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
     font-size: 25px;
     padding: 20px;
     margin: 0;

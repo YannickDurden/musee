@@ -31,7 +31,13 @@
             </div>
         {{ form_end(formMedia) }}
 
-            <div class="media"></div>
+            {% if currentMedia is defined %}
+            <h2 id="nameMedia">{{ currentMedia.name }}</h2>
+            <div id="media">
+                <img src="{{ app.request.basepath }}/uploads/{{ currentMedia.file }}" alt="{{ currentMedia.name }}">
+            </div>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
+
