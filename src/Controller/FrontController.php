@@ -24,19 +24,18 @@ class FrontController extends Controller
     public function results(SessionInterface $session)
     {
         //récupération de la durée du parcours
-        //$endRouteTime = new \DateTime('now');
-        //$beginRoute = $session->get('startTime');
-        //$calculateTime = $endRouteTime->diff($beginRoute);
+        $endRouteTime = new \DateTime('now');
+        $beginRoute = $session->get('startTime');
+        $calculateTime = $endRouteTime->diff($beginRoute);
 
+        //reste infos : nom parcours, nom user, score total
         $route = $session->get('nameRoute');
         $user = $session->get('firstname');
         $score = $session->get('correctAnswers');
         $totalMark = $session->get('totalMark');
 
-
-        //$userScore = $this->getDoctrine()->getRepository(Score::class)->find(1);
         return $this->render('Front-Office/end-results.html.twig',[
-            //'duration' => $calculateTime,
+            'duration' => $calculateTime,
             'nameRoute' => $route,
             'score' => $score,
             'totalMark' => $totalMark,
@@ -64,7 +63,7 @@ class FrontController extends Controller
         {
             $em = $this->getDoctrine()->getManager();
             // Déplacement du fichier
-            // $file contient le fichier uploadé, il est de type Symfony\Component\HttpFoundation\File\UploadedFile
+            // $file contient le fichier uploadé
             $file = $formMap->getData()->getMap();
             // Génération d'un nom aléatoire
             $fileName = md5(uniqid()) . '.' . $file->guessExtension();
@@ -106,10 +105,11 @@ class FrontController extends Controller
      */
     public function media(Request $request, SessionInterface $session)
     {
+        //creation formulaire
         $form = $this->createForm(AddMediaType::class);
         $form->handleRequest($request);
 
-
+        // générer preview de l'image si form valid et soumis
         if ($form->isSubmitted() && $form->isValid())
         {
             $media = $form->getData();
@@ -138,8 +138,6 @@ class FrontController extends Controller
                 'formMedia' => $form->createView(),
                 'currentMedia' => $currentMedia[0],
             ]);
-            //addFlash ne fonctionne pas: faire afficher un message sur la page existante "modif enregistrées"
-            //$this->addFlash('notice', 'Vos modifications ont bien été enregistrées.');
         }
 
         return $this->render('Back-Office/BackOffice-v2/media.html.twig', [

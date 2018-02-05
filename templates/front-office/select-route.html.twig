@@ -9,12 +9,15 @@
 
 {% block body %}
     <section id="jumbotron" class="picture-museum">
-        <div id="bg-jumbotron">
+        <div id="bg-jumbotron">  <!-- calc blanc dégradé sur image -->
             <h1>My Museum</h1>
             <h2>Bienvenue {{ userName }}, sélectionnez votre parcours</h2>
+
+            <!-- Div blanc Container Sélection du parcours -->
             <div class="section-route container-fluid">
                 <div class="row">
                     <div id="col-route" class="col-12">
+                        <!-- Formulaire sélection du parcours -->
 
                         {#{{ form(formSelect, {'attr': {'novalidate': 'novalidate'}}) }}#}
                         {{ form_start(formSelectRoute, {'attr': {'class': 'form-route'}}) }}

@@ -12,14 +12,19 @@
 
 {% block body %}
         <section id="jumbotron" class="picture-museum">
-            <div id="bg-jumbotron">
+            <div id="bg-jumbotron">  <!-- calc blanc dégradé sur image -->
                 <h1>My Museum</h1>
+
+                <!-- Div blanc Container content Home -->
                 <div class="section-home container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-12 text-home">
+
+                            <!-- BOUTON BIENVENUE QUI CACHE LA DIV -->
                             <div id="start">
                                 <button type="button" class="btn btn-lg" id="btn-start">Bienvenue</button>
                             </div>
+                            <!-- Texte introductif sur le musée -->
                             <p class="text-center">
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                                 Cras iaculis iaculis viverra. Vivamus sed dui arcu.
@@ -27,6 +32,8 @@
                                 Curabitur at ipsum quis tellus rutrum auctor volutpat a ligula.
                                 Cras molestie id turpis in ultrices.
                             </p>
+
+                            <!-- Formulaire prénom pour commencer visite -->
                             <div class="form-home">
                                     {{ form_start(formFirstname, {'attr': {'class': 'form-home'}}) }}
                                 <div class="form-group">
