@@ -145,26 +145,51 @@ $(function () {
 
     $('#submit-info-parcours').click(function (e) {
         e.preventDefault();
-        //Serialize les données du formulaire
-        var $routeInfo = $('#add_route').serialize();
-        //Récupere le précedent pour pouvoir tester si il c'est un update d'un parcours existant en PHP
-        var name = $('#form_route option:selected').text();
-        $.ajax({
-            url: 'http://localhost:8000/ajax/saveRoutetoBDD',
-            type: 'POST',
-            data: {routeInfo: $routeInfo, name: name}
-        })
-            .done(function () {
-                //Recharge la page en cas de succès pour la mise à jour du select des parcours
-                document.location.reload(true);
-            })
-            .fail(function () {
-                // Petit clin d'oeil en cas d'échec
-                var player = document.querySelector('#audioPlayer');
-                player.play();
-                alert("AH!");
+        var tabError = [];
+        if($('#name').val() === "")
+        {
+            tabError.push('Veuillez entrer un nom de parcours');
 
-            });
+        }
+        if($('#description').val() === "")
+        {
+            tabError.push('Veuillez entrer une description pour le parcours');
+        }
+        if(($('#hours').val() === "") || ($('#minutes').val() === ""))
+        {
+            tabError.push("Les heures ou minutes de la durée ne peuvent pas être nulles");
+        }
+        if(tabError.length !== 0)
+        {
+            var message = "";
+            for(var i = 0 ; i<tabError.length; i++)
+            {
+                message += tabError[i] + "\n";
+            }
+            alert(message);
+        }
+        else {
+            //Serialize les données du formulaire
+            var $routeInfo = $('#add_route').serialize();
+            //Récupere le précedent pour pouvoir tester si il c'est un update d'un parcours existant en PHP
+            var name = $('#form_route option:selected').text();
+            $.ajax({
+                url: 'http://localhost:8000/ajax/saveRoutetoBDD',
+                type: 'POST',
+                data: {routeInfo: $routeInfo, name: name}
+            })
+                .done(function () {
+                    //Recharge la page en cas de succès pour la mise à jour du select des parcours
+                    document.location.reload(true);
+                })
+                .fail(function () {
+                    // Petit clin d'oeil en cas d'échec
+                    var player = document.querySelector('#audioPlayer');
+                    player.play();
+                    alert("AH!");
+
+                });
+        }
     });
 
     /**
