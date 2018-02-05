@@ -16,21 +16,25 @@ class AddAnswersType extends AbstractType
 
         $builder
             ->add('goodAnswer', TextType::class,[
+                'label' => 'Bonne réponse:',
                 'constraints' =>[
                     new NotBlank(),
                 ]
             ])
             ->add('answer1', TextType::class,[
+                'label' => 'Réponse 2:',
                 'constraints' =>[
                     new NotBlank(),
                 ]
             ])
             ->add('answer2', TextType::class,[
+                'label' => 'Réponse 3:',
                 'constraints' =>[
                     new NotBlank(),
                 ]
             ])
             ->add('answer3', TextType::class,[
+                'label' => 'Réponse 4:',
                 'constraints' =>[
                     new NotBlank(),
                 ]

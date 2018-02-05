@@ -46,19 +46,25 @@ body{
     margin-bottom: 0;
 }
 
-.quiz{
+#quiz{
     text-align: center;
 }
 
-
-/****** MODAL ******/
-
-#valid-btn{
-    margin-top: 3%;
+#quiz p{
+    font-size: 25px;
 }
-#btn-modal a{
+
+#quiz .form-check{
+    margin: 0 auto;
+    font-size: 20px;
+}
+
+#form_submit{
     text-decoration: none;
-    color: white;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 15px;
+    color: rgb(78, 255, 176);
+    text-transform: uppercase;
+    background-color: rgb(1, 32, 86);
+    border-radius: 0;
 }
-
-

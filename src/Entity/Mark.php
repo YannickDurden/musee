@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MarkRepository")
@@ -18,17 +19,20 @@ class Mark
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=4)
+     * @Assert\NotBlank()
      */
     private $coordinateX;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=4)
+     * @Assert\NotBlank()
      */
     private $coordinateY;
 
@@ -38,27 +42,33 @@ class Mark
     private $image;
 
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark", cascade={"persist"})
+     * @ORM\OneToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $medias;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Description", mappedBy="mark", cascade ={"persist"})
+     * @Assert\NotBlank()
      */
     private $descriptions;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Route", mappedBy="marks")
+     * @Assert\NotBlank()
      */
     private $routes;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="mark", cascade={"persist"})
+     * @Assert\NotBlank()
      */
     private $questions;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="marks")
+     * @Assert\NotBlank()
      */
     private $museum;
 

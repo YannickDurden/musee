@@ -3,6 +3,7 @@
 namespace App\Form;
 use App\Entity\Description;
 use App\Entity\Mark;
+use App\Repository\MediaRepository;
 use Doctrine\ORM\EntityRepository;
 use App\Entity\Media;
 use App\Entity\Question;
@@ -60,7 +61,7 @@ class AddMarkAddType extends AbstractType
         $builder->add('image', FileType::class, [
             'constraints' => [
                 new NotBlank(),
-                new File(['mimeTypes' => ['image/jpeg', 'image/png', 'image/gif']]),
+                new File(['mimeTypes' => ['image/jpg', 'image/jpeg', 'image/png', 'image/gif']]),
             ]
         ]);
       
@@ -69,11 +70,13 @@ class AddMarkAddType extends AbstractType
             'allow_add'    => true,
             'allow_delete' => true
         ]);
-        /*$builder->add('medias', CollectionType::class, [
-            'entry_type'   => AddMediaType::class,
-            'allow_add'    => true,
-            'allow_delete' => true
-        ]); */
+        $builder->add('medias', EntityType::class, [
+            'class' => Media::class,
+            'choice_label' => 'name',
+            'constraints' => [
+                new NotBlank(),
+            ]
+        ]);
 
         $builder->add('questions', CollectionType::class, [
             'entry_type'   => AddQuestionType::class,
