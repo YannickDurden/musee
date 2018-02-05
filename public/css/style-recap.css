@@ -28,13 +28,19 @@ body {
     height: 100vh;
     width: 100vw;
 }
-
 #bg-jumbotron h1 {
-    font-family: 'Montserrat', cursive;
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
+
+#bg-jumbotron h2 {
     color: rgb(78, 255, 176);
     font-size: 30px;
-    margin-top: 10vh;
     text-align: center;
+    margin-top: 7vh;
+
 }
 
 
@@ -115,22 +121,39 @@ body {
 
 @media screen and (max-width: 760px) {
     .museum-best {
-        margin-top: 15%;
+        margin-top: 10%;
     }
 
     .museum-wrapper {
         margin-top: 10%;
     }
+
+
+    #bg-jumbotron h2 {
+        margin-top: 5vh;
+        font-size: 20px;
+    }
+
+    .stats h3 {
+        font-size: 20px;
+    }
+
+    .section-recap {
+        top: 31vh;
+    }
 }
 
 @media screen and (min-width: 760px) {
     #bg-jumbotron h1 {
-        margin-top: 12vh;
+        margin-top: 7vh;
+    }
+    #bg-jumbotron h2 {
+        margin-top: 5vh;
     }
 
     .section-recap {
         padding: 0 15vw;
-        top: 25vh;
+        top: 28vh;
     }
 
     .museum-best {
