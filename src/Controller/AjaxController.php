@@ -266,9 +266,12 @@ class AjaxController extends Controller
         $duration = $currentRoute->getDuration();
         $arrayMarks = [];
         $arrayNames = [];
+        $encodedArrayNames = [];
 
         foreach ($allMarks as $mark) {
+            $encodedName = str_replace(" ", "%20", $mark->getName());
             $arrayMarks[$mark->getName()] = $mark->getId();
+            $encodedArrayNames [] = $encodedName;
             $arrayNames [] = $mark->getName();
         }
         $session->set('savedMarksNames', $arrayNames);
@@ -277,7 +280,29 @@ class AjaxController extends Controller
             'allMarks' => $allMarks,
             'marks' => $arrayMarks,
             'route' => $currentRoute,
-            'duration' => $duration
+            'duration' => $duration,
+            'encodedNames' => $encodedArrayNames
         ]);
+    }
+
+    /**
+     * @Route("/mymuseum/ajax-media", name="ajax_media", methods={"GET", "HEAD"})
+     */
+    public function ajaxDescription($action, $param)
+    {
+        /**
+         * retourne l'image chargée
+         */
+        /*if($action == 'getdescription' && $param) {
+
+            $getInfo = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
+            $info = $getInfo->find(intval($param));
+            $description = $info->getDescription();
+            $duration = $info->getDuration();
+        }
+        return $this->render('Front-Office/ajax.html.twig', [
+            'description' => $description,
+            'duration' => $duration,
+        ]);*/
     }
 }

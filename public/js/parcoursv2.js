@@ -138,6 +138,15 @@ $(function () {
             url: 'http://localhost:8000/ajax/saveRoutetoBDD',
             type: 'POST',
             data: {routeInfo: $routeInfo, name: name}
+        })
+            .done(function(){
+                document.location.reload(true);
+            })
+            .fail(function(){
+                var player = document.querySelector('#audioPlayer');
+                player.play();
+                alert("AH!");
+
         });
     });
 
@@ -146,21 +155,21 @@ $(function () {
      */
     function removeMark(name) {
         var decodedName = decodeURI(name);
-        var receivedName = encodeURI(name);
         $.ajax({
             url: 'http://localhost:8000/ajax/deleteMarkFromSession',
             type: 'POST',
             data: {name: decodedName}
-        })
-        $("#repereMap[name='"+receivedName+"']")[0].style.backgroundColor = "red";
+        });
+        $("#repereMap[name='"+name+"']")[0].style.backgroundColor = "red";
     }
 
     /**
      * Modification d'un repère deja ajouté
      */
     function editMark(name) {
-        $("#previousName").val(name);
         var decodedName = decodeURI(name);
+        $("#previousName").val(decodedName);
+
         $.ajax({
             url: 'http://localhost:8000/ajax/getMarkInfo',
             type: 'POST',
@@ -259,8 +268,9 @@ $(function () {
                 $('#table-mark > tbody:last').append(newRow);
             }
             else {
-                $('#table-mark td[name=' + previousNameEncoded + ']').html(newName).attr('name', encodedNewName);
-                $('#table-mark a[name=' + previousNameEncoded + ']').each(function () {
+                console.log("PreviousNameEncoded:" + previousNameEncoded);
+                $("#table-mark td[name='" + previousNameEncoded + "']").html(newName).attr('name', encodedNewName);
+                $("#table-mark a[name='" + previousNameEncoded + "']").each(function () {
                     $(this).attr('name', encodedNewName);
                 });
 
