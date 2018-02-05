@@ -7,6 +7,8 @@ use App\Entity\Museum;
 use App\Entity\User;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
+use App\Form\DeleteRoutesType;
+use App\Form\DeleteMarksType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -15,6 +17,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 class RouteController extends Controller
 {
@@ -25,13 +29,15 @@ class RouteController extends Controller
     {
         $newRoute = new \App\Entity\Route();
         $form = $this->generateCreateForm($newRoute);
-        $museum = $session->get('museum');
+        //$museum = $session->get('museum');
 
+        //dump($museum);
+        //exit;
 
         return $this->render('Back-office/route/add.html.twig', [
             'formAdd' => $form->createView(),
             'newRoute' => $newRoute,
-            'museum' => $museum
+          //  'museum' => $museum
         ]);
     }
 
@@ -112,7 +118,44 @@ class RouteController extends Controller
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
+        $em=$this->getDoctrine()->getManager();
+        $map=$em->getRepository(Museum::class)->findBy([],['id'=>'desc'], 1);
+
+
+        //requête ajax pour récupérer les data
+
+        $marks = $this->getDoctrine()
+            ->getRepository('App\Entity\Mark')
+            ->findAll();
+
+        //dump($marks);
+        //exit;
+
+        if ($request->isXmlHttpRequest() || $request->query->get('showJson') == 1) {
+            $jsonData = array();
+            $idx = 0;
+            foreach($marks as $mark) {
+                $temp = array(
+                    'id' =>$mark->getId(),
+                    'name' => $mark->getName(),
+                    'coordinateX'=>$mark->getCoordinateX(),
+                    'coordinateY'=>$mark->getCoordinateY(),
+                    'image'=>$mark->getImage(),
+                );
+                $jsonData[$idx++] = $temp;
+
+            }
+
+            return new JsonResponse($jsonData);
+
+        }
+        //else
+       //{
+            //return $this->render('Back-Office/Mark/testAjax.html.twig');
+        //}
+
         $museum = $session->get('museum');
+
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
         $allMarks = [];
@@ -140,7 +183,8 @@ class RouteController extends Controller
             'allMarks' => $allMarks,
             'formList' => $form2->createView(),
             'formMark' => $formMark->createView(),
-            'museum' => $museum
+            'museum' => $museum,
+            'map'=>$map
         ]);
     }
 
@@ -174,6 +218,69 @@ class RouteController extends Controller
         return $this->render('Back-Office/BackOffice-v2/list-routes.html.twig', [
             'allRoutes' => $allRoutes
         ]);
+    }
+
+
+    /**
+     * @route("route/delete-routes", name="delete_routes")
+     */
+
+    public function deleteRoutes(Request $request, SessionInterface $session)
+    {
+        $form = $this->createForm( DeleteRoutesType::class
+        );
+        $form->handlerequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $id = $form->getData();
+            $currentRoute= $id['name'];
+            //$currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($currentRoute);
+            $em->flush();
+            return new Response('Suppression confirmée');
+
+        }
+
+        //dump($currentRoute);
+        //exit;
+
+        return $this->render('Back-Office/BackOffice-v2/delete-routes.html.twig',
+            [
+                'formRoute' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @route("route/delete-marks", name="delete_marks")
+     */
+
+    public function deleteMarks(Request $request, SessionInterface $session)
+    {
+        $form = $this->createForm( DeleteMarksType::class
+        );
+        $form->handlerequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $id = $form->getData();
+            $currentMark = $id['name'];
+            //$currentMark = $this->getDoctrine()->getRepository(\App\Entity\Mark::class)->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($currentMark);
+            $em->flush();
+            return new Response('Suppression confirmée');
+
+        }
+
+        //dump($currentMark);
+        //exit;
+
+        return $this->render('Back-Office/BackOffice-v2/delete-marks.html.twig',
+            [
+                'formMarks' => $form->createView()
+            ]);
     }
 
 
