@@ -24,10 +24,11 @@ class MarkController extends Controller
      */
     public function displayMark(SessionInterface $session, $id)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
         $nameRoute = $session->get('nameRoute');
 
-        //récupération en base de l'oeuvre via l'entité Mark
+        /**
+         * Récupération de l'oeuvre et de sa description
+         */
         $repository = $this->getDoctrine()->getRepository(Mark::class);
         $currentMark = $repository->find($id);
         $descriptions = $currentMark->getDescriptions();
@@ -45,7 +46,6 @@ class MarkController extends Controller
         return $this->render('Front-Office/newArtwork.html.twig',[
             'currentMark' => $currentMark,
             'description' => $goodDescription,
-//            'map' => $map,
             'nameRoute' => $nameRoute,
             'id' => $id,
         ]);

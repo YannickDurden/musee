@@ -2,7 +2,8 @@
 body{
     margin :0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 .row,
 .col-md-6,
@@ -63,70 +64,82 @@ body{
     content: "\f178";
 }
 
-/* MAP */
+/* MAP ET REPERES */
 #museum-map{
     position: relative;
 }
 
 .repere-map{
     position: absolute;
-    transform: translate(-100%,-100%);
+    -webkit-transform: translate(-100%,-100%);
+            transform: translate(-100%,-100%);
     text-decoration: none;
     color : dodgerblue;
 }
 
 .fa{
     font-size: 50px;
+    color: dodgerblue;
 }
 
 .markVisited{
     color: red;
 }
 
-/* Message flash */
+.legend{
+    margin-left: 50px;
+}
 
-#message-erreur,
-#message-redirection{
-    margin-top: 30px ;
+.legend .fa{
     font-size: 30px;
 }
 
-#message-redirection a{
-    text-decoration: none;
-    color: white;
-    font-size: 30px;
-    text-align: center;
-}
-
-/****/
-
-.score, .progression {
+/* CONTAINER */
+.text, .score, .progression {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
     padding: 15px;
-
 }
+
 .score h2{
     font-family: 'Playfair Display', serif;
 }
 
 .progression h2 {
-    margin-bottom: 1rem;
     font-family: 'Playfair Display', serif;
+    margin-bottom: 1rem;
 }
 
 .progress {
     background-color: lightgray;
 }
+
 .museum-stats {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row;
-    justify-content: space-around;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    -ms-flex-pack: distribute;
+        justify-content: space-around;
 }
 
 .museum-wrapper {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    background-color: rgba(255,255,255,0.8);
 }
 
 .museum-wrapper p{
@@ -137,44 +150,47 @@ body{
     width: 50vw;
 }
 
-@media screen and (max-width: 760px) {
-    .museum-stats {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-    }
-
-    .museum-wrapper {
-        display: flex;
-        flex-direction: column;
-        /*margin-top: 20%;*/
-    }
-
-    .progress {
-        width: 50vw;
-    }
-}
-
 /* mise en forme à la vue tablette en paysage */
 
 @media screen and (min-width: 760px) {
-    #museum-img {
-        width: 100%;
-        height: 50%;
+    .col-12{
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -ms-flex-item-align: center;
+            align-self: center;
+        padding: 15px;
     }
 
-    .col-md-6 {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-self: center;
-        padding: 15px;
+    .museum-wrapper{
+        margin-top: 0;
     }
 
     .score p{
         font-size: 20px;
     }
+
     .text p{
         font-size: 25px;
+    }
+}
+
+@media screen and (min-width: 992px){
+    #museum-map{
+        height: 75vh;
+        width: 75vw;
+        margin: 0 auto;
+    }
+
+    #map{
+        height: 100%;
+        width: 100%;
     }
 }

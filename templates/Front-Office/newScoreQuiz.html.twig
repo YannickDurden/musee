@@ -5,7 +5,7 @@
     <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
-    <link rel="stylesheet" href="{{app.request.basepath}}/css/newScoreQuiz.css">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/style-scoreQuiz.css">
 {% endblock %}
 {% block body %}
     <main class="container-fluid">
@@ -91,6 +91,12 @@
                     </div>
                 </div><!-- museum-wrapper-->
 
+                <div class="legend">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> Non visité
+                    <br>
+                    <i class="fa fa-map-marker markVisited" aria-hidden="true"></i> Visité
+                </div>
+
                 <div id="museum-map" class="col-12">
                     <img  id="map"
                           class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
@@ -101,12 +107,13 @@
                            data-coordy ="{{ mark.coordinateY }}"
                            href="http://localhost:8000/mymuseum/artwork/{{ mark.id }}">
 
-                            <i class="fa fa-map-marker {% for idMark in
-                                visitedMarkArray %}
-                                {% if idMark == mark.id %}
-                                    markVisited
-                                {% endif %}
-                                {% endfor %}" aria-hidden="true"></i>
+                            <i class="fa fa-map-marker
+                                {% for idMark in visitedMarkArray %}
+                                    {% if idMark == mark.id %}
+                                        markVisited
+                                    {% endif %}
+                                {% endfor %}" aria-hidden="true">
+                            </i>
                         </a>
                     {% endfor %}
                 </div>
