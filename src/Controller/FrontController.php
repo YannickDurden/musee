@@ -24,9 +24,9 @@ class FrontController extends Controller
     public function results(SessionInterface $session)
     {
         //récupération de la durée du parcours
-        //$endRouteTime = new \DateTime('now');
-        //$beginRoute = $session->get('startTime');
-        //$calculateTime = $endRouteTime->diff($beginRoute);
+        $endRouteTime = new \DateTime('now');
+        $beginRoute = $session->get('startTime');
+        $calculateTime = $endRouteTime->diff($beginRoute);
 
         $route = $session->get('nameRoute');
         $user = $session->get('firstname');
@@ -36,7 +36,7 @@ class FrontController extends Controller
 
         //$userScore = $this->getDoctrine()->getRepository(Score::class)->find(1);
         return $this->render('Front-Office/end-results.html.twig',[
-            //'duration' => $calculateTime,
+            'duration' => $calculateTime,
             'nameRoute' => $route,
             'score' => $score,
             'totalMark' => $totalMark,

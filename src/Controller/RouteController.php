@@ -170,8 +170,8 @@ class RouteController extends Controller
         }
 
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
-            'marks' => $arrayMarks
-            'map' => $map
+            'marks' => $arrayMarks,
+            'map' => $map,
         ]);
     }
 

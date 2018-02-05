@@ -38,18 +38,16 @@
         <div class="section-route container-fluid">
             <div class="row">
                 <div class="museum-wrapper col-12 text-center">
-
                     <!-- Message flash Erreur -->
                     {% for message in app.flashes('erreur') %}
                         <div id="message-erreur" class="flash-notice alert alert-danger">
                             {{ message }}
                         </div>
                     {% endfor %}
-                    <!-- Message flash Erreur-->
-
+                    <!-- Fin Message flash Erreur-->
                     <!-- Message flash  Redirection -->
                     {% for message in app.flashes('redirection') %}
-                        <div id="message-redirection" flash-notice alert alert-info">
+                        <div id="message-redirection" class="alert alert-info">
                             {{ message }}
                             <br>
                             <button type="button"
@@ -64,14 +62,16 @@
                             </button>
                         </div>
                     {% endfor %}
-                    <!-- Message flash  Redirection-->
+                    <!-- Fin Message flash  Redirection-->
 
                     <div class="museum-stats">
                         <div class="score text-center">
                             <h2 class="h4">Score</h2>
                             <p>{{ message }}</p>
-                            <p>Votre score actuel sur le parcours est de : <br> {{
-                                correctAnswers }} sur {{ totalMark }}</p>
+                            <p>
+                                Votre score actuel sur le parcours est de : <br>
+                                {{ correctAnswers }} sur {{ totalMark }}
+                            </p>
                         </div>
 
                         <div class="progression text-center">
@@ -86,8 +86,7 @@
                     </div>
 
                     <div class="text">
-                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
-                           visite</p>
+                        <p>Sélectionnez un point suivant sur la carte pour continuer votre visite</p>
                     </div>
                 </div><!-- museum-wrapper-->
 
@@ -116,9 +115,8 @@
                             </i>
                         </a>
                     {% endfor %}
-                </div>
-
-            </div>
+                </div><!-- Museum map -->
+            </div><!-- div row -->
         </div>
     </main>
 {% endblock %}

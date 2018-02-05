@@ -108,21 +108,23 @@ class DefaultController extends Controller
      */
     public function beginRoute(SessionInterface $session)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $musueum = $session->get('museum');
+        $map = $musueum->getMap();
 
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
-        $idMark = $session->get('selectedRoute');
+        $marksArray = $session->get('selectedRoute');
 
         $startRouteTime = new \DateTime('now');
         $session->set('startTime',$startRouteTime);
 
         return $this->render('Front-Office/newBeginRoute.html.twig',[
-            'idMark' => $idMark,
+            'marksArray'=> $marksArray,
             'map'=> $map,
             'progression' => $progression,
             'nameRoute' => $session->get("nameRoute"),
             'correctAnswers' => $session->get('correctAnswers'),
             'totalMark' => $session->get('totalMark'),
+            'visitedMarkArray' => $session->get('visitedMarkArray'),
         ]);
     }
 
