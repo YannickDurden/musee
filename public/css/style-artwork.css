@@ -2,7 +2,8 @@
 body{
     margin :0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
 }
 .row,
 .col-md-6,
@@ -75,7 +76,8 @@ h1{
 /* IMAGE ARTWORK */
 
 .img-tablet img{
-    box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+    -webkit-box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+            box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
 }
 
 .img-tablet{
