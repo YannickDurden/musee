@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Entity\Museum;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
+use App\Form\DeleteRoutesType;
+use App\Form\DeleteMarksType;
 use Doctrine\ORM\Mapping\Entity;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -25,13 +27,15 @@ class RouteController extends Controller
     {
         $newRoute = new \App\Entity\Route();
         $form = $this->generateCreateForm($newRoute);
-        $museum = $session->get('museum');
+        //$museum = $session->get('museum');
 
+        //dump($museum);
+        //exit;
 
         return $this->render('Back-office/route/add.html.twig', [
             'formAdd' => $form->createView(),
             'newRoute' => $newRoute,
-            'museum' => $museum
+          //  'museum' => $museum
         ]);
     }
     /**
@@ -112,9 +116,11 @@ class RouteController extends Controller
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
+
         $em = $this->getDoctrine()->getManager();
         $map = $em->getRepository(Museum::class)->findBy([], ['id' => 'desc'], 1);
         $museum = $session->get('museum');
+
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
         $allMarks = [];
@@ -145,6 +151,26 @@ class RouteController extends Controller
             'formList' => $form2->createView(),
             'formMark' => $formMark->createView(),
             'museum' => $museum,
+            'map'=>$map
+        ]);
+    }
+
+        /**
+         * @route("/ajax/getMarks", name="getMarks")
+         */
+    public function getMarks(Request $request, SessionInterface $session)
+    {
+        $id = $_POST['id'];
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
+        $allMarks = $currentRoute->getMarks();
+        $arrayMarks = [];
+
+        foreach ($allMarks as $mark) {
+            $arrayMarks[$mark->getName()] = $mark->getId();
+        }
+
+        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
+            'marks' => $arrayMarks
             'map' => $map
         ]);
     }
@@ -162,6 +188,68 @@ class RouteController extends Controller
         ]);
     }
 
+
+    /**
+     * @route("route/delete-routes", name="delete_routes")
+     */
+
+    public function deleteRoutes(Request $request, SessionInterface $session)
+    {
+        $form = $this->createForm( DeleteRoutesType::class
+        );
+        $form->handlerequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $id = $form->getData();
+            $currentRoute= $id['name'];
+            //$currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($currentRoute);
+            $em->flush();
+            return new Response('Suppression confirmée');
+
+        }
+
+        //dump($currentRoute);
+        //exit;
+
+        return $this->render('Back-Office/BackOffice-v2/delete-routes.html.twig',
+            [
+                'formRoute' => $form->createView()
+            ]);
+    }
+
+    /**
+     * @route("route/delete-marks", name="delete_marks")
+     */
+
+    public function deleteMarks(Request $request, SessionInterface $session)
+    {
+        $form = $this->createForm( DeleteMarksType::class
+        );
+        $form->handlerequest($request);
+
+
+        if ($form->isSubmitted() && $form->isValid()){
+            $id = $form->getData();
+            $currentMark = $id['name'];
+            //$currentMark = $this->getDoctrine()->getRepository(\App\Entity\Mark::class)->find($id);
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($currentMark);
+            $em->flush();
+            return new Response('Suppression confirmée');
+
+        }
+
+        //dump($currentMark);
+        //exit;
+
+        return $this->render('Back-Office/BackOffice-v2/delete-marks.html.twig',
+            [
+                'formMarks' => $form->createView()
+            ]);
+    }
 
 
 }
