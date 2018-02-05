@@ -33,10 +33,13 @@ class QuestionController extends Controller
         $repository = $this->getDoctrine()->getRepository(Mark::class);
         $currentMark = $repository->find($id);
 
+        /**
+         * Récupération de la question et des réponses puis
+         * décodage du json pour envoyer les réponses dans la vue
+         */
         $question = $currentMark->getQuestions();
-
-        //décodage du json pour envoyer les réponses dans la vue
         $answers = $question[0]->getAnswers();
+
         $json = json_decode($answers,true);
 
         $jsonFinal = [];
@@ -44,13 +47,14 @@ class QuestionController extends Controller
            $jsonFinal[$a] = $a;
         }
 
+        /**
+         * Boucle pour mélanger les réponses dans
+         * un nouveau tableau
+         */
         $newArray = [];
         while (count($jsonFinal)) {
-                // takes a rand array elements by its key
                 $element = array_rand($jsonFinal);
-                // assign the array and its value to an another array
                 $newArray[$element] = $jsonFinal[$element];
-                //delete the element from source array
                 unset($jsonFinal[$element]);
             }
 
@@ -67,45 +71,32 @@ class QuestionController extends Controller
 
         $formBuilder->handleRequest($request);
 
+        //Soumission du formulaire
         if($formBuilder->isSubmitted() && $formBuilder->isValid())
         {
             $userAnswer = $formBuilder->getData();
-            /*
-            $answeredQuestions = $session->get('answeredQuestions');
-            $answeredQuestions++;
-            $session->set('answeredQuestions',$answeredQuestions);
-
-            if($json['goodAnswer'] == $userAnswer['answers'])
-            {
-                $session->set('lastQuestion', true);
-                $currentReponsePositive = $session->get('correctAnswers');
-                $currentReponsePositive++ ;
-                $session->set('correctAnswers',$currentReponsePositive);
-
-            } else {
-                $session->set('lastQuestion', false);
-            }
-            */
 
             if(!(in_array($id,$session->get('visitedMarkArray'))))
             {
                 /**
-                 * Ajoute dans un tableau l'id du repère si celui-ci n'est pas dans le tableau
+                 * Ajoute dans un tableau l'id du repère si celui-ci
+                 * n'est pas dans le tableau
                  */
                 $visitedMarkArray = $session->get('visitedMarkArray');
                 array_push($visitedMarkArray,$id);
                 $session->set('visitedMarkArray',$visitedMarkArray);
 
                 /**
-                 * Incrémente la variable de session qui recupère le nombre de quiz réalisé
+                 * Incrémente la variable de session qui recupère
+                 * le nombre de quiz réalisé
                  */
                 $markCount = $session->get('markCount');
                 $markCount++;
                 $session->set('markCount',$markCount);
 
                 /**
-                 * Recupère le nombre de question auquelle on a répondu et incrémente si
-                 * c'est la première fois
+                 * Recupère le nombre de questions auxquelles on a répondu
+                 * et incrémente si 'est la première fois
                  */
                 $answeredQuestions = $session->get('answeredQuestions');
                 $answeredQuestions++;
@@ -148,11 +139,10 @@ class QuestionController extends Controller
 
 
         //Affichage de la carte avec l'id
-        $mapRespository = $this->getDoctrine()->getRepository(Museum::class);
-        $map = $mapRespository->find(1);
+        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
 
         return $this->render('Front-Office/newQuiz.html.twig',[
-            'map' => $map->getMap(),
+            'map' => $map,
             'question' => $question[0],
             'currentMark' => $currentMark,
             'formQ'=> $formBuilder->createView(),
@@ -180,6 +170,7 @@ class QuestionController extends Controller
             $message = 'Dommage, ce n\'était pas la bonne réponse';
         }
 
+        //Affichage de la progression
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
 
         return $this->render("/Front-Office/newScoreQuiz.html.twig",[
