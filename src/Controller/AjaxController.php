@@ -18,7 +18,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
-use App\Entity\Route as r;
 
 
 
@@ -31,7 +30,7 @@ class AjaxController extends Controller
     public function ajaxEditRoute(Request $request)
     {
         $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(r::class)->find($id);
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
         $currentMap = new File('C:\xampp\htdocs\musee\public\uploads\\' . $currentRoute->getMap());
         $currentRoute->setMap($currentMap);
         $form = $this->createForm(AddRouteType::class, $currentRoute);
@@ -59,7 +58,7 @@ class AjaxController extends Controller
         parse_str($_POST['form'], $arrayObject);
 
         //Recuperation de la route en BDD et mise à jour des valeurs
-        $updatedRoute = $this->getDoctrine()->getRepository(r::class)->find($_POST['id']);
+        $updatedRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($_POST['id']);
         $updatedRoute->setName($arrayObject['add_route']['name']);
         $updatedRoute->setDescription($arrayObject['add_route']['description']);
         $durationArrayToString = strval($arrayObject['add_route']['duration']['hour']) . " " . strval($arrayObject['add_route']['duration']['minute']);
@@ -186,7 +185,7 @@ class AjaxController extends Controller
         */
         parse_str($_POST['routeInfo'], $decodedJson);
         $arrayMarks = [];
-        $newRoute = $this->getDoctrine()->getRepository(r::class)->findOneBy(['name' => $_POST['name']]);
+        $newRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $_POST['name']]);
         if ($newRoute == null) {
             $newRouteToSave = new \App\Entity\Route();
         } else {
@@ -290,7 +289,7 @@ class AjaxController extends Controller
     public function getMarks(Request $request, SessionInterface $session)
     {
         $name = $_POST['name'];
-        $currentRoute = $this->getDoctrine()->getRepository(r::class)->findOneBy(['name' => $name]);
+        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $name]);
         $allMarks = $currentRoute->getMarks();
         $duration = $currentRoute->getDuration();
         $arrayMarks = [];
@@ -320,7 +319,7 @@ class AjaxController extends Controller
     public function displayAllroute(Request $request)
     {
         $routes = $this->getDoctrine()->getManager()
-            ->getRepository(r::class)
+            ->getRepository(\App\Entity\Route::class)
             ->findAll();
         $jsonData = array();
         $idx = 0;
@@ -343,7 +342,7 @@ class AjaxController extends Controller
     {
         $tableId = $request->request->get('tableId');
         $em=$this->getDoctrine()->getManager();
-        $route = $em->getRepository(r::class)->find($tableId);
+        $route = $em->getRepository(\App\Entity\Route::class)->find($tableId);
         $em->remove($route);
         $em->flush();
         return new Response("is Delete");
