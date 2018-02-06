@@ -1,9 +1,6 @@
-#museum-edit {
-    top: 2vh;
-    left: 17vw;
-}
+/* mise en forme formulaire edit infos et ajout de la map */
 
-#museum-edit .input-museum  {
+.input-museum  {
     margin-bottom: 3vh;
 }
 

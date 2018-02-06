@@ -15,6 +15,7 @@ class AddSelectRouteType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        //champ select en fonction de l'id du musée
         $builder->add('route', EntityType::class, [
             'class' => Route::class,
             'choice_label' => 'name',

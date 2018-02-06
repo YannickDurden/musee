@@ -4,13 +4,18 @@
     {% block stylesheets %}
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
         <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-recap.css">
     {% endblock %}
 
 {% block body %}
 <section id="jumbotron" class="picture-museum">
-    <div id="bg-jumbotron">
-        <h1>{{ userName }}, les résultats de votre visite: {{ nameRoute }}</h1>
+    <div id="bg-jumbotron"> <!-- calc blanc dégradé sur image -->
+        <h1>My Museum</h1>
+        <h2>{{ userName }}, les résultats de votre visite: {{ nameRoute }}</h2>
+
+        <!-- Div blanc Container -->
+        <!--  Récapitulatif des résultats de session -->
         <div class="section-recap container-fluid">
             <div class="row">
                 <div id="results" class="col-12 col-md-12 text-center">
@@ -20,8 +25,9 @@
                         </div>
 
                         <div class="stats text-center">
-                            <h2 class="h4">Durée de votre parcours</h2>
-                            <p id="durate">{{ duration.h }} heure et {{ duration.i }} minutes.</p>
+                            <h3 class="h4">Durée de votre parcours</h3>
+                            <p id="durate">{{ duration.h }} heure et {{ duration.i }}
+                                                            minutes .</p>
                         </div>
                     </div>
                     <div class="museum-best">
@@ -30,18 +36,21 @@
                         </div>
 
                         <div class="stats text-center">
-                            <h2 class="h4">Votre score total</h2>
+                            <h3 class="h4">Votre score total</h3>
                             <p id="score">{{ score }} / {{ totalMark }} </p>
                         </div>
                     </div>
 
+                    <!-- Bouton Recevoir Newsletter -->
                     <div class="return-btn">
                         <button type="button" class="btn-submit btn btn-lg">
                             <a href="{{ path("newsletter") }}">Recevoir mes scores <br> par mail</a>
                         </button>
                     </div>
+
+                    <!-- Bouton retour page home -->
                     <div class="return-btn">
-                        <!-- START SCRIPT MODAL -->
+                        <!-- START SCRIPT MODAL SI RETOUR A L'ACCUEIL -->
                         <!-- Button trigger modal -->
                         <button type="button" id="btn-home" class="btn-submit btn btn-lg" data-toggle="modal" data-target="#modalHome">
                             Retour à l'accueil

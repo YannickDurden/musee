@@ -73,14 +73,24 @@ html, body, #content {
     margin-right: 0;
 }
 
-#map {
+#map
+{
     position: relative;
 }
-
 #map img {
+
     height: 100%;
     width: 100%;
 }
+
+.pointeur
+{
+    position: absolute;
+}
+#delete_icon_map{
+    background-image: url("../uploads/delete-m1.png");
+}
+
 
 #repereMap {
     position: absolute;
@@ -141,6 +151,7 @@ html, body, #content {
  */
 
 #pills-tab {
+>>>>>>> dev
     background-color: #e9ecef;
     display: flex;
     justify-content: space-between;

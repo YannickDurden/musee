@@ -4,10 +4,8 @@
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    background: url('img/louvre.jpg') no-repeat center center;
-    background-size: cover;
-    height: 100vh;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 
 }
@@ -34,11 +32,18 @@ body {
 #bg-jumbotron {
     overflow-x: hidden;
     overflow-y: auto;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
     height: 100vh;
     width: 100vw;
 }
 
+#bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
 
 /* mise en forme formulaire */
 
@@ -56,9 +61,16 @@ body {
 }
 
 .form-email {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     padding: 40px;
     color: grey;
     font-size: 15px;

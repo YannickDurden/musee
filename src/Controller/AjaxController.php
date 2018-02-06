@@ -10,14 +10,17 @@ use App\Entity\Question;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
 use Doctrine\Common\Collections\ArrayCollection;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Validator\Constraints\DateTime;
+use App\Entity\Route as r;
+
+
 
 class AjaxController extends Controller
 {
@@ -48,11 +51,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @route("ajax/route/add", name="ajax_add_BDD")
-     */
-
-    /*
-     * Route permettant d'ajouter en BDD une route via AJAX
+     * @Route("ajax/route/add", name="ajax_add_BDD")
      */
     public function addAjaxBdd()
     {
@@ -141,9 +140,11 @@ class AjaxController extends Controller
         }
         $savedMark->setDescriptions($descriptions);
         $savedMark->setQuestions($questions);
+
         $savedMark->setMedias($this->getDoctrine()->getRepository(Media::class)->find($decodedJson['add_mark_add']['medias']));
         $savedMark->setImage('123456.jpeg');
         $sessionMarks = $session->get('savedMarksNames');
+
         // Avant de stocker en session il faut verifier que ça ne soit pas qu'un update d'un repère exisant dans le parcours
         if (!(in_array($savedMark->getName(), $sessionMarks))) {
             $sessionMarks [] = $savedMark->getName();
@@ -296,27 +297,6 @@ class AjaxController extends Controller
             'duration' => $duration,
             'encodedNames' => $encodedArrayNames
         ]);
-    }
-
-    /**
-     * @Route("/mymuseum/ajax-media", name="ajax_media", methods={"GET", "HEAD"})
-     */
-    public function ajaxDescription($action, $param)
-    {
-        /**
-         * retourne l'image chargée
-         */
-        /*if($action == 'getdescription' && $param) {
-
-            $getInfo = $this->getDoctrine()->getRepository(\App\Entity\Route::class);
-            $info = $getInfo->find(intval($param));
-            $description = $info->getDescription();
-            $duration = $info->getDuration();
-        }
-        return $this->render('Front-Office/ajax.html.twig', [
-            'description' => $description,
-            'duration' => $duration,
-        ]);*/
     }
 
     /**

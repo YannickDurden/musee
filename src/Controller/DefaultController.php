@@ -44,9 +44,11 @@ class DefaultController extends Controller
      */
     public function myMuseumHome(SessionInterface $session, Request $request)
     {
+        //formulaire prénom
         $form = $this->createForm(UserLogType::class);
         $form->handleRequest($request);
 
+        //création des variables de sessions (données dont nous aurons besoin)
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $session->set('firstname', $user->getFirstName());
@@ -65,10 +67,12 @@ class DefaultController extends Controller
      */
     public function myMuseumSession(SessionInterface $session, Request $request)
     {
+        //formulaire sélection parcours + récup du prénom en session
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
         $user = $session->get('firstname');
 
+        //si form soumis création de variables de sessions pour pages de la visite et récapitulatif fin de parcours
         if($form->isSubmitted() && $form->isValid())
         {
             $id = $form->getData();
@@ -95,21 +99,30 @@ class DefaultController extends Controller
      */
     public function beginRoute(SessionInterface $session)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
-        $idMark = $session->get('selectedRoute');
-        $startRouteTime = new \DateTime('now');
-        $session->set('startTime', $startRouteTime);
+        $musueum = $session->get('museum');
+        $map = $musueum->getMap();
 
-        return $this->render('Front-Office/begin-route.html.twig',[
-            'idMark' => $idMark,
+        $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
+        $marksArray = $session->get('selectedRoute');
+
+        $startRouteTime = new \DateTime('now');
+        $session->set('startTime',$startRouteTime);
+
+        return $this->render('Front-Office/newBeginRoute.html.twig',[
+            'marksArray'=> $marksArray,
             'map'=> $map,
+            'progression' => $progression,
+            'nameRoute' => $session->get("nameRoute"),
+            'correctAnswers' => $session->get('correctAnswers'),
+            'totalMark' => $session->get('totalMark'),
+            'visitedMarkArray' => $session->get('visitedMarkArray'),
         ]);
     }
 
     /**
      * @Route("/mymuseum/newsletter", name="newsletter")
      */
-    public function newsletter(Request $request, \Swift_Mailer $mailer)
+    public function newsletter(SessionInterface $session, Request $request, \Swift_Mailer $mailer)
     {
         $newUser = $this->createForm(UserRegisterType::class);
 
@@ -130,7 +143,12 @@ class DefaultController extends Controller
                 ->setFrom('mymuseumwf3@gmail.com')
                 ->setTo($mail)
                 ->setBody(
-                    $this->renderView('Front-Office/email.html.twig'),
+                    $this->renderView('Front-Office/email.html.twig',[
+                        'firstname' => $session->get('firstname'),
+                        'nameRoute' => $session->get('nameRoute'),
+                        'correctAnswers' => $session->get('correctAnswers'),
+                        'totalMark' => $session->get('totalMark'),
+                    ]),
                     'text/html'
                 );
 
@@ -143,7 +161,6 @@ class DefaultController extends Controller
             'formRegister' => $newUser->createView(),
         ]);
     }
-
     /**
      * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */

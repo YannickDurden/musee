@@ -3,7 +3,8 @@
 body {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     font-family: 'Montserrat', sans-serif;
 }
 
@@ -13,7 +14,8 @@ body {
     padding: 0;
 }
 
-/* Page select parcours */
+/* Page select parcours
+   Background fond et div */
 #jumbotron {
     position: relative;
     background: url('img/louvre.jpg') no-repeat center center;
@@ -24,22 +26,30 @@ body {
 #bg-jumbotron {
     overflow-x: hidden;
     overflow-y: auto;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
     height: 100vh;
     width: 100vw;
 }
 
 #bg-jumbotron h1 {
-    color: rgb(78, 255, 176);
-    font-size: 30px;
-    text-align: center;
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
     margin-top: 7vh;
+    text-align: center;
+}
 
+#bg-jumbotron h2 {
+    color: rgb(78, 255, 176);
+    font-size: 25px;
+    text-align: center;
+    margin-top: 5vh;
+    padding: 10px;
 }
 
 .section-route {
     position: absolute;
-    top: 30vh;
+    top: 33vh;
     left: 0;
     padding: 0 10vw 0 10vw;
 }
@@ -50,18 +60,20 @@ body {
     color: rgb(20, 20, 20);
 }
 
-/* CONTAINER */
+/* mise en forme formulaire selection parcours */
 
 .form-route {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     padding: 40px;
-}
-
-.link-route {
-    text-decoration: none;
-    color: white;
 }
 
 .border-desc {
@@ -84,8 +96,12 @@ body {
     text-transform: uppercase;
     margin-top: 5%;
 }
+#display-route {
+    max-height: 30vh;
+}
 
 
+/*mise en forme btn Démarrer pour vue mobile */
 @media screen and (max-width: 760px) {
 
     .btn-start {
@@ -97,20 +113,20 @@ body {
         border-radius: 0;
         padding: 20px;
     }
-    #display-route {
-        max-height: 30vh;
-    }
+
 }
 
-
-    /* mise en forme à la vue tablette en paysage */
+/* mise en forme à la vue tablette */
 
 @media screen and (min-width: 760px) {
-    #bg-jumbotron h1 {
-        margin-top: 14vh;
+
+    #bg-jumbotron h2 {
+        margin-top: 6vh;
+        font-size: 30px;
     }
     .section-route {
         padding: 0 25vw 0 25vw;
+        top: 30vh;
     }
     #display-route {
         max-height: 25vh;
@@ -118,14 +134,22 @@ body {
 
     .btn-start {
         border-radius: .3rem;
-        margin-top: 7vh;
+        margin-top: 5vh;
         padding: 15px;
     }
     .col-12 {
+        display: -webkit-box;
+        display: -ms-flexbox;
         display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-self: center;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -ms-flex-item-align: center;
+            align-self: center;
         padding: 15px;
     }
 }
