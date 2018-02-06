@@ -21,99 +21,9 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 class RouteController extends Controller
 {
-    /**
-     * @Route("/route/add", name="new_route", methods="GET")
-     */
-    public function newRoute(Request $request, SessionInterface $session)
-    {
-        $newRoute = new \App\Entity\Route();
-        $form = $this->generateCreateForm($newRoute);
-        //$museum = $session->get('museum');
-
-        //dump($museum);
-        //exit;
-
-        return $this->render('Back-office/route/add.html.twig', [
-            'formAdd' => $form->createView(),
-            'newRoute' => $newRoute,
-          //  'museum' => $museum
-        ]);
-    }
-    /**
-     * @Route("/route/add", name="create_route", methods="POST")
-     */
-    public function createRoute(Request $request, SessionInterface $session)
-    {
-        $em2 = $this->getDoctrine()->getManager();
-        $newRoute = new \App\Entity\Route();
-        $museum = $session->get('museum');
-        $form = $this->generateCreateForm($newRoute);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $currentMuseumId = $museum->getId();
-            $newRoute->setMuseum($this->getDoctrine()->getRepository(Museum::class)->find($currentMuseumId));
-
-            $file = $form->get('map')->getData();
-
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-            $file->move(
-                $this->getParameter('uploads_directory'),
-                $fileName
-            );
-
-
-            $newRoute->setMap($fileName);
-
-            $em2->persist($newRoute);
-            $em2->flush();
-
-            return new Response("Insertion faite");
-        }
-        return $this->render('Back-office/route/add.html.twig', [
-            'formAdd' => $form->createView(),
-            'museum' => $museum
-        ]);
-    }
-
-    private function generateCreateForm(\APP\Entity\Route $newRoute)
-    {
-        $form = $this->createForm(AddRouteType::class, $newRoute, [
-            'action' => $this->generateUrl('create_route'),
-            'method' => 'POST'
-        ]);
-        return $form;
-    }
-
 
     /**
-     * @Route("/route/edit", name="edit_route")
-     */
-
-    public function editAjax(Request $request, SessionInterface $session)
-    {
-        $museum = $session->get('museum');
-        $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
-        //Conversion du tableau d'objet en tableau associatif id => nom
-        $arrayRoutes = [];
-        foreach ($allRoutes as $route) {
-            $arrayRoutes[$route->getName()] = $route->getId();
-        }
-        $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
-            'choices' => $arrayRoutes
-        ]);
-        $form2 = $formBuilder->getForm();
-        $form2->handlerequest($request);
-
-        return $this->render('Back-Office/route/update2.html.twig', [
-
-            'formList' => $form2->createView(),
-            'museum' => $museum
-        ]);
-    }
-
-    /**
-     * @Route("/back-office/route/edit", name="edit_routev2")
+     * @Route("/admin/route/edit", name="edit_routev2")
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
@@ -165,7 +75,7 @@ class RouteController extends Controller
     }
 
     /**
-     * @Route("route/list", name="list_routes")
+     * @Route("/admin/route/list", name="list_routes")
      */
     public function listRoutes(SessionInterface $session)
     {
@@ -179,7 +89,7 @@ class RouteController extends Controller
 
 
     /**
-     * @route("route/delete-routes", name="delete_routes")
+     * @route("/admin/route/delete-routes", name="delete_routes")
      */
 
     public function deleteRoutes(Request $request, SessionInterface $session)
@@ -206,7 +116,7 @@ class RouteController extends Controller
     }
 
     /**
-     * @route("route/delete-marks", name="delete_marks")
+     * @route("/admin/route/delete-marks", name="delete_marks")
      */
 
     public function deleteMarks(Request $request, SessionInterface $session)
