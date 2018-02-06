@@ -51,43 +51,6 @@ class AjaxController extends Controller
     }
 
     /**
-     * @Route("ajax/route/add", name="ajax_add_BDD")
-     */
-    public function addAjaxBdd()
-    {
-        //Décompose le json recu en tableau
-        parse_str($_POST['form'], $arrayObject);
-
-        //Recuperation de la route en BDD et mise à jour des valeurs
-        $updatedRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($_POST['id']);
-        $updatedRoute->setName($arrayObject['add_route']['name']);
-        $updatedRoute->setDescription($arrayObject['add_route']['description']);
-        if($arrayObject['add_route']['duration']['minute'] < 10)
-        {
-            $minutes = "0".strval($arrayObject['add_route']['duration']['minute']);
-        }
-        else
-        {
-            $minutes = strval($arrayObject['add_route']['duration']['minute']);
-        }
-        $durationArrayToString = strval($arrayObject['add_route']['duration']['hour']) . " " . $minutes;
-        //$updatedRoute->setMap($_POST['fileName']);
-        $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
-        $updatedRoute->setDuration($duration);
-        $arrayMarks = new ArrayCollection();
-        //Boucle permettant de récuperer tout les repères associés a une route pour update les modif de la route
-        for ($i = 0; $i < count($arrayObject['add_route']['marks']); $i++) {
-            $arrayMarks [] = $this->getDoctrine()->getRepository(Mark::class)->find($arrayObject['add_route']['marks'][$i]);
-        }
-        $updatedRoute->setMarks($arrayMarks);
-        $em = $this->getDoctrine()->getManager();
-        $em->merge($updatedRoute);
-        $em->flush();
-
-        return new Response("Modif effectuée");
-    }
-
-    /**
      * @route("ajax/saveMarkToSession", name="add_mark_session")
      * Créé un objet de type Mark avec les info envoyées l'ajoute en BDD et le stock en session
      */
@@ -293,7 +256,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @route("/ajax/getMarks", name="getMarks")
+     * @route("ajax/getMarks", name="getMarks")
      */
     public function getMarks(Request $request, SessionInterface $session)
     {

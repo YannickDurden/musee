@@ -12,15 +12,15 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 class MediaController extends Controller
 {
     /**
-     * @Route("/back-office/media", name="media_edit")
+     * @Route("/admin/media", name="media_edit")
      */
     public function media(Request $request, SessionInterface $session)
     {
-        //$museum = $session->get('museum');
+        //creation formulaire
         $form = $this->createForm(AddMediaType::class);
         $form->handleRequest($request);
 
-
+        // générer preview de l'image si form valid et soumis
         if ($form->isSubmitted() && $form->isValid())
         {
             $media = $form->getData();
@@ -43,16 +43,14 @@ class MediaController extends Controller
             $em->persist($media);
             $em->flush();
 
-            //addFlash ne fonctionne pas: faire afficher un message sur la page existante "modif enregistrées"
-            //$this->addFlash('notice', 'Vos modifications ont bien été enregistrées.');
 
-            return new Response('okkk');
         }
 
-
+        $currentMedia = $this->getDoctrine()->getRepository(\App\Entity\Media::class)->findBy([], ['id' => 'DESC'], 1);
 
         return $this->render('Back-Office/BackOffice-v2/media.html.twig', [
             'formMedia' => $form->createView(),
+            'currentMedia' => $currentMedia[0],
         ]);
     }
 }

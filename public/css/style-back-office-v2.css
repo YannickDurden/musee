@@ -7,8 +7,7 @@ html, body, #content {
 }
 
 #col-content {
-    padding: 0;
-    left: 17vw;
+    top: 0;
 }
 
 /*
@@ -57,13 +56,6 @@ html, body, #content {
     bottom: 0;
 }
 
-#nav .nav-link.active {
-    text-decoration: underline;
-    text-underline-position: under;
-    text-underline-color: rgb(1, 74, 238);
-    color: white;
-    border-radius: 5px;
-}
 
 /*
  * Map
@@ -151,7 +143,6 @@ html, body, #content {
  */
 
 #pills-tab {
->>>>>>> dev
     background-color: #e9ecef;
     display: flex;
     justify-content: space-between;
