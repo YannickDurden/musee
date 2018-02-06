@@ -41,7 +41,7 @@
         <div id="wrapper" class="row">
             <div class="img-tablet col-12 col-md-6">
                 <img class="img-artwork img-fluid w-100"
-                     src="{{app.request.basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{currentMark.image }#}"
+                     src="{{app.request.basepath}}/uploads/{{ currentMedia.file }}"
                      alt="image de l'oeuvre">
 
             </div>
@@ -66,7 +66,7 @@
 
                 <section class="img-mobile">
                     <img class="img-artwork img-fluid w-100"
-                         src="{{app.request.basepath}}/uploads/{{ currentMark.image }}"
+                         src="{{app.request.basepath}}/uploads/{{ currentMedia.file }}"
                          alt="image de l'oeuvre">
                     <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
                 </section>

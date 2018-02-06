@@ -4,6 +4,13 @@ body{
     padding: 0;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    background-color: rgba(1, 32, 86,0.4);
+}
+
+.calc-bg{
+    height: 100vh;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
+    background: linear-gradient(0deg, rgba(255,255,255,0.65), rgba(255, 255, 255, 0));
 }
 .row,
 .col-md-6,
@@ -81,7 +88,7 @@ h1{
 }
 
 .img-tablet{
-    padding: 40px;
+    padding: 0 40px 40px 40px;
 }
 
 /* DESCRIPTION ARTWORK*/
@@ -101,21 +108,28 @@ article p{
 
 }
 
+#btn-tablet{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
 #btn-tablet a{
     font-size: 16px;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: white;
-    background-color: yellowgreen;
-    font-family: 'Montserrat', sans-serif;
+    color: rgb(1, 32, 86);
+    background-color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
     text-decoration: none;
-    border-bottom: 1px solid rgb(1, 83, 255);
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 }
 
 #btn-tablet .active{
-    background-color: rgb(1, 83, 255);
+    background-color: rgb(1, 32, 86);
+    color: whitesmoke;
 }
 
 
@@ -124,16 +138,16 @@ article p{
     font-size: 1em;
     letter-spacing: 1px;
     text-transform: uppercase;
-    color: white;
-    background-color: yellowgreen;
-    font-family: 'Montserrat', sans-serif;
+    color: rgb(1, 32, 86);
+    background-color: rgb(78, 255, 176);
+    font-family: 'Raleway', sans-serif;
     text-decoration: none;
-    border-bottom : 1px solid rgb(1, 83, 255);
     border-radius: 0;
 }
 
 #btn-footer .active{
-    background-color: rgb(1, 83, 255);
+    background-color: rgb(1, 32, 86);
+    color: rgb(78, 255, 176);
 }
 
 /* AFFICHAGE TABLETTE */
@@ -153,7 +167,11 @@ article p{
     }
 
     #border-tablet{
-        padding: 40px;
+        padding: 0 40px 40px 40px;
+        max-height: 66vh;
+        background-color: rgba(245, 248, 255, 0.5);
+        border-radius: 5px;
+        position: relative;
     }
 }
 

@@ -55,9 +55,10 @@
                 </div>
                 <!-- Fin du menu depliable d'info parcours -->
 
-                     <div class="row" id="map-mark">
+                <div class="row" id="map-mark">
 
-                        <div class="col col-6" id="map-contain">
+
+                    <div class="col col-6" id="map-contain">
                         <!-- Affichage de la map du parcours -->
 
                         <div class="col" id="map">
@@ -70,7 +71,7 @@
                                     </div>
                                 </a>
                             {% endfor %}
-
+                        </div>
                         <!-- Fin d'affichage de la map du parcours -->
 
                         <!-- Divs de l'animation de chargement pendant les requètes AJAX -->
@@ -87,20 +88,19 @@
                         <h3>Liste des reperes ajoutés</h3>
                         <table class="table table-striped" id="table-mark">
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nom du repère</th>
-                                <th scope="col">Modifier</th>
-                                <th scope="col">Supprimer</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nom du repère</th>
+                                    <th scope="col">Modifier</th>
+                                    <th scope="col">Supprimer</th>
+                                </tr>
                             </thead>
+
                             <tbody>
-
-                        <div class="col" id="liste-reperes">
-
-                        </div>
+                                <div class="col" id="liste-reperes"></div>
                             </tbody>
                         </table>
+
                         <div class="col" id="selectedMark">
                         </div>
                     </div>
