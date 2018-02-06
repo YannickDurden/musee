@@ -47,7 +47,8 @@
                     <!-- Fin Message flash Erreur-->
                     <!-- Message flash  Redirection -->
                     {% for message in app.flashes('redirection') %}
-                        <div id="message-redirection" class="alert alert-info">
+                        <div id="message-redirection"
+                             class="alert alert-info">
                             {{ message }}
                             <br>
                             <button type="button"
