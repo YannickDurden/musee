@@ -10,9 +10,12 @@
 
 {% block body %}
 <section id="jumbotron" class="picture-museum">
-    <div id="bg-jumbotron">
+    <div id="bg-jumbotron"> <!-- calc blanc dégradé sur image -->
         <h1>My Museum</h1>
         <h2>{{ userName }}, les résultats de votre visite: {{ nameRoute }}</h2>
+
+        <!-- Div blanc Container -->
+        <!--  Récapitulatif des résultats de session -->
         <div class="section-recap container-fluid">
             <div class="row">
                 <div id="results" class="col-12 col-md-12 text-center">
@@ -38,13 +41,16 @@
                         </div>
                     </div>
 
+                    <!-- Bouton Recevoir Newsletter -->
                     <div class="return-btn">
                         <button type="button" class="btn-submit btn btn-lg">
                             <a href="{{ path("newsletter") }}">Recevoir mes scores <br> par mail</a>
                         </button>
                     </div>
+
+                    <!-- Bouton retour page home -->
                     <div class="return-btn">
-                        <!-- START SCRIPT MODAL -->
+                        <!-- START SCRIPT MODAL SI RETOUR A L'ACCUEIL -->
                         <!-- Button trigger modal -->
                         <button type="button" id="btn-home" class="btn-submit btn btn-lg" data-toggle="modal" data-target="#modalHome">
                             Retour à l'accueil

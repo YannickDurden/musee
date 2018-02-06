@@ -14,7 +14,8 @@ body {
     padding: 0;
 }
 
-/* Page select parcours */
+/* Page select parcours
+   Background fond et div */
 #jumbotron {
     position: relative;
     background: url('img/louvre.jpg') no-repeat center center;
@@ -40,16 +41,15 @@ body {
 
 #bg-jumbotron h2 {
     color: rgb(78, 255, 176);
-    font-size: 30px;
+    font-size: 25px;
     text-align: center;
-    margin-top: 7vh;
+    margin-top: 5vh;
     padding: 10px;
-
 }
 
 .section-route {
     position: absolute;
-    top: 30vh;
+    top: 33vh;
     left: 0;
     padding: 0 10vw 0 10vw;
 }
@@ -60,7 +60,7 @@ body {
     color: rgb(20, 20, 20);
 }
 
-/* CONTAINER */
+/* mise en forme formulaire selection parcours */
 
 .form-route {
     display: -webkit-box;
@@ -74,11 +74,6 @@ body {
         -ms-flex-pack: center;
             justify-content: center;
     padding: 40px;
-}
-
-.link-route {
-    text-decoration: none;
-    color: white;
 }
 
 .border-desc {
@@ -101,18 +96,13 @@ body {
     text-transform: uppercase;
     margin-top: 5%;
 }
+#display-route {
+    max-height: 30vh;
+}
 
 
+/*mise en forme btn Démarrer pour vue mobile */
 @media screen and (max-width: 760px) {
-
-    #jumbotron h2 {
-        margin-top: 5vh;
-        font-size: 25px;
-    }
-
-    .section-route {
-        top: 33vh;
-    }
 
     .btn-start {
         position: fixed;
@@ -123,18 +113,20 @@ body {
         border-radius: 0;
         padding: 20px;
     }
-    #display-route {
-        max-height: 30vh;
-    }
+
 }
 
-
-    /* mise en forme à la vue tablette en paysage */
+/* mise en forme à la vue tablette */
 
 @media screen and (min-width: 760px) {
 
+    #bg-jumbotron h2 {
+        margin-top: 6vh;
+        font-size: 30px;
+    }
     .section-route {
         padding: 0 25vw 0 25vw;
+        top: 30vh;
     }
     #display-route {
         max-height: 25vh;
@@ -142,7 +134,7 @@ body {
 
     .btn-start {
         border-radius: .3rem;
-        margin-top: 7vh;
+        margin-top: 5vh;
         padding: 15px;
     }
     .col-12 {

@@ -1,4 +1,7 @@
 $(function(){
+
+    //Affichage description de chaque parcours pour le template
+    //select-route.html.twig
     $('.border-desc').hide();
     function refreshDesc() {
 

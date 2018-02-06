@@ -10,12 +10,14 @@
 {% block body %}
 
 <section id="jumbotron" class="picture-museum">
-    <div id="bg-jumbotron">
+    <div id="bg-jumbotron">  <!-- calc blanc dégradé sur image -->
         <h1>My Museum</h1>
+
+        <!-- Div blanc Container -->
         <div class="section-email container-fluid">
             <div class="row">
                 <div id="col-email" class="col col-md-12">
-                        <!-- form class form-email -->
+                        <!-- Formulaire Newsletter form class form-email -->
                         {{ form_start(formRegister,{'attr':{'class': 'form-email'}}) }}
                             <div class="form-group">
                                 {{ form_errors(formRegister.firstname) }}
