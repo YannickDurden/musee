@@ -40,7 +40,7 @@ body {
 }
 
 #bg-jumbotron h2 {
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
     font-size: 25px;
     text-align: center;
     margin-top: 5vh;
@@ -90,7 +90,7 @@ body {
 
 .btn-start{
     background-color: rgb(1, 32, 86);
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
     font-size: 18px;
     font-family: 'Montserrat', sans-serif;
     text-transform: uppercase;

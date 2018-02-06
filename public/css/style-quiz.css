@@ -118,7 +118,7 @@ h1{
     display: flex;
     -ms-flex-wrap: wrap;
         flex-wrap: wrap;
-    margin-left: 120px;
+    margin-left: 7vw;
 }
 
 #quiz #form_answers input[type='radio']{
@@ -190,7 +190,7 @@ h1{
     letter-spacing: 1px;
     text-transform: uppercase;
     color: rgb(1, 32, 86);
-    background-color: rgb(78, 255, 176);
+    background-color: whitesmoke;
     font-family: 'Raleway', sans-serif;
     text-decoration: none;
     border-radius: 0;
@@ -198,7 +198,7 @@ h1{
 
 #btn-footer .active{
     background-color: rgb(1, 32, 86);
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
 }
 
 /* AFFICHAGE TABLETTE */
