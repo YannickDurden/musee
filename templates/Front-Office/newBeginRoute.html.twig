@@ -2,9 +2,7 @@
 
 {% block stylesheets %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway|Great+Vibes" rel="stylesheet">
     <link rel="stylesheet" href="{{app.request.basepath}}/css/style-beginRoute.css">
 {% endblock %}
 {% block body %}
@@ -26,58 +24,62 @@
                 </nav>
             </div>
         </div>
+            <div class="section-route">
+                <!-- Affichage de la carte et des points de reperes -->
+                <div class="row">
+                    <div class="museum-wrapper col-12 text-center">
+                        <div class="museum-stats">
+                            <div class="score text-center">
+                                <h2 class="h4">Score actuel</h2>
+                                <p>{{ correctAnswers }} / {{ totalMark }}</p>
+                            </div>
 
-        <div class="section-route">
-            <!-- Affichage de la carte et des points de reperes -->
-            <div class="row">
-                <div class="museum-wrapper col-12 text-center">
-                    <div class="museum-stats">
-                        <div class="score text-center">
-                            <h2 class="h4">Score actuel</h2>
-                            <p>{{ correctAnswers }} / {{ totalMark }}</p>
+                            <div class="progression text-center">
+                                <h2 class="h4">Progression</h2>
+                                <div class="progress">
+                                    <div class="progress-bar bg-success"
+                                         role="progressbar"
+                                         style="width: {{ progression }}%">
+                                    </div>
+                                </div> <!-- progress -->
+                            </div> <!-- progression -->
+                        </div>  <!--  museum stats -->
+
+                        <div class="text">
+                            <p>Sélectionnez un point suivant sur la carte pour continuer votre
+                               visite
+                            </p>
                         </div>
+                    </div> <!-- wrapper col -->
 
-                        <div class="progression text-center">
-                            <h2 class="h4">Progression</h2>
-                            <div class="progress">
-                                <div class="progress-bar bg-success"
-                                     role="progressbar"
-                                     style="width: {{ progression }}%">
-                                </div>
-                            </div> <!-- progress -->
-                        </div> <!-- progression -->
-                    </div>  <!--  museum stats -->
-
-                    <div class="text">
-                        <p>Sélectionnez un point suivant sur la carte pour continuer votre
-                           visite
-                        </p>
+                    <div class="legend">
+                        <i class="fa fa-map-marker" aria-hidden="true"></i> Non visité
+                        <br>
+                        <i class="fa fa-map-marker markVisited" aria-hidden="true"></i> Visité
                     </div>
-                </div> <!-- wrapper col -->
+                    <div id="museum-map" class="col-12">
+                        <img  id="map"
+                              class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                              alt="carte image">
+                        {% for mark in marksArray %}
+                            <a class="repere-map" id="repere-{{ mark.id }}"
+                               data-coordx ="{{ mark.coordinateX }}"
+                               data-coordy ="{{ mark.coordinateY }}"
+                               href="http://localhost:8000/mymuseum/artwork/{{ mark.id }}">
 
-                <div class="legend">
-                    <i class="fa fa-map-marker" aria-hidden="true"></i> Non visité
-                    <br>
-                    <i class="fa fa-map-marker markVisited" aria-hidden="true"></i> Visité
-                </div>
-                <div id="museum-map" class="col-12">
-                    <img  id="map"
-                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
-                          alt="carte image">
-                    {% for id in idMark %}
-                        <a class="repere-map" id="repere-{{ id.id }}"
-                           data-coordx ="{{ id.coordinateX }}"
-                           data-coordy ="{{ id.coordinateY }}"
-                           href="http://localhost:8000/mymuseum/artwork/{{ id.id }}">
-                            <i class="fa fa-map-marker" aria-hidden="true"></i>
-                        </a>
-                    {% endfor %}
-                </div>
-
-                <!-- Fin Affichage de la carte et des points de reperes -->
-
-            </div> <!-- row  -->
-        </div>  <!-- container -->
+                                <i class="fa fa-map-marker
+                                    {% for idMark in visitedMarkArray %}
+                                        {% if idMark == mark.id %}
+                                            markVisited
+                                        {% endif %}
+                                    {% endfor %}" aria-hidden="true">
+                                </i>
+                            </a>
+                        {% endfor %}
+                    </div>
+                    <!-- Fin Affichage de la carte et des points de reperes -->
+                </div> <!-- row  -->
+            </div>  <!-- container -->
     </main>
 {% endblock %}
 {% block javascripts %}<script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>{% endblock %}

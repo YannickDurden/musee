@@ -1,4 +1,19 @@
 /* mise en forme base barre nav */
+
+
+/* Style du template Base du Back Office V2 */
+
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+/* Fonts / Typographie */
+
 body {
     font-family: 'Roboto', sans-serif;
 }
@@ -17,12 +32,22 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
 }
 
-
-html, body, #content {
+html, body, #content, .container-fluid {
     min-height: 100vh;
-
+}
+#nav .nav-link.active {
+    text-decoration: underline;
+    text-underline-position: under;
+    text-underline-color: rgb(1, 74, 238);
+    color: white;
+    border-radius: 5px;
 }
 
+#bg-container {
+    background-color: #f8f9fa;
+}
+
+/* Menu vertical */
 .btn {
     background-color: rgb(1, 32, 86);
     color: #f8f9fa;
@@ -38,9 +63,6 @@ html, body, #content {
     left: 0;
     bottom: 0;
     background-color: rgb(1, 32, 86);
-}
-.container-fluid {
-    min-height: 100vh;
 }
 
 #logout {
@@ -62,3 +84,11 @@ html, body, #content {
 #logout a:hover {
     color: gray;
 }
+
+/* Colonne pour contenu de chaque page mis en place */
+
+#col-content {
+    top: 2vh;
+    left: 16vw;
+}
+

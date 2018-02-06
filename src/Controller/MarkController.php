@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Description;
 use App\Entity\Mark;
+use App\Entity\Media;
 use App\Entity\Museum;
 use App\Entity\Route as r;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -34,6 +35,10 @@ class MarkController extends Controller
          */
         $repository = $this->getDoctrine()->getRepository(Mark::class);
         $currentMark = $repository->find($id);
+
+        $currentMedia = $this->getDoctrine()->getRepository(Media::class)->find
+        ($currentMark->getMedias()->getId());
+
         $descriptions = $currentMark->getDescriptions();
 
         $session->set('currentMark', $currentMark->getName());
@@ -48,6 +53,7 @@ class MarkController extends Controller
 
         return $this->render('Front-Office/newArtwork.html.twig',[
             'currentMark' => $currentMark,
+            'currentMedia' => $currentMedia,
             'description' => $goodDescription,
             'nameRoute' => $nameRoute,
             'id' => $id,

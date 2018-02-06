@@ -21,13 +21,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/home", name="home")
-     */
-    public function home()
-    {
-        return new Response("Bienvenue sur le panel admin");
-    }
+
     /**
      * @Route("/admin/home", name="admin_home")
      */
@@ -43,13 +37,6 @@ class DefaultController extends Controller
         return $this->render('Back-Office/home-admin.html.twig');
     }
 
-    /**
-     * @Route("/testv2", name="test_v2")
-     */
-    public function testHome()
-    {
-        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig');
-    }
     /* FONCTIONS FRONT OFFICE */
 
     /**
@@ -57,9 +44,11 @@ class DefaultController extends Controller
      */
     public function myMuseumHome(SessionInterface $session, Request $request)
     {
+        //formulaire prénom
         $form = $this->createForm(UserLogType::class);
         $form->handleRequest($request);
 
+        //création des variables de sessions (données dont nous aurons besoin)
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $form->getData();
             $session->set('firstname', $user->getFirstName());
@@ -78,10 +67,12 @@ class DefaultController extends Controller
      */
     public function myMuseumSession(SessionInterface $session, Request $request)
     {
+        //formulaire sélection parcours + récup du prénom en session
         $form = $this->createForm(AddSelectRouteType::class);
         $form->handleRequest($request);
         $user = $session->get('firstname');
 
+        //si form soumis création de variables de sessions pour pages de la visite et récapitulatif fin de parcours
         if($form->isSubmitted() && $form->isValid())
         {
             $id = $form->getData();
@@ -108,21 +99,23 @@ class DefaultController extends Controller
      */
     public function beginRoute(SessionInterface $session)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $musueum = $session->get('museum');
+        $map = $musueum->getMap();
 
         $progression = (($session->get('answeredQuestions')) / ($session->get('totalMark'))) * 100;
-        $idMark = $session->get('selectedRoute');
+        $marksArray = $session->get('selectedRoute');
 
         $startRouteTime = new \DateTime('now');
         $session->set('startTime',$startRouteTime);
 
         return $this->render('Front-Office/newBeginRoute.html.twig',[
-            'idMark' => $idMark,
+            'marksArray'=> $marksArray,
             'map'=> $map,
             'progression' => $progression,
             'nameRoute' => $session->get("nameRoute"),
             'correctAnswers' => $session->get('correctAnswers'),
             'totalMark' => $session->get('totalMark'),
+            'visitedMarkArray' => $session->get('visitedMarkArray'),
         ]);
     }
 
@@ -168,11 +161,6 @@ class DefaultController extends Controller
             'formRegister' => $newUser->createView(),
         ]);
     }
-
-    /**
-     * @Route("/mymuseum
-     */
-
     /**
      * @Route("/mymuseum/admin-ajax/{action}/{param}", name="admin_ajax", methods={"GET", "HEAD"})
      */
@@ -193,4 +181,6 @@ class DefaultController extends Controller
             'duration' => $duration,
         ]);
     }
+
+
 }

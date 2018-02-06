@@ -3,9 +3,7 @@
     <link rel="stylesheet" href="{{ app.request.basepath }}/css/style-back-office-v2.css">
 {% endblock %}
 {% block body %}
-            <!-- Fin du menu de navigation latéral -->
 
-            <div class="col col-10" id="col-content">
                 <!-- Breadcrumb pour le repère visuel de la page courante -->
                 <ol class="breadcrumb">
                     <li><a href="#" title="Accueil">Accueil</a></li>
@@ -51,20 +49,29 @@
                                 {{ form_end(formList) }}
                                 <button type="submit" class="btn mb-3" id="submit-info-parcours">Enregistrer le parcours</button>
                             </div>
+                            <audio id="audioPlayer" src="https://www.myinstants.com/media/sounds/denis_ha.mp3"></audio>
                         </div>
                     </form>
                 </div>
                 <!-- Fin du menu depliable d'info parcours -->
 
-                     <div class="row" id="map-mark">
+                <div class="row" id="map-mark">
 
-                        <div class="col col-6" id="map-contain">
+
+                    <div class="col col-6" id="map-contain">
                         <!-- Affichage de la map du parcours -->
 
                         <div class="col" id="map">
-                        <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="image en dur">
-                        </div>
+                            <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="carte du musée">
+                            <!--Création des repères visuels sur la map dont les coordonnées seront modifiées en JS -->
+                            {% for name, mark in allMarks %}
 
+                                <a href="#" name="{{ name }}" class="tableAdd">
+                                    <div id="repereMap" name="{{ name }}" style="height: 10px; width: 10px; left: {{ mark.X }}%; top: {{ mark.Y }}%; background-color: red">
+                                    </div>
+                                </a>
+                            {% endfor %}
+                        </div>
                         <!-- Fin d'affichage de la map du parcours -->
 
                         <!-- Divs de l'animation de chargement pendant les requètes AJAX -->
@@ -81,20 +88,19 @@
                         <h3>Liste des reperes ajoutés</h3>
                         <table class="table table-striped" id="table-mark">
                             <thead>
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Nom du repère</th>
-                                <th scope="col">Modifier</th>
-                                <th scope="col">Supprimer</th>
-                            </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Nom du repère</th>
+                                    <th scope="col">Modifier</th>
+                                    <th scope="col">Supprimer</th>
+                                </tr>
                             </thead>
+
                             <tbody>
-
-                        <div class="col" id="liste-reperes">
-
-                        </div>
+                                <div class="col" id="liste-reperes"></div>
                             </tbody>
                         </table>
+
                         <div class="col" id="selectedMark">
                         </div>
                     </div>
@@ -170,7 +176,7 @@
                         <!-- Fin du formulaire d'ajout d'un repère -->
                     </div>
                 </div>
-            </div>
+
 {% endblock %}
 {% block scriptJavascript %}
     <script src ="{{app.request.basepath}}/js/parcoursv2.js"></script>

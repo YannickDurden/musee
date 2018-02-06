@@ -7,8 +7,7 @@ html, body, #content {
 }
 
 #col-content {
-    padding: 0;
-    left: 17vw;
+    top: 0;
 }
 
 /*
@@ -57,13 +56,6 @@ html, body, #content {
     bottom: 0;
 }
 
-#nav .nav-link.active {
-    text-decoration: underline;
-    text-underline-position: under;
-    text-underline-color: rgb(1, 74, 238);
-    color: white;
-    border-radius: 5px;
-}
 
 /*
  * Map
@@ -73,12 +65,12 @@ html, body, #content {
     margin-right: 0;
 }
 
-#map {
+#map
+{
     position: relative;
-
 }
-
 #map img {
+
     height: 100%;
     width: 100%;
 }
@@ -86,16 +78,9 @@ html, body, #content {
 .pointeur
 {
     position: absolute;
-    background-image: url("../uploads/p2-m1.png");
-    background-repeat: no-repeat;
 }
 #delete_icon_map{
-
     background-image: url("../uploads/delete-m1.png");
-    background-repeat: no-repeat;
-    width: 30px;
-    height: 30px;
-
 }
 
 
@@ -158,7 +143,6 @@ html, body, #content {
  */
 
 #pills-tab {
->>>>>>> dev
     background-color: #e9ecef;
     display: flex;
     justify-content: space-between;
