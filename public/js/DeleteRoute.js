@@ -1,5 +1,3 @@
-
-
 function deleteRoute(id) {
 
     $.ajax({
@@ -58,8 +56,6 @@ function displayAllRoute()
 }
 
 
-
-
 /**
  * init Jquery
  */
@@ -70,3 +66,4 @@ $(function ()
     displayAllRoute();
 
 })
+

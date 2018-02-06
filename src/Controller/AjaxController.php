@@ -79,10 +79,10 @@ class AjaxController extends Controller
 
         return new Response("Modif effectuée");
     }
-
+    
     /**
-     * @Route("ajax/saveMarkToSession", name="add_mark_session")
-     * Créé un objet de type Mark avec les info envoyées et le stock en session
+     * @route("ajax/saveMarkToSession", name="add_mark_session")
+     * Créé un objet de type Mark avec les info envoyées l'ajoute en BDD et le stock en session
      */
     public function addMarkSession(SessionInterface $session)
     {
@@ -91,9 +91,32 @@ class AjaxController extends Controller
             $savedMark = new Mark();
         } else {
             $savedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name' => $_POST['update']]);
+
+            // Dans un premier temps on supprimes les questions et les descriptions associés à ce
+            // repere en BDD
+            $previousDescriptions = $savedMark->getDescriptions();
+            $previousQuestions = $savedMark->getQuestions();
+            foreach ($previousDescriptions as $currentDescription) {
+                $deleted = $this->getDoctrine()->getRepository(Description::class)->find($currentDescription->getId());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($deleted);
+                $em->flush();
+            }
+            foreach ($previousQuestions as $currentQuestion) {
+                $deleted = $this->getDoctrine()->getRepository(Question::class)->find($currentQuestion->getId());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($deleted);
+                $em->flush();
+            }
+
             $arrayMarks = $session->get('savedMarksNames');
             foreach ($arrayMarks as $key => $currentMark) {
-                if ($currentMark = $_POST['update']) {
+                if ($currentMark == $_POST['update']) {
+                    array_splice($arrayMarks,$key,1);
+                }
+            }
+            foreach ($arrayMarks as $key => $currentMark) {
+                if ($currentMark == $_POST['update']) {
                     array_splice($arrayMarks,$key,1);
                 }
             }
@@ -171,11 +194,17 @@ class AjaxController extends Controller
         }
         $newRouteToSave->setName($decodedJson['name']);
         $newRouteToSave->setDescription($decodedJson['description']);
-        $durationArrayToString = strval($decodedJson['hours']) . ":" . strval($decodedJson['minutes']);
-        print_r($durationArrayToString);
+        if($decodedJson['minutes'] < 10)
+        {
+            $minutes = "0".strval($decodedJson['minutes']);
+        }
+        else
+        {
+            $minutes = strval($decodedJson['minutes']);
+        }
+        $durationArrayToString = strval($decodedJson['hours']) . ":" . $minutes;
         //$updatedRoute->setMap($_POST['fileName']);
         $duration = \DateTime::createFromFormat('G:i', $durationArrayToString);
-        var_dump($duration);
         //$duration = new \DateTime('now');
         $newRouteToSave->setDuration($duration);
         foreach ($session->get('savedMarksNames') as $mark) {
@@ -256,7 +285,7 @@ class AjaxController extends Controller
     }
 
     /**
-     * @route("/ajax/getMarks", name="getMarks")
+     * @route("ajax/getMarks", name="getMarks")
      */
     public function getMarks(Request $request, SessionInterface $session)
     {
@@ -266,47 +295,23 @@ class AjaxController extends Controller
         $duration = $currentRoute->getDuration();
         $arrayMarks = [];
         $arrayNames = [];
+        $encodedArrayNames = [];
 
         foreach ($allMarks as $mark) {
+            $encodedName = str_replace(" ", "%20", $mark->getName());
             $arrayMarks[$mark->getName()] = $mark->getId();
+            $encodedArrayNames [] = $encodedName;
             $arrayNames [] = $mark->getName();
         }
         $session->set('savedMarksNames', $arrayNames);
         print_r($arrayNames);
         return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
+            'allMarks' => $allMarks,
             'marks' => $arrayMarks,
             'route' => $currentRoute,
-            'duration' => $duration
+            'duration' => $duration,
+            'encodedNames' => $encodedArrayNames
         ]);
-    }
-
-    /**
-     *    CRUD AJAX MARKER
-     *
-     */
-
-
-    /**
-     * @Route("/Mark/displayAllMark", name="display_all_Mark")
-     */
-    public function displayAllMark(Request $request)
-    {
-        $marks = $this->getDoctrine()
-            ->getRepository('App\Entity\Mark')
-            ->findAll();
-        $jsonData = array();
-        $idx = 0;
-        foreach($marks as $mark) {
-            $temp = array(
-                'id' =>$mark->getId(),
-                'name' => $mark->getName(),
-                'coordinateX'=>$mark->getCoordinateX(),
-                'coordinateY'=>$mark->getCoordinateY(),
-                'image'=>$mark->getImage(),
-            );
-            $jsonData[$idx++] = $temp;
-        }
-        return new JsonResponse($jsonData);
     }
 
     /**
@@ -345,84 +350,21 @@ class AjaxController extends Controller
 
     }
 
+    
     /**
-     * @Route("/Mark/LoadIcon", name="load_icon")
+     * @route("ajax/addToSession", name="add_mark_to_session")
      */
-    public function LoadIcon(Request $request)
+    public function addMarkToSession(SessionInterface $session)
     {
-        $RouteID = $request->request->get('RouteID');
-        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
-        $dataMark=$routes->getMarks();
-        $jsonData = array();
-        $idx = 0;
-        foreach($dataMark as $mark)
-        {
-            $temp = array(
-                'id' =>$mark->getId(),
-                'name' => $mark->getName(),
-                'coordinateX'=>$mark->getCoordinateX(),
-                'coordinateY'=>$mark->getCoordinateY(),
-                'image'=>$mark->getImage(),
-            );
-            $jsonData[$idx++] = $temp;
-        }
-        return new JsonResponse($jsonData);
+        $arrayMarks = [];
+        $arrayMarks = $session->get('savedMarksNames');
+        $arrayMarks []= $_POST['newMarkName'];
+        $session->set('savedMarksNames', $arrayMarks);
+        print_r($session->get('savedMarksNames'));
+
+
+        return new Response("Ajout en session effectué");
+       
     }
-    /**
-     * @Route("/Mark/UpdateIcon", name="update_icon")
-     */
-    public function UpdateIcon(Request $request)
-    {
-        $RouteID = $request->request->get('RouteID');
-
-        $ValMarkId = $request->request->get('ValMarkId');
-        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
-
-        $dataMark=$routes->getMarks();
-        foreach ($dataMark as $data)
-        {
-            if($data->getID() == $ValMarkId)
-            {
-                $temp=array
-                (
-                    "id" => $data->getId(),
-                    "name" => $data->getName(),
-                    "CoordinateX" => $data->getCoordinateX(),
-                    "CoordinateY"=>$jsonData[]=$data->getCoordinateY()
-                );
-                return new JsonResponse($temp);
-            }
-        }
-        return new Response('Data Delete');
-    }
-    /**
-     * @Route("/Mark/DeleteIcon", name="delete_icon")
-     */
-    public function DeleteIcon(Request $request)
-    {
-        $RouteID = $request->request->get('RouteID');
-
-        $ValMarkId = $request->request->get('ValMarkId');
-        $routes =$this->getDoctrine()->getManager()->getRepository(r::class)->find($RouteID);
-
-        $dataMark=$routes->getMarks();
-        foreach ($dataMark as $data)
-        {
-            if($data->getID() == $ValMarkId)
-            {
-                $temp=array
-                       (
-                           "id" => $data->getId(),
-                           "name" => $data->getName(),
-                           "CoordinateX" => $data->getCoordinateX(),
-                           "CoordinateY"=>$data->getCoordinateY()
-                       );
-                return new JsonResponse($temp);
-            }
-        }
-        return new Response('Data Delete');
-    }
-
-
-
+         
 }

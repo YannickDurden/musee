@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: yannickfrancois
+ * User: yannick
  * Date: 18/01/2018
  * Time: 13:51
  */
@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Entity\Answer;
 use App\Entity\Mark;
+use App\Entity\Media;
 use App\Entity\Museum;
 use App\Entity\Question;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,6 +33,9 @@ class QuestionController extends Controller
         //Récupération de l'image de l'oeuvre
         $repository = $this->getDoctrine()->getRepository(Mark::class);
         $currentMark = $repository->find($id);
+
+        $currentMedia = $this->getDoctrine()->getRepository(Media::class)->find
+        ($currentMark->getMedias()->getId());
 
         /**
          * Récupération de la question et des réponses puis
@@ -137,14 +141,10 @@ class QuestionController extends Controller
             return $this->redirectToRoute('score_quiz');
         }
 
-
-        //Affichage de la carte avec l'id
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
-
         return $this->render('Front-Office/newQuiz.html.twig',[
-            'map' => $map,
             'question' => $question[0],
             'currentMark' => $currentMark,
+            'currentMedia' => $currentMedia,
             'formQ'=> $formBuilder->createView(),
             'id' => $id,
             'nameRoute' => $session->get('nameRoute'),
@@ -158,7 +158,9 @@ class QuestionController extends Controller
      */
     public function scoreQuiz(SessionInterface $session)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $musueum = $session->get('museum');
+        $map = $musueum->getMap();
+
         $marksArray = $session->get('selectedRoute');
 
         //Affichage du score

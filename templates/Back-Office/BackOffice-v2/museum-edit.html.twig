@@ -4,85 +4,87 @@
 {% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/style-museum-edit.css">{% endblock %}
 
 {% block body %}
-        {{ form_start(formEditMuseum) }}
+    {{ form_start(formEditMuseum) }}
 
 
-        <h1>Modification des informations du musée</h1>
-        <br>
-        <div class="form-group">
-            <div class="row">
-                <div class="col col-6">
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.name, "Nom du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.name) }}
-                        {{ form_widget(formEditMuseum.name, {'attr': {'placeholder': 'Entrer le nom du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.address, "Adresse du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.address) }}
-                        {{ form_widget(formEditMuseum.address, {'attr': {'placeholder': 'Entrer l\'adresse du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.phoneNumber, "Numero du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.phoneNumber) }}
-                        {{ form_widget(formEditMuseum.phoneNumber, {'attr': {'placeholder': 'Entrer le numero du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.website, "Site web du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.website) }}
-                        {{ form_widget(formEditMuseum.website, {'attr': {'placeholder': 'Entrer le site web du musée', 'class': 'form-control'}}) }}
-                    </div>
+    <!-- Formulaire infos musée -->
+    <h1>Modification des informations du musée</h1>
+    <br>
+    <div class="form-group">
+        <div class="row">
+            <div class="col col-6">
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.name, "Nom du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.name) }}
+                    {{ form_widget(formEditMuseum.name, {'attr': {'placeholder': 'Entrer le nom du musée', 'class': 'form-control'}}) }}
                 </div>
-                <div class="col col-6">
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.facebook, "Facebook du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.facebook) }}
-                        {{ form_widget(formEditMuseum.facebook, {'attr': {'placeholder': 'Entrer le facebook du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.twitter, "Twitter du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.twitter) }}
-                        {{ form_widget(formEditMuseum.twitter, {'attr': {'placeholder': 'Entrer le twitter du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.instagram, "instagram du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.instagram) }}
-                        {{ form_widget(formEditMuseum.instagram, {'attr': {'placeholder': 'Entrer l\'instagram du musée', 'class': 'form-control'}}) }}
-                    </div>
-                    <div class="input-museum">
-                        <h2>{{ form_label(formEditMuseum.youtube, "Youtube du musée") }}</h2>
-                        {{ form_errors(formEditMuseum.youtube) }}
-                        {{ form_widget(formEditMuseum.youtube, {'attr': {'placeholder': 'Entrer le youtubeinstagrammusée', 'class': 'form-control'}}) }}
-                    </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.address, "Adresse du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.address) }}
+                    {{ form_widget(formEditMuseum.address, {'attr': {'placeholder': 'Entrer l\'adresse du musée', 'class': 'form-control'}}) }}
+                </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.phoneNumber, "Numero du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.phoneNumber) }}
+                    {{ form_widget(formEditMuseum.phoneNumber, {'attr': {'placeholder': 'Entrer le numero du musée', 'class': 'form-control'}}) }}
+                </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.website, "Site web du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.website) }}
+                    {{ form_widget(formEditMuseum.website, {'attr': {'placeholder': 'Entrer le site web du musée', 'class': 'form-control'}}) }}
                 </div>
             </div>
+            <div class="col col-6">
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.facebook, "Facebook du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.facebook) }}
+                    {{ form_widget(formEditMuseum.facebook, {'attr': {'placeholder': 'Entrer le facebook du musée', 'class': 'form-control'}}) }}
+                </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.twitter, "Twitter du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.twitter) }}
+                    {{ form_widget(formEditMuseum.twitter, {'attr': {'placeholder': 'Entrer le twitter du musée', 'class': 'form-control'}}) }}
+                </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.instagram, "instagram du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.instagram) }}
+                    {{ form_widget(formEditMuseum.instagram, {'attr': {'placeholder': 'Entrer l\'instagram du musée', 'class': 'form-control'}}) }}
+                </div>
+                <div class="input-museum">
+                    <h2>{{ form_label(formEditMuseum.youtube, "Youtube du musée") }}</h2>
+                    {{ form_errors(formEditMuseum.youtube) }}
+                    {{ form_widget(formEditMuseum.youtube, {'attr': {'placeholder': 'Entrer le youtubeinstagrammusée', 'class': 'form-control'}}) }}
+                </div>
+            </div>
+        </div>
 
 
             <div class="btn-museum d-flex justify-content-end">
                 {{ form_row(formEditMuseum.Modifier, {'attr': {'class': 'btn'}}) }}
             </div>
-            {{ form_end(formEditMuseum) }}
-        </div>
+    </div>
+    {{ form_end(formEditMuseum) }}
 
 
+    <!-- formulaire ajout de la Map -->
 
 
-        {#{{ form(formAdd, {'attr': {'novalidate': 'novalidate'}}) }}#}
-        {{ form_start(formAdd) }}
+    {#{{ form(formAdd, {'attr': {'novalidate': 'novalidate'}}) }}#}
+    {{ form_start(formAdd) }}
 
-        <h1>Ajouter une image</h1>
+    <h1>Ajouter une image</h1>
         <div class="row">
         {% if(museum != null) %}
             <div class="col col-6 d-flex justify-content-center" id="museumMap">
                 <figure class="figure m-3">
-                    <figcaption class="figure-caption">Map actuelle</figcaption>
+                    <figcaption class="figure-caption">Plan actuel</figcaption>
                     <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="map du musée" height="300" width="400">
                 </figure>
             </div>
         {% endif %}
         <div class="col-select-img col col-6">
             <div class="form-group">
-                <h2>{{ form_label(formAdd.map, "Selection de l'image") }}</h2>
+                <h2>{{ form_label(formAdd.map, "Selection du plan") }}</h2>
                 {{ form_errors(formAdd.map) }}
                 {{ form_widget(formAdd.map, {'attr': {'class': 'form-control'}}) }}
 
@@ -92,8 +94,10 @@
                 {{ form_row(formAdd.save, {'attr': {'class': 'btn btn-img'}}) }}
             </div>
         </div>
-        {{ form_end(formAdd) }}
-        </div>
+    </div>
+    {{ form_end(formAdd) }}
 
-
+{% endblock %}
+{% block scriptJavascript %}
+    <script src ="{{app.request.basepath}}/js/museum.js"></script>
 {% endblock %}

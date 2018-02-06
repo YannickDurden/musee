@@ -4,6 +4,7 @@
 
 {% block body %}
 
+    <!-- Ajout des images pour les oeuvres -->
 
     {#{{ form(formMedia, {'attr': {'novalidate': 'novalidate'}}) }}#}
     {{ form_start(formMedia) }}
@@ -30,12 +31,19 @@
             </div>
         {{ form_end(formMedia) }}
 
+            <!-- preview de l'image chargée -->
+
             {% if currentMedia is defined %}
-            <h2 id="nameMedia">{{ currentMedia.name }}</h2>
-            <div id="media">
-                <img src="{{ app.request.basepath }}/uploads/{{ currentMedia.file }}" alt="{{ currentMedia.name }}">
+            <div class="col col-6">
+                <h2 id="nameMedia">Votre image : "{{ currentMedia.name }}"</h2>
+                <div id="media">
+                    <img src="{{ app.request.basepath }}/uploads/{{ currentMedia.file }}" alt="{{ currentMedia.name }}">
+                </div>
             </div>
             {% endif %}
         </div>
+{% endblock %}
+{% block scriptJavascript %}
+    <script src ="{{app.request.basepath}}/js/media.js"></script>
 {% endblock %}
 

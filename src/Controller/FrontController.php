@@ -24,127 +24,22 @@ class FrontController extends Controller
     public function results(SessionInterface $session)
     {
         //récupération de la durée du parcours
-        //$endRouteTime = new \DateTime('now');
-        //$beginRoute = $session->get('startTime');
-        //$calculateTime = $endRouteTime->diff($beginRoute);
+        $endRouteTime = new \DateTime('now');
+        $beginRoute = $session->get('startTime');
+        $calculateTime = $endRouteTime->diff($beginRoute);
 
+        //reste infos : nom parcours, nom user, score total
         $route = $session->get('nameRoute');
         $user = $session->get('firstname');
         $score = $session->get('correctAnswers');
         $totalMark = $session->get('totalMark');
 
-
-        //$userScore = $this->getDoctrine()->getRepository(Score::class)->find(1);
         return $this->render('Front-Office/end-results.html.twig',[
-            //'duration' => $calculateTime,
+            'duration' => $calculateTime,
             'nameRoute' => $route,
             'score' => $score,
             'totalMark' => $totalMark,
             'userName' => $user,
         ]);
     }
-
-    /**
-     * @route("/back-office/museum/edit", name="museum_edit")
-     */
-
-    public function museumEdit(Request $request, SessionInterface $session)
-    {
-
-        /*
-         * Gère l'affichage du formulaire de modification des infos du musée et sa soumission
-         */
-        $museum = $session->get('museum');
-        $form = $this->createForm(MuseumType::class, $museum);
-        $form->handleRequest($request);
-        $formMap = $this->createForm(AddMapType::class);
-        $formMap->handleRequest($request);
-
-        if ($formMap->isSubmitted() && $formMap->isValid())
-        {
-            $em = $this->getDoctrine()->getManager();
-            // Déplacement du fichier
-            // $file contient le fichier uploadé, il est de type Symfony\Component\HttpFoundation\File\UploadedFile
-            $file = $formMap->getData()->getMap();
-            // Génération d'un nom aléatoire
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
-            // Déplacement du fichier dans un dossier paramétré à l'avance
-            $file->move(
-                $this->getParameter('uploads_directory'),
-                $fileName
-            );
-
-            $museum->setMap($fileName);
-
-            $em->merge($museum);
-            $em->flush();
-
-            //addFlash ne fonctionne pas: faire afficher un message sur la page existante "modif enregistrées"
-            //$this->addFlash('notice', 'Vos modifications ont bien été enregistrées.');
-        }
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $museum = $form->getData();
-            $em = $this->getDoctrine()->getManager();
-            $em->merge($museum);
-            $em->flush();
-
-        }
-
-        return $this->render('Back-Office/BackOffice-v2/museum-edit.html.twig', [
-            'formEditMuseum' => $form->createView(),
-            'formAdd' => $formMap->createView(),
-            'museum' => $museum
-        ]);
-
-    }
-
-    /**
-     * @route("/back-office/media", name="media_edit")
-     */
-    public function media(Request $request, SessionInterface $session)
-    {
-        $form = $this->createForm(AddMediaType::class);
-        $form->handleRequest($request);
-
-
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            $media = $form->getData();
-
-            $em = $this->getDoctrine()->getManager();
-            // Déplacement du fichier
-            // $file contient le fichier uploadé, il est de type Symfony\Component\HttpFoundation\File\UploadedFile
-            $file = $form->getData()->getFile();
-            // Génération d'un nom aléatoire
-            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
-
-            // Déplacement du fichier dans un dossier paramétré à l'avance
-            $file->move(
-                $this->getParameter('uploads_directory'),
-                $fileName
-            );
-
-            $media->setFile($fileName);
-
-            $em->persist($media);
-            $em->flush();
-
-            $currentMedia = $this->getDoctrine()->getRepository(\App\Entity\Media::class)->findBy([], ['id' => 'DESC'], 1);
-
-            return $this->render('Back-Office/BackOffice-v2/media.html.twig', [
-                'formMedia' => $form->createView(),
-                'currentMedia' => $currentMedia[0],
-            ]);
-            //addFlash ne fonctionne pas: faire afficher un message sur la page existante "modif enregistrées"
-            //$this->addFlash('notice', 'Vos modifications ont bien été enregistrées.');
-        }
-
-        return $this->render('Back-Office/BackOffice-v2/media.html.twig', [
-            'formMedia' => $form->createView(),
-        ]);
-    }
-
 }
