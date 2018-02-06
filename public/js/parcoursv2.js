@@ -172,6 +172,7 @@ function Create_Map_Marker(mapId, number) {
     Display_map_marker(mapId, pointeurX, pointeurY, number);
 }
 
+
 /**
  * init Jquery
  */

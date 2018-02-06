@@ -61,7 +61,7 @@
                     <tr>
                         <th scope="row">{{ loop.index }}</th>
                         <td>{{ route.name }}</td>
-                        <td><button class="btnSelect"></button><i class="fa fa-pencil" aria-hidden="true"></i><input id="inputIDHiden" type="hidden" value="{{ route.id }}"/></a></td>
+                        <td><button class="btnSelect"></button><i class="fa fa-pencil" aria-hidden="true"></i><input id="inputIDHiden" type="hidden" value="{{ route.id }}"/></td>
                         <td><a href="#" id="{{ route.id }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
                     </tr>
 
@@ -72,28 +72,8 @@
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<script src="{{ app.request.basepath }}/js/jquery-3.3.1.min.js"></script>
-<script>
-
- $(function () {
-
-     // code to read selected table row cell data (values).
-     $("#table-parcours").on('click','.btnSelect',function(){
-         // get the current row
-         var currentRow=$(this).closest("tr");
-
-         var col1=currentRow.find("td:eq(0)").text(); // get current row 1st TD value
-         var col2=currentRow.find("td:eq(1)").text(); // get current row 2nd TD
-         var col3=currentRow.find("td:eq(2)").text(); // get current row 3rd TD
-         var data=col1+"\n"+col2+"\n"+col3;
-
-         alert(data);
-     });
+<script src="{{ app.request.basepath }}/js/DeleteRoute.js"></script>
 
 
- });
-
-
-</script>
 </body>
 </html>

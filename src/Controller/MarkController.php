@@ -12,10 +12,13 @@ namespace App\Controller;
 use App\Entity\Description;
 use App\Entity\Mark;
 use App\Entity\Museum;
+use App\Entity\Route as r;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class MarkController extends Controller
 {
@@ -50,4 +53,9 @@ class MarkController extends Controller
             'id' => $id,
         ]);
     }
+
+
+
+
+
 }
