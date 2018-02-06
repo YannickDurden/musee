@@ -21,13 +21,7 @@ use Symfony\Component\Validator\Constraints\DateTime;
 
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/home", name="home")
-     */
-    public function home()
-    {
-        return new Response("Bienvenue sur le panel admin");
-    }
+
     /**
      * @Route("/admin/home", name="admin_home")
      */
@@ -43,13 +37,6 @@ class DefaultController extends Controller
         return $this->render('Back-Office/home-admin.html.twig');
     }
 
-    /**
-     * @Route("/testv2", name="test_v2")
-     */
-    public function testHome()
-    {
-        return $this->render('Back-Office/BackOffice-v2/base.back-officev2.html.twig');
-    }
     /* FONCTIONS FRONT OFFICE */
 
     /**
@@ -194,4 +181,6 @@ class DefaultController extends Controller
             'duration' => $duration,
         ]);
     }
+
+
 }

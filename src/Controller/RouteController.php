@@ -116,26 +116,34 @@ class RouteController extends Controller
      */
     public function editRoutev2(Request $request, SessionInterface $session)
     {
+        //Récuperation en session du musée connecté pour les requètes en BDD
 
-        $em = $this->getDoctrine()->getManager();
-        $map = $em->getRepository(Museum::class)->findBy([], ['id' => 'desc'], 1);
         $museum = $session->get('museum');
 
         $allRoutes = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findBy(['museum' => $museum->getId()]);
         $arrayRoutes = [];
+
+        //Dans un second temps on récupère la liste complete des repères car en partant de $allRoutes nous n'aurions pas les repères orphelins
+        $allMuseumMarks = $this->getDoctrine()->getRepository(Mark::class)->findBy(['museum' => $museum->getId()]);
         $allMarks = [];
+        //Création du tableau de session qui se remplira lors de l'ajout d'un repère au parcours par l'user
         $session->set('savedMarksNames', []);
 
         foreach ($allRoutes as $route) {
             $arrayRoutes[$route->getName()] = $route->getId();
-
-            $marksInRoute = $route->getMarks();
-            foreach ($marksInRoute as $currentMark) {
-                if (array_search($currentMark->getName(), $allMarks) === false) {
-                    $allMarks[$currentMark->getName()] = ['X' => $currentMark->getCoordinateX(), 'Y' => $currentMark->getCoordinateY()];
-                }
+        }
+        foreach ($allMuseumMarks as $currentMark)
+        {
+            //Avant d'ajouter le repère au tableau on verifie que celui ci n'est pas deja présent pour eviter les doublons
+            if(array_search($currentMark->getName(), $allMarks)=== false)
+            {
+                //Ajout au format tableau associatif 'name' => ['X=> coordonnéeX, 'Y'=> coordonnéeY]
+                //Les coordonnées sont multipliées par 100 pour les avoir en %
+                $currentNameEncode = str_replace(" ","%20", $currentMark->getName());
+                $allMarks[$currentNameEncode]=['X'=>($currentMark->getCoordinateX()*100), 'Y'=>($currentMark->getCoordinateY()*100)];
             }
         }
+
         $formBuilder = $this->createFormBuilder()->add('route', ChoiceType::class, [
             'choices' => $arrayRoutes,
             'placeholder' => 'Choisir le parcours à modifier'
@@ -151,27 +159,6 @@ class RouteController extends Controller
             'formList' => $form2->createView(),
             'formMark' => $formMark->createView(),
             'museum' => $museum,
-            'map'=>$map
-        ]);
-    }
-
-        /**
-         * @route("/ajax/getMarks", name="getMarks")
-         */
-    public function getMarks(Request $request, SessionInterface $session)
-    {
-        $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find(['id' => $id]);
-        $allMarks = $currentRoute->getMarks();
-        $arrayMarks = [];
-
-        foreach ($allMarks as $mark) {
-            $arrayMarks[$mark->getName()] = $mark->getId();
-        }
-
-        return $this->render('Back-Office/BackOffice-v2/mark-table.html.twig', [
-            'marks' => $arrayMarks,
-            'map' => $map,
         ]);
     }
 
@@ -203,16 +190,12 @@ class RouteController extends Controller
         if ($form->isSubmitted() && $form->isValid()){
             $id = $form->getData();
             $currentRoute= $id['name'];
-            //$currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
             $em = $this->getDoctrine()->getManager();
             $em->remove($currentRoute);
             $em->flush();
             return new Response('Suppression confirmée');
 
         }
-
-        //dump($currentRoute);
-        //exit;
 
         return $this->render('Back-Office/BackOffice-v2/delete-routes.html.twig',
             [
@@ -241,9 +224,6 @@ class RouteController extends Controller
             return new Response('Suppression confirmée');
 
         }
-
-        //dump($currentMark);
-        //exit;
 
         return $this->render('Back-Office/BackOffice-v2/delete-marks.html.twig',
             [
