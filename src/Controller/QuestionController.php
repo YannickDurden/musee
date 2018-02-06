@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: yannickfrancois
+ * User: yannick
  * Date: 18/01/2018
  * Time: 13:51
  */
@@ -137,12 +137,7 @@ class QuestionController extends Controller
             return $this->redirectToRoute('score_quiz');
         }
 
-
-        //Affichage de la carte avec l'id
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
-
         return $this->render('Front-Office/newQuiz.html.twig',[
-            'map' => $map,
             'question' => $question[0],
             'currentMark' => $currentMark,
             'formQ'=> $formBuilder->createView(),
@@ -158,7 +153,9 @@ class QuestionController extends Controller
      */
     public function scoreQuiz(SessionInterface $session)
     {
-        $map = $this->getDoctrine()->getRepository(Museum::class)->find(1)->getMap();
+        $musueum = $session->get('museum');
+        $map = $musueum->getMap();
+
         $marksArray = $session->get('selectedRoute');
 
         //Affichage du score

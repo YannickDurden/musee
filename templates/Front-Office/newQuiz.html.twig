@@ -50,22 +50,23 @@
                 <!-- Menu tablette -->
                 <ul id="btn-tablet" class="nav nav-tabs nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("artwork",{'id' : id})}}">Description</a>
+                        <a class="nav-link"
+                           href="{{ path("artwork",{'id' : id})}}">Description</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("begin_route")
-                        }}">Retour carte</a>
+                        <a class="nav-link"
+                           href="{{ path("begin_route") }}">Retour carte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ path("quiz",{'id': id})
-                        }}">Quiz</a>
+                        <a class="nav-link active"
+                           href="{{ path("quiz",{'id': id}) }}">Quiz</a>
                     </li>
                 </ul>
                 <!-- Fin Menu tablette -->
 
                 <section class="img-mobile">
                     <img class="img-artwork img-fluid w-100"
-                         src="{{app.request.basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{currentMark.image }#}"
+                         src="{{app.request.basepath}}/uploads/{{ currentMark.image }}"
                          alt="image de l'oeuvre">
                     <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
                 </section>
@@ -77,16 +78,14 @@
                     <div class="form-group row">
                         <div class="form-check">
                             <div class="form-check-input">
-                                {{ form_widget(formQ.answers
-                                ) }}
+                                {{ form_widget(formQ.answers) }}
                             </div>
                         </div>
                     </div>
 
                     <div id="submit" class="form-group">
                         {{ form_widget(formQ.submit,
-                            {'attr': {'class': 'btn'}}
-                        ) }}
+                            {'attr': {'class': 'btn'}}) }}
                     </div>
                     {{ form_end(formQ) }}
                     <!-- fin du formulaire -->
@@ -97,17 +96,16 @@
                         <!-- Menu mobile -->
                         <ul class="fixed-bottom nav nav-tabs nav-fill">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ path("artwork",{'id':id})
-                                }}">Description</a>
+                                <a class="nav-link active"
+                                   href="{{ path("artwork",{'id':id}) }}">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path("begin_route")
-                                }}">Retour
-                                    carte</a>
+                                <a class="nav-link"
+                                   href="{{ path("begin_route") }}">Retour carte</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path("quiz",{'id': id })
-                                }}">Quiz</a>
+                                <a class="nav-link"
+                                   href="{{ path("quiz",{'id': id }) }}">Quiz</a>
                             </li>
                         </ul>
                         <!-- Fin Menu mobile -->

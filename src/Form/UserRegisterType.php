@@ -28,7 +28,7 @@ class UserRegisterType extends AbstractType
         $builder->add('firstname', TextType::class, [
             'constraints' => [
                 new NotBlank(),
-                new Length(['min' => 5]),
+                new Length(['min' => 3]),
             ],
             'label'=> 'Votre prénom',
 
