@@ -39,7 +39,7 @@ function displayAllRoute()
 
             }
             table.html(html);
-            $(".deleteButton").on('click', function () {
+            $(".deleteButton").click(function () {
 
                var idTable= $(this).data('id');
                deleteRoute(idTable);
