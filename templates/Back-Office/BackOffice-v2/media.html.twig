@@ -1,0 +1,49 @@
+{% extends '/Back-Office/BackOffice-v2/base.back2.html.twig' %}
+
+{% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/style-media.css">{% endblock %}
+
+{% block body %}
+
+    <!-- Ajout des images pour les oeuvres -->
+
+    {#{{ form(formMedia, {'attr': {'novalidate': 'novalidate'}}) }}#}
+    {{ form_start(formMedia) }}
+
+        <h1>Ajouter une image</h1>
+        <div class="row">
+            <div class="col-select-img col col-6">
+                <div class="form-group">
+                    <h2>{{ form_label(formMedia.name, "Nom de l'image de l'oeuvre") }}</h2>
+                    {{ form_errors(formMedia.name) }}
+                    {{ form_widget(formMedia.name, {'attr': {'class': 'form-control'}}) }}
+
+                </div>
+                <div class="form-group">
+                    <h2>{{ form_label(formMedia.file, "Choisir une image") }}</h2>
+                    {{ form_errors(formMedia.file) }}
+                    {{ form_widget(formMedia.file, {'attr': {'class': 'form-control'}}) }}
+
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    {{ form_row(formMedia.submit, {'attr': {'class': 'btn btn-img'}}) }}
+                </div>
+            </div>
+        {{ form_end(formMedia) }}
+
+            <!-- preview de l'image chargée -->
+
+            {% if currentMedia is defined %}
+            <div class="col col-6">
+                <h2 id="nameMedia">Votre image : "{{ currentMedia.name }}"</h2>
+                <div id="media">
+                    <img src="{{ app.request.basepath }}/uploads/{{ currentMedia.file }}" alt="{{ currentMedia.name }}">
+                </div>
+            </div>
+            {% endif %}
+        </div>
+{% endblock %}
+{% block scriptJavascript %}
+    <script src ="{{app.request.basepath}}/js/media.js"></script>
+{% endblock %}
+

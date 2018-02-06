@@ -1,0 +1,142 @@
+
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+
+}
+.row,
+ .container-fluid, 
+ .col, 
+ .col-12, 
+ p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+
+/* Background */
+
+#jumbotron {
+    position: relative;
+    background: url('img/louvre.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+#bg-jumbotron {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    height: 100vh;
+    width: 100vw;
+}
+
+#bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
+
+/* mise en forme formulaire */
+
+.section-email {
+    position: absolute;
+    top: 20vh;
+    left: 0;
+    padding: 0 10vw 0 10vw;
+}
+
+#col-email {
+    background-color: rgba(245, 248, 255, 0.8);
+    border-radius: 10px;
+    color: rgb(20, 20, 20);
+}
+
+.form-email {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 40px;
+    color: grey;
+    font-size: 15px;
+    /*text-shadow: 4px 2px 7px #000000;*/
+}
+
+.form-email .form-group {
+    margin-top: 10%;
+}
+
+.form-check{
+    text-align: center;
+    margin-top: 10%;
+}
+
+#user_register_firstname,
+#user_register_lastname,
+#user_register_email
+{
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(150, 150, 150, 0.5);
+}
+
+#user_register_submit{
+    text-decoration: none;
+    color: whitesmoke;
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: 16px;
+    background-color: rgb(1, 32, 86);
+    margin-top: 10%;
+}
+
+
+/* mise en forme mobile et tablette */
+
+@media screen and (max-width: 760px) {
+
+    #user_register_submit{
+        position: fixed;
+        display: block;
+        width: 100vw;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+        border-radius: 0;
+        padding: 20px;
+    }
+}
+
+@media screen and (min-width: 760px) { 
+    .section-email {
+        padding: 0 30vw;
+    }
+
+    .form-email {
+        padding: 5vh 5vw;
+        font-size: 16px;
+    }
+
+    .form-group:first-child{
+        margin-top: 0;
+    }
+
+}
+
+

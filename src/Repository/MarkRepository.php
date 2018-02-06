@@ -13,6 +13,16 @@ class MarkRepository extends ServiceEntityRepository
         parent::__construct($registry, Mark::class);
     }
 
+    public function findAllMarkByMuseum($museumId)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery('SELECT m FROM App\Entity\Mark m WHERE m.museum = :id');
+        $query->setParameter('id', $museumId);
+        $marks = $query->getResult();
+
+        return $marks;
+    }
+
     /*
     public function findBySomething($value)
     {

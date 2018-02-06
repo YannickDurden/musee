@@ -1,0 +1,127 @@
+{% extends 'front-base.html.twig' %}
+
+{% block stylesheets %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link rel="stylesheet" href="{{app.request.basepath}}/css/style-scoreQuiz.css">
+{% endblock %}
+{% block body %}
+    <main class="container-fluid">
+        <div id="banner" class="row">
+            <div class="calque">
+                <nav id="brand" class="navbar">
+                    <span class="navbar-brand mb-0 h1">MyMuseum</span>
+                </nav>
+                <nav id="breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path('my_museum') }}">Accueil</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path("begin_route")}}">{{ nameRoute }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">{{ currentMark }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">Description</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">Quiz</li>
+                        <li class="hide-li breadcrumb-item active">Score du quiz</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+
+        <div class="section-route container-fluid">
+            <div class="row">
+                <div class="museum-wrapper col-12 text-center">
+                    <!-- Message flash Erreur -->
+                    {% for message in app.flashes('erreur') %}
+                        <div id="message-erreur" class="flash-notice alert alert-danger">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    <!-- Fin Message flash Erreur-->
+                    <!-- Message flash  Redirection -->
+                    {% for message in app.flashes('redirection') %}
+                        <div id="message-redirection"
+                             class="alert alert-info">
+                            {{ message }}
+                            <br>
+                            <button type="button"
+                                    class="btn btn-lg btn-success">
+                                <a href="{{ path('end_results')}}">Oui</a>
+                            </button>
+
+                            <button id="btn-no"
+                                    type="button"
+                                    class="btn btn-lg btn-danger">
+                                <a href="#">Non</a>
+                            </button>
+                        </div>
+                    {% endfor %}
+                    <!-- Fin Message flash  Redirection-->
+
+                    <div class="museum-stats">
+                        <div class="score text-center">
+                            <h2 class="h4">Score</h2>
+                            <p>{{ message }}</p>
+                            <p>
+                                Votre score actuel sur le parcours est de : <br>
+                                {{ correctAnswers }} sur {{ totalMark }}
+                            </p>
+                        </div>
+
+                        <div class="progression text-center">
+                            <h2 class="h4">Progression</h2>
+                            <div class="progress">
+                                <div class="progress-bar bg-success"
+                                     role="progressbar"
+                                     style="width: {{ progression }}%">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="text">
+                        <p>Sélectionnez un point suivant sur la carte pour continuer votre visite</p>
+                    </div>
+                </div><!-- museum-wrapper-->
+
+                <div class="legend">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i> Non visité
+                    <br>
+                    <i class="fa fa-map-marker markVisited" aria-hidden="true"></i> Visité
+                </div>
+
+                <div id="museum-map" class="col-12">
+                    <img  id="map"
+                          class="img-fluid" src="{{ app.request.basepath }}/uploads/{{ map }}"
+                          alt="carte image">
+                    {% for mark in marksArray %}
+                        <a class="repere-map" id="repere-{{ mark.id }}"
+                           data-coordx ="{{ mark.coordinateX }}"
+                           data-coordy ="{{ mark.coordinateY }}"
+                           href="http://localhost:8000/mymuseum/artwork/{{ mark.id }}">
+
+                            <i class="fa fa-map-marker
+                                {% for idMark in visitedMarkArray %}
+                                    {% if idMark == mark.id %}
+                                        markVisited
+                                    {% endif %}
+                                {% endfor %}" aria-hidden="true">
+                            </i>
+                        </a>
+                    {% endfor %}
+                </div><!-- Museum map -->
+            </div><!-- div row -->
+        </div>
+    </main>
+{% endblock %}
+{% block javascripts %}
+    <script src="{{ app.request.basepath }}/js/scriptRepere.js"></script>
+    <script src="{{ app.request.basepath }}/js/scriptMsgErreur.js"></script>
+{% endblock %}

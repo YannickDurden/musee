@@ -1,0 +1,28 @@
+/* Ajout de l'image */
+.btn {
+    background-color: rgb(1, 32, 86);
+    color: #f8f9fa;
+}
+
+.btn-museum {
+    margin-top: 1vh;
+}
+
+.btn-img {
+    margin-top: 2vh;
+}
+
+.col-select-img {
+    top: 2vh;
+}
+
+/* Preview image */
+
+#media {
+    margin-top: 4vh;
+}
+
+#media img {
+    width: 30%;
+    height: 30%;
+}

@@ -1,10 +1,10 @@
 composer.lock
 symfony.lock
-/bin/
 .idea/*
 ###> symfony/framework-bundle ###
 .env
 /public/bundles/
+/public/uploads
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
@@ -12,3 +12,15 @@ symfony.lock
 ###> symfony/web-server-bundle ###
 .web-server-pid
 ###< symfony/web-server-bundle ###
+
+
+###> symfony/webpack-encore-pack ###
+/node_modules/
+/public/build/
+###< symfony/webpack-encore-pack ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+

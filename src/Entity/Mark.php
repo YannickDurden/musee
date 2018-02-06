@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MarkRepository")
@@ -17,17 +19,20 @@ class Mark
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_x", precision=6, scale=4)
+     * @Assert\NotBlank()
      */
     private $coordinateX;
 
     /**
-     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=2)
+     * @ORM\Column(type="decimal", name="coordinate_y", precision=6, scale=4)
+     * @Assert\NotBlank()
      */
     private $coordinateY;
 
@@ -36,51 +41,45 @@ class Mark
      */
     private $image;
 
-
     /**
-     * @ORM\OneToMany(targetEntity="Media", mappedBy="mark")
+     * @ORM\OneToOne(targetEntity="Media", cascade={"persist"})
+     * @ORM\JoinColumn(name="media_id", referencedColumnName="id")
+     * @Assert\NotBlank()
      */
     private $medias;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\OneToMany(targetEntity="App\Entity\Description", mappedBy="mark", cascade ={"persist"})
+     * @Assert\NotBlank()
      */
-    private $description;
+    private $descriptions;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Route", mappedBy="marks")
+     * @Assert\NotBlank()
      */
     private $routes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\User", mappedBy="mark")
+     * @ORM\OneToMany(targetEntity="App\Entity\Question", mappedBy="mark", cascade={"persist"})
+     * @Assert\NotBlank()
      */
     private $questions;
 
     /**
-     * Mark constructor.
-     * @param $id
-     * @param $name
-     * @param $coordinateX
-     * @param $coordinateY
-     * @param $image
-     * @param $medias
-     * @param $description
-     * @param $routes
-     * @param $questions
+     * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="marks")
+     * @Assert\NotBlank()
      */
-    public function __construct($id, $name, $coordinateX, $coordinateY, $image, $medias, $description, $routes, $questions)
+    private $museum;
+
+    /**
+     * Mark constructor.
+     */
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->coordinateX = $coordinateX;
-        $this->coordinateY = $coordinateY;
-        $this->image = $image;
-        $this->medias = $medias;
-        $this->description = $description;
-        $this->routes = $routes;
-        $this->questions = $questions;
+        $this->questions = new ArrayCollection();
     }
+
 
 
     /**
@@ -182,22 +181,6 @@ class Mark
     /**
      * @return mixed
      */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description): void
-    {
-        $this->description = $description;
-    }
-
-    /**
-     * @return mixed
-     */
     public function getRoutes()
     {
         return $this->routes;
@@ -226,6 +209,42 @@ class Mark
     {
         $this->questions = $questions;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMuseum()
+    {
+        return $this->museum;
+    }
+
+    /**
+     * @param mixed $museum
+     */
+    public function setMuseum($museum): void
+    {
+        $this->museum = $museum;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescriptions()
+    {
+        return $this->descriptions;
+    }
+
+    /**
+     * @param mixed $descriptions
+     */
+    public function setDescriptions($descriptions): void
+    {
+        $this->descriptions = $descriptions;
+    }
+
+
+
+
 
 
 

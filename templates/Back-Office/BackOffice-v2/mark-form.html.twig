@@ -1,0 +1,64 @@
+<!-- Creation des differentes pills pour la navigation dans le formulaire de repère -->
+<ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+    <li class="nav-item">
+        <a class="nav-link active" id="pills-general-tab" data-toggle="pill" href="#pills-general" role="tab" aria-controls="pills-general" aria-selected="true">Général</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-descriptions-tab" data-toggle="pill" href="#pills-descriptions" role="tab" aria-controls="pills-descriptions" aria-selected="false">Descriptions</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" id="pills-questions-tab" data-toggle="pill" href="#pills-questions" role="tab" aria-controls="pills-questions" aria-selected="false">Questions</a>
+    </li>
+</ul>
+<!-- Fin de création des pills -->
+{{ form_start(formMark, {attr: {id: 'add_mark_form'}}) }}
+<!-- Definition du formulaire et selection des éléments à afficher pour chaque pill -->
+<div class="tab-content" id="pills-tabContent">
+    <div class="tab-pane fade show active" id="pills-general" role="tabpanel" aria-labelledby="pills-general-tab">
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.name, "Nom du repère") }}</h5>
+            {{ form_errors(formMark.name) }}
+            {{ form_widget(formMark.name, {'attr': {'placeholder': 'Entrer le nom du repère', 'class': 'col-12'}}) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.coordinateX, "Coordonnée X") }}</h5>
+            {{ form_errors(formMark.coordinateX) }}
+            {{ form_widget(formMark.coordinateX) }}
+        </div>
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.coordinateY, "Coordonnée Y") }}</h5>
+            {{ form_errors(formMark.coordinateY) }}
+            {{ form_widget(formMark.coordinateY) }}
+        </div>
+        {#
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.image, "Image du repère") }}</h5>
+            {{ form_errors(formMark.image) }}
+            {{ form_widget(formMark.image) }}
+        </div>
+        #}
+    </div>
+    <div class="tab-pane fade" id="pills-descriptions" role="tabpanel" aria-labelledby="pills-descriptions-tab">
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.descriptions, "Descriptions associées au repère") }}</h5>
+            {{ form_errors(formMark.descriptions) }}
+            {{ form_widget(formMark.descriptions) }}
+        </div>
+    </div>
+    <div class="tab-pane fade" id="pills-questions" role="tabpanel" aria-labelledby="pills-questions-tab">
+        <div class="mb-1">
+            <h5>{{ form_label(formMark.questions, "Questions associées au repère") }}</h5>
+            {{ form_errors(formMark.questions) }}
+            {{ form_widget(formMark.questions) }}
+        </div>
+        <div class="d-flex justify-content-end">
+            {{ form_row(formMark.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+    </div>
+</div>
+{{ form_start(formMark) }}
+{% if name is defined %}
+    <input type="hidden" id="previousName" value="{{ name }}">
+{% else %}
+    <input type="hidden" id="previousName" value="false">
+{% endif %}

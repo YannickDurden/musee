@@ -1,0 +1,186 @@
+/****** RESET ******/
+body{
+    margin :0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+}
+
+.row,
+.col-md-6,
+.col,
+.col-md-2,
+.container-fluid{
+    margin: 0;
+    padding: 0;
+}
+
+/****** HEADER ******/
+/*NAV*/
+
+.calque{
+    width: 100%;
+    background: linear-gradient(23deg, rgba(0, 0, 0, 0.6), rgba(255, 255, 255, 0.5));
+}
+
+#banner{
+    background: url("img/louvre.jpg") no-repeat center;
+    background-size: cover;
+}
+
+#brand span{
+    font-family: 'Great Vibes', cursive;
+    font-size: 40px;
+    color: whitesmoke;
+    text-shadow: 4px 4px 7px rgba(0,0,0,0.9);
+}
+
+.breadcrumb{
+    background-color: rgba(1, 32, 86,0.7);
+    margin: 0;
+    padding: 8px 0 8px 16px;
+    font-family: 'Raleway', sans-serif;
+    color: white;
+    font-size: 20px;
+}
+
+.breadcrumb a{
+    color: rgba(255,255,255,0.9);
+    letter-spacing: 2px;
+}
+
+.breadcrumb .active{
+    color : rgba(255,255,255,1);
+    text-decoration: underline;
+}
+
+.breadcrumb-item+.breadcrumb-item::before{
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    color: white;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    content: "\f178";
+}
+
+/****** MAIN ******/
+
+/* TITLE ARTWORK*/
+
+h1{
+    margin: 0 auto;
+    font-family: 'Raleway', sans-serif;
+}
+
+/* IMAGE ARTWORK */
+
+.img-tablet img{
+    -webkit-box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+            box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+}
+
+.img-tablet{
+    padding: 0 40px 40px 0;
+}
+
+/* DESCRIPTION ARTWORK*/
+article p{
+    font-family: 'Raleway', sans-serif;
+    font-size: 1.3em;
+    padding: 20px;
+}
+
+/* MENU TABLETTE */
+@media screen and (max-width: 768px ){
+    #btn-tablet,
+    .hide-li,
+    .breadcrumb-item+.breadcrumb-item::before{
+        display: none;
+    }
+
+}
+
+#btn-tablet{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+#btn-tablet a{
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(1, 32, 86);
+    background-color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
+    text-decoration: none;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+#btn-tablet .active{
+    background-color: rgb(1, 32, 86);
+    color: whitesmoke;
+}
+
+
+/* MENU MOBILE */
+#btn-footer a{
+    font-size: 1em;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: rgb(1, 32, 86);
+    background-color: whitesmoke;
+    font-family: 'Raleway', sans-serif;
+    text-decoration: none;
+    border-radius: 0;
+}
+
+#btn-footer .active{
+    background-color: rgb(1, 32, 86);
+    color: whitesmoke;
+}
+
+/* AFFICHAGE TABLETTE */
+@media screen and (min-width: 768px ){
+    #btn-footer,
+    .img-mobile{
+        display: none;
+    }
+
+    #artwork-name{
+        margin-top: 20px;
+    }
+    #wrapper{
+        margin-top: 25px;
+        margin-right: 30px;
+        margin-left: 30px;
+    }
+
+    #border-tablet{
+        padding: 40px;
+        max-height: 66vh;
+        height: 100vh;
+        background-color: rgba(245, 248, 255, 0.5);
+        border-radius: 5px;
+        position: relative;
+        -webkit-box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+        box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+    }
+    #display-artwork{
+        position: relative;
+        overflow-y: scroll;
+        overflow-x: auto;
+        max-height: 57vh;
+    }
+}
+
+@media screen and (max-width: 768px){
+    .img-tablet,
+    #artwork-name{
+        display:none;
+    }
+}

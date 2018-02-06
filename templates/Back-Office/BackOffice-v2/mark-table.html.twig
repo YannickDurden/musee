@@ -1,0 +1,16 @@
+{% for key, mark in marks %}
+<tr>
+    <th scope="row">{{ loop.index }}</th>
+    <td name="{{ encodedNames[loop.index - 1] }}" class="coordinates" data-coordX="{{ allMarks[(loop.index - 1)].coordinateX }}" data-coordY="{{ allMarks[(loop.index - 1)].coordinateY }}">{{ key }}</td>
+    <td><a href="#" name="{{ encodedNames[loop.index - 1] }}" class="editMark"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+    <td><a href="#" name="{{encodedNames[loop.index - 1] }}" class="deleteMark"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+</tr>
+{% endfor %}
+{% if route is defined %}
+<input type="hidden" value="{{ route.name }}" id="route_name">
+<input type="hidden" value="{{ route.description }}" id="route_description">
+{% endif %}
+{% if duration is defined %}
+    <input type="hidden" value="{{ duration|date('G') }}" id="route_hours">
+    <input type="hidden" value="{{ duration|date('i') }}" id="route_minutes">
+{% endif %}

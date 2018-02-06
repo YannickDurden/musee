@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\RouteRepository")
@@ -17,7 +19,12 @@ class Route
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $name;
 
@@ -27,12 +34,12 @@ class Route
     private $duration;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string")
      */
-    private $category;
+    private $map;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="routes")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Museum", inversedBy="routes", cascade ={"persist"})
      */
     private $museum;
 
@@ -49,24 +56,12 @@ class Route
     private $scores;
 
     /**
-     * Route constructor.
-     * @param $id
-     * @param $name
-     * @param $duration
-     * @param $category
-     * @param $museum
-     * @param $marks
-     * @param $scores
+     * route constructor.
      */
-    public function __construct($id, $name, $duration, $category, $museum, $marks, $scores)
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->duration = $duration;
-        $this->category = $category;
-        $this->museum = $museum;
-        $this->marks = $marks;
-        $this->scores = $scores;
+        $this->marks = new ArrayCollection();
+        $this->scores = new ArrayCollection();
     }
 
 
@@ -121,18 +116,35 @@ class Route
     /**
      * @return mixed
      */
-    public function getCategory()
+    public function getDescription()
     {
-        return $this->category;
+        return $this->description;
     }
 
     /**
-     * @param mixed $category
+     * @param mixed $description
      */
-    public function setCategory($category): void
+    public function setDescription($description): void
     {
-        $this->category = $category;
+        $this->description = $description;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param mixed $map
+     */
+    public function setMap($map): void
+    {
+        $this->map = $map;
+    }
+
 
     /**
      * @return mixed
@@ -181,8 +193,4 @@ class Route
     {
         $this->scores = $scores;
     }
-
-
-
-
 }

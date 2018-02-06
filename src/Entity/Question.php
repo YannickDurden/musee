@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\QuestionRepository")
@@ -27,38 +28,16 @@ class Question
     private $category;
 
     /**
-     * @ORM\Column(type="text");
-     */
-    private $responses;
-
-    /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="questions")
      */
     private $mark;
 
     /**
-     *@ORM\OneToMany(targetEntity="App\Entity\Answer", mappedBy="question")
+     *@ORM\Column(type="string")
      */
     private $answers;
 
-    /**
-     * Question constructor.
-     * @param $id
-     * @param $label
-     * @param $category
-     * @param $responses
-     * @param $mark
-     * @param $answers
-     */
-    public function __construct($id, $label, $category, $responses, $mark, $answers)
-    {
-        $this->id = $id;
-        $this->label = $label;
-        $this->category = $category;
-        $this->responses = $responses;
-        $this->mark = $mark;
-        $this->answers = $answers;
-    }
+
 
     /**
      * @return mixed
@@ -106,22 +85,6 @@ class Question
     public function setCategory($category): void
     {
         $this->category = $category;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResponses()
-    {
-        return $this->responses;
-    }
-
-    /**
-     * @param mixed $responses
-     */
-    public function setResponses($responses): void
-    {
-        $this->responses = $responses;
     }
 
     /**

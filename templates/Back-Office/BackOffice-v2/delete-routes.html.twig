@@ -1,0 +1,19 @@
+{% extends '/Back-Office/BackOffice-v2/base.back2.html.twig' %}
+{% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/delete-routes.css">{% endblock %}
+
+        {% block body %}
+
+<div id="col-delete" class="col col-10">
+    {{ form_start(formRoute) }}
+                <h1>Supprimer un parcours</h1><br/>
+    <div class="form-group col-md-4">
+        <h2>{{ form_label(formRoute.name, "Nom du parcours") }}</h2>
+
+            {{ form_errors(formRoute.name) }}
+            {{ form_widget(formRoute.name, {'attr': {'class': 'form-control'}}) }}
+
+    </div>
+    {{ form_end(formRoute) }}
+</div>
+        {% endblock %}
+

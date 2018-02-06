@@ -1,0 +1,31 @@
+{% extends '/Back-Office/base.back-office.html.twig' %}
+
+{% block body %}
+    {#{{ form(formAdd, {'attr': {'novalidate': 'novalidate'}}) }}#}
+    {{ form_start(formAdd) }}
+
+    <h4>Ajouter une map</h4>
+
+    {% if(museum != null) %}
+        <div class="col col-9 d-flex justify-content-center" id="museumMap">
+            <figure class="figure m-3">
+                <figcaption class="figure-caption">Map actuelle</figcaption>
+                <img src="{{app.request.basepath}}/uploads/{{ museum.map }}" alt="map du musée" height="300" width="400">
+            </figure>
+        </div>
+    {% endif %}
+    <div class="col col-9">
+        <div class="form-group">
+            <h5>{{ form_label(formAdd.map, "Selection de la map") }}</h5>
+            {{ form_errors(formAdd.map) }}
+            {{ form_widget(formAdd.map, {'attr': {'class': 'form-control'}}) }}
+
+        </div>
+
+        <div class="d-flex justify-content-end">
+            {{ form_row(formAdd.save, {'attr': {'class': 'btn btn-primary'}}) }}
+        </div>
+    </div>
+    {{ form_end(formAdd) }}
+{% endblock %}
+

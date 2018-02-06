@@ -1,0 +1,156 @@
+/* reset */
+
+body {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.row, .container-fluid, .col, .col-12, p {
+    margin: 0;
+    padding: 0;
+}
+
+/* Page select parcours
+   Background fond et div */
+#jumbotron {
+    position: relative;
+    background: url('img/louvre.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+}
+
+#bg-jumbotron {
+    overflow-x: hidden;
+    overflow-y: auto;
+    background: -webkit-gradient(linear, left bottom, left top, from(rgba(255, 255, 255, 0.65)), to(rgba(255, 255, 255, 0)));
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0));
+    height: 100vh;
+    width: 100vw;
+}
+
+#bg-jumbotron h1 {
+    font-family: 'Great Vibes', cursive;
+    color: whitesmoke;
+    margin-top: 7vh;
+    text-align: center;
+}
+
+#bg-jumbotron h2 {
+    color: whitesmoke;
+    font-size: 25px;
+    text-align: center;
+    margin-top: 5vh;
+    padding: 10px;
+}
+
+.section-route {
+    position: absolute;
+    top: 33vh;
+    left: 0;
+    padding: 0 10vw 0 10vw;
+}
+
+#col-route {
+    background-color: rgba(245, 248, 255, 0.8);
+    border-radius: 10px;
+    color: rgb(20, 20, 20);
+}
+
+/* mise en forme formulaire selection parcours */
+
+.form-route {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    padding: 40px;
+}
+
+.border-desc {
+    padding: 10px;
+    background-color: rgba(201, 201, 201, 0.4);
+    border-radius: 5px 5px 5px;
+}
+
+#display-route{
+    position: relative;
+    overflow-y: scroll;
+    overflow-x: auto;
+}
+
+.btn-start{
+    background-color: rgb(1, 32, 86);
+    color: whitesmoke;
+    font-size: 18px;
+    font-family: 'Montserrat', sans-serif;
+    text-transform: uppercase;
+    margin-top: 5%;
+}
+#display-route {
+    max-height: 30vh;
+}
+
+
+/*mise en forme btn Démarrer pour vue mobile */
+@media screen and (max-width: 760px) {
+
+    .btn-start {
+        position: fixed;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 1030;
+        border-radius: 0;
+        padding: 20px;
+    }
+
+}
+
+/* mise en forme à la vue tablette */
+
+@media screen and (min-width: 760px) {
+
+    #bg-jumbotron h2 {
+        margin-top: 6vh;
+        font-size: 30px;
+    }
+    .section-route {
+        padding: 0 25vw 0 25vw;
+        top: 30vh;
+    }
+    #display-route {
+        max-height: 25vh;
+    }
+
+    .btn-start {
+        border-radius: .3rem;
+        margin-top: 5vh;
+        padding: 15px;
+    }
+    .col-12 {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        -ms-flex-item-align: center;
+            align-self: center;
+        padding: 15px;
+    }
+}
+

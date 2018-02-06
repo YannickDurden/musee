@@ -1,0 +1,15 @@
+#content {
+    min-height: 100vh;
+}
+
+a.nav-link:hover,
+a.nav-link:focus,
+a.nav-link:active {
+    background-color: #5eb5e0;
+    border-radius: 10px;
+}
+
+#logout {
+    position: absolute;
+    top: 90vh;
+}

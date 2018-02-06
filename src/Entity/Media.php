@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MediaRepository")
@@ -17,7 +18,8 @@ class Media
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
+     * @Assert\NotBlank()
      */
     private $name;
 
@@ -25,26 +27,6 @@ class Media
      * @ORM\Column(type="string", length=255)
      */
     private $file;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Mark", inversedBy="medias")
-     */
-    private $mark;
-
-    /**
-     * Media constructor.
-     * @param $id
-     * @param $name
-     * @param $file
-     * @param $mark
-     */
-    public function __construct($id, $name, $file, $mark)
-    {
-        $this->id = $id;
-        $this->name = $name;
-        $this->file = $file;
-        $this->mark = $mark;
-    }
 
     /**
      * @return mixed
@@ -92,22 +74,6 @@ class Media
     public function setFile($file): void
     {
         $this->file = $file;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getMark()
-    {
-        return $this->mark;
-    }
-
-    /**
-     * @param mixed $mark
-     */
-    public function setMark($mark): void
-    {
-        $this->mark = $mark;
     }
 
 

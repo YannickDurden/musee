@@ -2,7 +2,9 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\MuseumRepository")
@@ -17,7 +19,7 @@ class Museum
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $name;
 
@@ -62,31 +64,46 @@ class Museum
     private $routes;
 
     /**
-     * Museum constructor.
-     * @param $id
-     * @param $name
-     * @param $website
-     * @param $address
-     * @param $phoneNumber
-     * @param $facebook
-     * @param $twitter
-     * @param $instagram
-     * @param $youtube
-     * @param $routes
+     * @ORM\Column(type="string", length=255)
      */
-    public function __construct($id, $name, $website, $address, $phoneNumber, $facebook, $twitter, $instagram, $youtube, $routes)
+    private $map;
+
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\User", cascade={"persist"})
+     * @ORM\JoinColumn(name="admin_id", referencedColumnName="id")
+     */
+    private $admin;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="museum")
+     */
+    private $marks;
+
+    /**
+     * Museum constructor.
+     */
+    public function __construct()
     {
-        $this->id = $id;
-        $this->name = $name;
-        $this->website = $website;
-        $this->address = $address;
-        $this->phoneNumber = $phoneNumber;
-        $this->facebook = $facebook;
-        $this->twitter = $twitter;
-        $this->instagram = $instagram;
-        $this->youtube = $youtube;
-        $this->routes = $routes;
+        $this->marks = new ArrayCollection();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMarks()
+    {
+        return $this->marks;
+    }
+
+    /**
+     * @param mixed $marks
+     */
+    public function setMarks($marks): void
+    {
+        $this->marks = $marks;
+    }
+
+
 
 
     /**
@@ -248,6 +265,41 @@ class Museum
     {
         $this->routes = $routes;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getMap()
+    {
+        return $this->map;
+    }
+
+    /**
+     * @param mixed $map
+     */
+    public function setMap($map): void
+    {
+        $this->map = $map;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAdmin()
+    {
+        return $this->admin;
+    }
+
+    /**
+     * @param mixed $admin
+     */
+    public function setAdmin($admin): void
+    {
+        $this->admin = $admin;
+    }
+
+
+
 
 
 }

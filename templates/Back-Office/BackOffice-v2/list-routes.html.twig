@@ -1,0 +1,27 @@
+{% extends '/Back-Office/BackOffice-v2/base.back2.html.twig' %}
+   {% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/style-back-office-v2.css">{% endblock %}
+
+{% block body %}
+            <ol class="breadcrumb">
+                <li><a href="#" title="Accueil">Accueil</a></li>
+                <li><a href="#" title="formations">Parcours</a></li>
+                <li class="#">Liste</li>
+            </ol>
+            <h3>Liste de tout les parcours</h3>
+            <table class="table table-striped" id="table-parcours">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Nom du parcours</th>
+                        <th scope="col">Supprimer</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+{% endblock %}
+{% block scriptJavascript %}
+    <script src ="{{app.request.basepath}}/js/DeleteRoute.js"></script>
+{% endblock %}
+

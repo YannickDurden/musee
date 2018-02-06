@@ -1,0 +1,22 @@
+/* mise en forme formulaire edit infos et ajout de la map */
+
+.input-museum  {
+    margin-bottom: 3vh;
+}
+
+.btn {
+    background-color: rgb(1, 32, 86);
+    color: #f8f9fa;
+}
+
+.btn-museum {
+    margin-top: 1vh;
+}
+
+.btn-img {
+    margin-top: 2vh;
+}
+
+.col-select-img {
+    top: 2vh;
+}
