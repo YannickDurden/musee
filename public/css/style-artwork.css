@@ -133,7 +133,7 @@ article p{
     letter-spacing: 1px;
     text-transform: uppercase;
     color: rgb(1, 32, 86);
-    background-color: rgb(78, 255, 176);
+    background-color: whitesmoke;
     font-family: 'Raleway', sans-serif;
     text-decoration: none;
     border-radius: 0;
@@ -141,7 +141,7 @@ article p{
 
 #btn-footer .active{
     background-color: rgb(1, 32, 86);
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
 }
 
 /* AFFICHAGE TABLETTE */
@@ -169,6 +169,12 @@ article p{
         position: relative;
         -webkit-box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
         box-shadow: 4px 4px 25px 1px rgba(0,0,0,0.8);
+    }
+    #display-artwork{
+        position: relative;
+        overflow-y: scroll;
+        overflow-x: auto;
+        max-height: 57vh;
     }
 }
 

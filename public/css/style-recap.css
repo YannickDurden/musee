@@ -38,7 +38,7 @@ body {
 }
 
 #bg-jumbotron h2 {
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
     font-size: 20px;
     text-align: center;
     margin-top: 7vh;
@@ -98,7 +98,7 @@ body {
 
 .btn-submit {
     background-color: rgb(1, 32, 86);
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
     font-size: 18px;
     text-transform: uppercase;
     text-decoration: none;
@@ -110,7 +110,7 @@ body {
 }
 
 .btn-submit a {
-    color: rgb(78, 255, 176);
+    color: whitesmoke;
 }
 
 .stats {

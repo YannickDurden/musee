@@ -191,6 +191,17 @@ body{
     .progress {
         width: 50vw;
     }
+
+    #btn-tablet,
+    .hide-li,
+    .breadcrumb-item+.breadcrumb-item::before{
+        display: none;
+    }
+
+    .active {
+        display: initial;
+    }
+
 }
 
 /* mise en forme à la vue tablette en paysage */

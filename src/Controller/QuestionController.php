@@ -134,7 +134,7 @@ class QuestionController extends Controller
             if(($session->get('markCount')) == ($session->get("totalMark"))){
                 $this->addFlash(
                     'redirection',
-                    'Vous avez répondu à tous les quiz, souhaitez vous être redirigez ?'
+                    'Vous avez fini votre visite, souhaitez vous voir vos scores ?'
                 );
             }
 
