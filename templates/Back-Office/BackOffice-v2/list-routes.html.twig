@@ -18,19 +18,11 @@
                     </tr>
                 </thead>
                 <tbody>
-                {% for route in allRoutes %}
-
-                    <tr>
-                        <th scope="row">{{ loop.index }}</th>
-                        <td>{{ route.name }}</td>
-                        <td><a href="#" id="{{ route.id }}"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
-                        <td><a href="#" id="{{ route.id }}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                    </tr>
-
-                {% endfor %}
+                
                 </tbody>
             </table>
 {% endblock %}
 {% block scriptJavascript %}
-    <script src ="{{app.request.basepath}}/js/route-list.js"></script>
+    <script src ="{{app.request.basepath}}/js/DeleteRoute.js"></script>
 {% endblock %}
+

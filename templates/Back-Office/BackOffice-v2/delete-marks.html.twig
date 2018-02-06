@@ -1,23 +1,19 @@
-<!doctype html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
-    <title>Suppression d'un repère</title>
-</head>
-<body>
-<div class="container-fluid">
-    <div class="row">
-        <div class="col-md-6 justify-content-center">
-            {% block body %}
-                {% block title %}
-                    <h1>Supprimer un repère</h1>
-                {% endblock %}
-                {{ form(formMarks) }}
-            {% endblock %}
-        </div>
+{% extends '/Back-Office/BackOffice-v2/base.back2.html.twig' %}
+{% block stylesheet %}<link rel="stylesheet" href="{{ app.request.basepath }}/css/delete-marks.css">{% endblock %}
+
+        {% block body %}
+
+<div id="col-delete" class="col col-10">
+    {{ form_start(formMarks) }}
+                <h1>Supprimer un repère</h1><br/>
+    <div class="form-group col-md-4">
+        <h2>{{ form_label(formMarks.name, "Nom du repère") }}</h2>
+
+            {{ form_errors(formMarks.name) }}
+            {{ form_widget(formMarks.name, {'attr': {'class': 'form-control'}}) }}
+
     </div>
+    {{ form_end(formMarks) }}
 </div>
-</body>
-</html>
+        {% endblock %}
+

@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Doctrine\ORM\Query\ResultSetMapping;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Entity\Route as r;
 
 class RouteController extends Controller
 {
@@ -82,11 +83,16 @@ class RouteController extends Controller
         $idMuseum = $session->get('museum')->getId();
         $museum = $this->getDoctrine()->getRepository(Museum::class)->find($idMuseum);
         $allRoutes = $museum->getRoutes();
+         foreach  ($allRoutes as $route)
+         {
+             $em = $this->getDoctrine()->getManager();
+             $em->remove($route);
+             $em->flush();
+         };
         return $this->render('Back-Office/BackOffice-v2/list-routes.html.twig', [
             'allRoutes' => $allRoutes
         ]);
     }
-
 
     /**
      * @route("/admin/route/delete-routes", name="delete_routes")
@@ -115,6 +121,7 @@ class RouteController extends Controller
             ]);
     }
 
+
     /**
      * @route("/admin/route/delete-marks", name="delete_marks")
      */
@@ -142,6 +149,7 @@ class RouteController extends Controller
                 'formMarks' => $form->createView()
             ]);
     }
+
 
 
 }
