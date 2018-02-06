@@ -14,56 +14,35 @@ var height = $("#map").height();
 var width = $("#map").width();
 var mapId = $("#map");
 var markerWidth = 10,
-    markerHeight = 10
+    markerHeight = 10;
+
+
 
 
 /**
- *  Mousshover active
+ *   Display_all_map_marker()
  * @param mapId [string] a valid DOM element ID
+ * @param x [number] the x coordinate of the point
+ * @param y [number] the y coordinate of the point
+ * @param number [number] the count number of the point ID
  */
-
-function mousehover(MarkID) {
-    var info = $("<div><div>",
+function Display_all_map_marker(mapId, x, y, number)
+{
+    var x;
+    var y;
+    var point = $("<div></div>",
         {
-            "class": "info"
-        }
-    ).css
-    (
+            "id": "New_pointer_" + number,
+            "class": "pointeur"
+        }).css(
         {
-            "width": 200,
-            "height": 200,
-        }
-    ).html("hello");
-    MarkID.append(info);
-}
-
-/**
- * delete_icon
- *  @param MapID [string] a valid DOM element ID
- *  @param MarkID [string] a valid DOM element ID of Mark
- */
-function delete_icon(MarkID, RouteID, ValMarkId) {
-    $(MarkID).text("delete point ?");
-    $(MarkID).remove();
-
-    /**
-     *  appel de la fonction pph pour suppirmer en seesion
-     */
-    $.ajax
-    (
-        {
-            url: '/Mark/DeleteIcon',
-            type: 'POST',
-            data:
-                {
-                    RouteID: RouteID,
-                    ValMarkId: ValMarkId
-                }
-        })
-        .done(function (data) {
-
-            console.log(data);
+            "width": markerWidth,
+            "height": markerHeight,
+            "left": x,
+            "top": y,
+            "background-color":"red"
         });
+    $(mapId).append(point);
 }
 /**
  * Display a map marker on a specific map
@@ -73,29 +52,15 @@ function delete_icon(MarkID, RouteID, ValMarkId) {
  * @param number [number] the count number of the point ID
  *
  */
-function Display_map_marker(mapId, x, y, number, RouteID, ValMarkId) {
+function Display_map_marker(mapId, x, y, number,Markname) {
     $(mapId).unbind();
+
     var x;
     var y;
-    var delete_icon_map = $("<div></div>",
-        {
-            "id": "delete_icon_map",
-            "class": "delete_icon_map"
-        }).click(function () {
-
-    });
-
     var point = $("<div></div>",
         {
             "id": "New_pointer_" + number,
             "class": "pointeur"
-        }).on(
-
-        'click', function () {
-            var MarkId = $(this);
-
-            delete_icon(MarkId, RouteID, ValMarkId);
-            mousehover(MarkId);
         }).css(
         {
             "width": markerWidth,
@@ -103,13 +68,52 @@ function Display_map_marker(mapId, x, y, number, RouteID, ValMarkId) {
             "left": x,
             "top": y,
             "background-color":"green"
-        }).append(delete_icon_map);
+        });
+
     $(mapId).append(point);
 
+    $('.deleteMark').click(function (e)
+    {
+        e.preventDefault();
+        var name = $(this).attr('name');
+        console.log(name);
+        $(this).parent().parent().remove();
+        removeMark(name);
+    });
+
 }
+/**
+ * display all mark
+ */
+function displayAllMark()
+{
+    $.ajax({
+        url: '/Mark/displayAllMark',
+        type: 'POST',
+        success: function (data) {
+            var count = 0;
+            for (i = 0; i < data.length; i++) {
+                count++;
+                var mark = data[i];
+                var name = mark['name'];
+                var coordinateX = mark['coordinateX'] * 100 + '%';
+                var coordinateY = mark['coordinateY'] * 100 + '%';
+
+                Display_all_map_marker(mapId,coordinateX,coordinateY,i);
+            }
+        },
+        error: function (xhr, textStatus, errorThrown) {
+
+        }
+
+    });
+}
+
+
 
 /**
  *  Route on page load
+ * @param RouteID [string] a valid DOM element ID
  */
 function ajax_load_map_route(RouteID) {
     $.ajax({
@@ -122,9 +126,10 @@ function ajax_load_map_route(RouteID) {
                 count++;
                 var mark = data[i];
                 var ValMarkId = mark.id;
+                var Markname = mark.name;
                 var coordX = mark.coordinateX * 100 + '%';
                 var coordY = mark.coordinateY * 100 + '%';
-                Display_map_marker(mapId, coordX, coordY, i, RouteID, ValMarkId);
+                Display_map_marker(mapId, coordX, coordY, i,Markname);
             }
         },
         error: function (xhr, textStatus, errorThrown) {
@@ -134,49 +139,14 @@ function ajax_load_map_route(RouteID) {
     });
 }
 
-/**
- * Create repere
- * @param mapId mapId [string] a valid DOM element ID
- * @param number [integer] the count number of the point ID
- */
-function Create_Map_Marker(mapId, number)
-{
-    //Recupere les coordonnées du clique par rapport a la div #map
-
-    var coordX = e.pageX - $(this).offset().left;
-    var coordY = e.pageY - $(this).offset().top;
-
-    //Pour les afficher plus facilement par la suite on stock les coordonnées
-    //en % de la hauteur et largeur
-    coordX = (coordX / width).toFixed(3);
-    coordY = (coordY / height).toFixed(3);
-
-    //Affiche les coordonnées dans le formulaire
-    $('#add_mark_add_coordinateX').val(coordX);
-    $('#add_mark_add_coordinateY').val(coordY);
-
-    //Affiche le repere sur la map
-    var p = document.createElement("div");
-    p.setAttribute("id", "repereMap");
-    p.style.width = 10 + "px";
-    p.style.height = 10 + "px";
-    p.style.backgroundColor = "red";
-    //Sans oublier de convertir le % en valeur en pixel
-    p.style.left = (coordX * mapWidth) + 'px';
-    p.style.top = (coordY * mapHeight) + 'px';
-    $('#map').append(p);
-}
 
 /**
  * init Jquery
  */
 
 $(function () {
-    //$('#map').click(function (e) {
-    //  count++;
-    // Create_Map_Marker('$(this)',count);
-    //});
 
+    displayAllMark();
 
     // Gestion des coordonnées des repères
 
@@ -240,18 +210,18 @@ $(function () {
      */
 
     $('#form_route').change(function () {
-        //$("#map").html("");
+        mapId.children().html("");
         var RouteID = $(this).val();
-
         ajax_load_map_route(RouteID);
 
         //Affiche l'animation de chargment
+
         var name = $('#form_route option:selected').text();
         if (name != 'Choisir le parcours à modifier') {
             $('#animation').show();
             $('#table-mark').fadeOut('slow');
             $.ajax({
-                url: 'http://localhost:8000/ajax/getMarks',
+                url: '/ajax/getMarks',
                 type: 'POST',
                 data: {name: name}
             })
@@ -287,6 +257,7 @@ $(function () {
      * Ajout d'un repère au parcours
      */
 
+
     $('#add_mark_add_save').click(function (e, update) {
         e.preventDefault();
         addMarkToBdd();
@@ -298,12 +269,15 @@ $(function () {
 
         });
 
+        /**
         $('.deleteMark').click(function (e) {
             e.preventDefault();
             var name = $(this).attr('name');
+            console.log(MarkName);
             $(this).parent().parent().remove();
             removeMark(name);
         });
+         **/
     });
 
     /**
@@ -316,7 +290,7 @@ $(function () {
         var $routeInfo = $('#add_route').serialize();
         var name = $('#form_route option:selected').text();
         $.ajax({
-            url: 'http://localhost:8000/ajax/saveRoutetoBDD',
+            url: '/ajax/saveRoutetoBDD',
             type: 'POST',
             data: {routeInfo: $routeInfo, name: name}
         });
@@ -330,7 +304,7 @@ $(function () {
 function removeMark(name) {
     var decodedName = decodeURI(name);
     $.ajax({
-        url: 'http://localhost:8000/ajax/deleteMarkFromSession',
+        url: '/ajax/deleteMarkFromSession',
         type: 'POST',
         data: {name: decodedName}
     })
@@ -343,7 +317,7 @@ function editMark(name) {
     $("#previousName").val(name);
     var decodedName = decodeURI(name);
     $.ajax({
-        url: 'http://localhost:8000/ajax/getMarkInfo',
+        url: '/ajax/getMarkInfo',
         type: 'POST',
         data: {name: decodedName}
     })
@@ -396,7 +370,7 @@ function addMarkToBdd() {
     $("#hideForm").delay(3000).fadeOut(800);
 
     $.ajax({
-        url: 'http://localhost:8000/ajax/saveMarkToSession',
+        url: '/ajax/saveMarkToSession',
         type: 'POST',
         //processData: false,
         //cache: false,
