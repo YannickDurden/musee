@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controller;
+use App\Entity\Mark;
 use App\Entity\Museum;
 use App\Form\AddMarkAddType;
 use App\Form\AddRouteType;
@@ -124,7 +125,8 @@ class RouteController extends Controller
         $arrayRoutes = [];
 
         //Dans un second temps on récupère la liste complete des repères car en partant de $allRoutes nous n'aurions pas les repères orphelins
-        $allMuseumMarks = $this->getDoctrine()->getRepository(Mark::class)->findBy(['museum' => $museum->getId()]);
+        $allMuseumMarks = $this->getDoctrine()->getRepository(Mark::class)->findBy(['museum' =>
+            $museum->getId()]);
         $allMarks = [];
         //Création du tableau de session qui se remplira lors de l'ajout d'un repère au parcours par l'user
         $session->set('savedMarksNames', []);

@@ -98,7 +98,30 @@ class AjaxController extends Controller
             $savedMark = new Mark();
         } else {
             $savedMark = $this->getDoctrine()->getRepository(Mark::class)->findOneBy(['name' => $_POST['update']]);
+
+            // Dans un premier temps on supprimes les questions et les descriptions associés à ce
+            // repere en BDD
+            $previousDescriptions = $savedMark->getDescriptions();
+            $previousQuestions = $savedMark->getQuestions();
+            foreach ($previousDescriptions as $currentDescription) {
+                $deleted = $this->getDoctrine()->getRepository(Description::class)->find($currentDescription->getId());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($deleted);
+                $em->flush();
+            }
+            foreach ($previousQuestions as $currentQuestion) {
+                $deleted = $this->getDoctrine()->getRepository(Question::class)->find($currentQuestion->getId());
+                $em = $this->getDoctrine()->getManager();
+                $em->remove($deleted);
+                $em->flush();
+            }
+
             $arrayMarks = $session->get('savedMarksNames');
+            foreach ($arrayMarks as $key => $currentMark) {
+                if ($currentMark == $_POST['update']) {
+                    array_splice($arrayMarks,$key,1);
+                }
+            }
             foreach ($arrayMarks as $key => $currentMark) {
                 if ($currentMark == $_POST['update']) {
                     array_splice($arrayMarks,$key,1);

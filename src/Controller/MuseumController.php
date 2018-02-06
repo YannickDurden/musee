@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Museum;
 use App\Form\AddMapType;
 use App\Form\EditMuseumType;
+use App\Form\MuseumType;
 use App\Form\UserLogType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

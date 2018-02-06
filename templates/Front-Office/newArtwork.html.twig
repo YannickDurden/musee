@@ -2,34 +2,32 @@
 
 {% block stylesheets %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Great+Vibes" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display|Raleway|Great+Vibes" rel="stylesheet">
     <link rel="stylesheet" href="{{app.request.basepath}}/css/style-artwork.css">
 {% endblock %}
 {% block body %}
     <main class="container-fluid">
-            <div id="banner" class="row">
-                <div class="calque">
-                    <nav id="brand" class="navbar">
-                        <span class="navbar-brand mb-0 h1">MyMuseum</span>
-                    </nav>
-                    <nav id="breadcrumb" aria-label="breadcrumb">
-                        <ol class="breadcrumb">
-                            <li class="hide-li breadcrumb-item">
-                                <a href="{{ path('my_museum') }}">Accueil</a>
-                            </li>
-                            <li class="hide-li breadcrumb-item">
-                                <a href="{{ path("begin_route") }}">{{ nameRoute }}</a>
-                            </li>
-                            <li class="hide-li breadcrumb-item">
-                                <a href="#">{{ currentMark.name }}</a>
-                            </li>
-                            <li class="breadcrumb-item active" aria-current="page">Description</li>
-                        </ol>
-                    </nav>
-                </div>
+        <div id="banner" class="row">
+            <div class="calque">
+                <nav id="brand" class="navbar">
+                    <span class="navbar-brand mb-0 h1">MyMuseum</span>
+                </nav>
+                <nav id="breadcrumb" aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path('my_museum') }}">Accueil</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="{{ path("begin_route") }}">{{ nameRoute }}</a>
+                        </li>
+                        <li class="hide-li breadcrumb-item">
+                            <a href="#">{{ currentMark.name }}</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Description</li>
+                    </ol>
+                </nav>
             </div>
+        </div>
 
         <div id="artwork-name" class="row">
             <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
@@ -38,7 +36,7 @@
         <div id="wrapper" class="row">
             <div class="img-tablet col-12 col-md-6">
                 <img class="img-artwork img-fluid w-100"
-                     src="{{app.request.basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{currentMark.image }#}"
+                     src="{{app.request.basepath}}/uploads/{{ currentMedia.file }}"
                      alt="image de l'oeuvre">
             </div>
 
@@ -51,18 +49,18 @@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="{{ path("begin_route") }}">Retour carte</a>
+                           href="{{ path("quiz",{'id': id}) }}">Quiz</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link"
-                           href="{{ path("quiz",{'id': id}) }}">Quiz</a>
+                           href="{{ path("begin_route") }}">Retour carte</a>
                     </li>
                 </ul>
                 <!-- Fin Menu tablette -->
 
                 <section class="img-mobile">
                     <img class="img-artwork img-fluid w-100"
-                         src="{{app.request.basepath}}/uploads/{{ currentMark.image }}"
+                         src="{{app.request.basepath}}/uploads/{{ currentMedia.file }}"
                          alt="image de l'oeuvre">
                     <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
                 </section>
@@ -83,11 +81,11 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link"
-                                   href="{{ path("begin_route") }}">Retour carte</a>
+                                   href="{{ path("quiz",{'id': id }) }}">Quiz</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link"
-                                   href="{{ path("quiz",{'id': id }) }}">Quiz</a>
+                                   href="{{ path("begin_route") }}">Retour carte</a>
                             </li>
                         </ul>
                         <!-- Fin Menu mobile -->
