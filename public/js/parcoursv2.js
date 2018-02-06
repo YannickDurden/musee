@@ -77,7 +77,7 @@ $(function () {
             $('#table-mark').fadeOut('slow');
             //Récupère tous les repères liés au parcours
             $.ajax({
-                url: '/ajax/getMarks',
+                url: 'http://localhost:8000/ajax/getMarks',
                 type: 'POST',
                 data: {name: name}
             })
@@ -174,7 +174,7 @@ $(function () {
             //Récupere le précedent pour pouvoir tester si il c'est un update d'un parcours existant en PHP
             var name = $('#form_route option:selected').text();
             $.ajax({
-                url: '/ajax/saveRoutetoBDD',
+                url: 'http://localhost:8000/ajax/saveRoutetoBDD',
                 type: 'POST',
                 data: {routeInfo: $routeInfo, name: name}
             })
@@ -199,7 +199,7 @@ $(function () {
         //Pour la recherche dans le tableau de repère en session il faut le nom originel du repère
         var decodedName = decodeURI(name);
         $.ajax({
-            url: '/ajax/deleteMarkFromSession',
+            url: 'http://localhost:8000/ajax/deleteMarkFromSession',
             type: 'POST',
             data: {name: decodedName}
         });
@@ -216,7 +216,7 @@ $(function () {
         $("#previousName").val(decodedName);
 
         $.ajax({
-            url: '/ajax/getMarkInfo',
+            url: 'http://localhost:8000/ajax/getMarkInfo',
             type: 'POST',
             data: {name: decodedName}
         })
@@ -324,7 +324,7 @@ $(function () {
             $("#hideForm").delay(3000).fadeOut(800);
 
             $.ajax({
-                url: '/ajax/saveMarkToSession',
+                url: 'http://localhost:8000/ajax/saveMarkToSession',
                 type: 'POST',
                 data: {markInfo: $markInfo, update: previousName}
             }).done(function () {

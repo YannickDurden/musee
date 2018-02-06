@@ -31,7 +31,7 @@ class AjaxController extends Controller
     public function ajaxEditRoute(Request $request)
     {
         $id = $_POST['id'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->find($id);
+        $currentRoute = $this->getDoctrine()->getRepository(r::class)->find($id);
         $currentMap = new File('C:\xampp\htdocs\musee\public\uploads\\' . $currentRoute->getMap());
         $currentRoute->setMap($currentMap);
         $form = $this->createForm(AddRouteType::class, $currentRoute);
@@ -50,6 +50,36 @@ class AjaxController extends Controller
         ]);
     }
 
+    /**
+     * @Route("ajax/route/add", name="ajax_add_BDD")
+     */
+    public function addAjaxBdd()
+    {
+        //Décompose le json recu en tableau
+        parse_str($_POST['form'], $arrayObject);
+
+        //Recuperation de la route en BDD et mise à jour des valeurs
+        $updatedRoute = $this->getDoctrine()->getRepository(r::class)->find($_POST['id']);
+        $updatedRoute->setName($arrayObject['add_route']['name']);
+        $updatedRoute->setDescription($arrayObject['add_route']['description']);
+        $durationArrayToString = strval($arrayObject['add_route']['duration']['hour']) . " " . strval($arrayObject['add_route']['duration']['minute']);
+        //$updatedRoute->setMap($_POST['fileName']);
+        $duration = \DateTime::createFromFormat('H i', $durationArrayToString);
+        $duration = new \DateTime('now');
+        $updatedRoute->setDuration($duration);
+        $arrayMarks = new ArrayCollection();
+        //Boucle permettant de récuperer tout les repères associés a une route pour update les modif de la route
+        for ($i = 0; $i < count($arrayObject['add_route']['marks']); $i++) {
+            $arrayMarks [] = $this->getDoctrine()->getRepository(Mark::class)->find($arrayObject['add_route']['marks'][$i]);
+        }
+        $updatedRoute->setMarks($arrayMarks);
+        $em = $this->getDoctrine()->getManager();
+        $em->merge($updatedRoute);
+        $em->flush();
+
+        return new Response("Modif effectuée");
+    }
+    
     /**
      * @route("ajax/saveMarkToSession", name="add_mark_session")
      * Créé un objet de type Mark avec les info envoyées l'ajoute en BDD et le stock en session
@@ -156,7 +186,7 @@ class AjaxController extends Controller
         */
         parse_str($_POST['routeInfo'], $decodedJson);
         $arrayMarks = [];
-        $newRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $_POST['name']]);
+        $newRoute = $this->getDoctrine()->getRepository(r::class)->findOneBy(['name' => $_POST['name']]);
         if ($newRoute == null) {
             $newRouteToSave = new \App\Entity\Route();
         } else {
@@ -252,7 +282,6 @@ class AjaxController extends Controller
         $session->set('savedMarksNames', $arrayMarks);
         print_r($session->get('savedMarksNames'));
         return new Response("Done");
-
     }
 
     /**
@@ -261,7 +290,7 @@ class AjaxController extends Controller
     public function getMarks(Request $request, SessionInterface $session)
     {
         $name = $_POST['name'];
-        $currentRoute = $this->getDoctrine()->getRepository(\App\Entity\Route::class)->findOneBy(['name' => $name]);
+        $currentRoute = $this->getDoctrine()->getRepository(r::class)->findOneBy(['name' => $name]);
         $allMarks = $currentRoute->getMarks();
         $duration = $currentRoute->getDuration();
         $arrayMarks = [];
@@ -286,6 +315,43 @@ class AjaxController extends Controller
     }
 
     /**
+     * @Route("/Mark/displayAllroute", name="display_all_Route")
+     */
+    public function displayAllroute(Request $request)
+    {
+        $routes = $this->getDoctrine()->getManager()
+            ->getRepository(r::class)
+            ->findAll();
+        $jsonData = array();
+        $idx = 0;
+        foreach($routes as $route) {
+            $temp = array(
+                'id' =>$route->getId(),
+                'name' => $route->getName(),
+                'description'=>$route->getDescription(),
+                'duration'=>$route->getDuration(),
+            );
+            $jsonData[$idx++] = $temp;
+        }
+        return new JsonResponse($jsonData);
+    }
+
+    /**
+     * @Route("/Ajax/deleteRoute",name="Ajax_delete_Route")
+     */
+    public function deleteRoute(Request $request)
+    {
+        $tableId = $request->request->get('tableId');
+        $em=$this->getDoctrine()->getManager();
+        $route = $em->getRepository(r::class)->find($tableId);
+        $em->remove($route);
+        $em->flush();
+        return new Response("is Delete");
+
+    }
+
+    
+    /**
      * @route("ajax/addToSession", name="add_mark_to_session")
      */
     public function addMarkToSession(SessionInterface $session)
@@ -296,6 +362,9 @@ class AjaxController extends Controller
         $session->set('savedMarksNames', $arrayMarks);
         print_r($session->get('savedMarksNames'));
 
+
         return new Response("Ajout en session effectué");
+       
     }
+         
 }

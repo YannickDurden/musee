@@ -65,12 +65,6 @@ function coord() {
 
 }
 
-
-
-
-
-
-
 $(document).ready(function() {
 
 
