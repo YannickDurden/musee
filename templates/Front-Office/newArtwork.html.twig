@@ -19,8 +19,8 @@
                             <li class="hide-li breadcrumb-item">
                                 <a href="{{ path('my_museum') }}">Accueil</a>
                             </li>
-                            <li class="hide-li breadcrumb-item"><a
-                                        href="{{ path("begin_route") }}">{{ nameRoute }}</a>
+                            <li class="hide-li breadcrumb-item">
+                                <a href="{{ path("begin_route") }}">{{ nameRoute }}</a>
                             </li>
                             <li class="hide-li breadcrumb-item">
                                 <a href="#">{{ currentMark.name }}</a>
@@ -40,30 +40,29 @@
                 <img class="img-artwork img-fluid w-100"
                      src="{{app.request.basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{currentMark.image }#}"
                      alt="image de l'oeuvre">
-
             </div>
 
             <div id="border-tablet" class="col-md-6">
                 <!-- Menu tablette -->
                 <ul id="btn-tablet" class="nav nav-tabs nav-fill">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ path("artwork",{'id':id})
-                        }}">Description</a>
+                        <a class="nav-link active"
+                           href="{{ path("artwork",{'id':id}) }}">Description</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("begin_route")
-                        }}">Retour carte</a>
+                        <a class="nav-link"
+                           href="{{ path("begin_route") }}">Retour carte</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ path("quiz",{'id': id})
-                        }}">Quiz</a>
+                        <a class="nav-link"
+                           href="{{ path("quiz",{'id': id}) }}">Quiz</a>
                     </li>
                 </ul>
                 <!-- Fin Menu tablette -->
 
                 <section class="img-mobile">
                     <img class="img-artwork img-fluid w-100"
-                         src="{{app.request.basepath}}/uploads/87bb5fc8031f7b37261a975080e39bfb.jpeg{#}{currentMark.image }#}"
+                         src="{{app.request.basepath}}/uploads/{{ currentMark.image }}"
                          alt="image de l'oeuvre">
                     <h1 class="text-center">{{ currentMark.name }}</h1><!--Titre de l'oeuvre-->
                 </section>
@@ -79,17 +78,16 @@
                         <!-- Menu mobile -->
                         <ul class="fixed-bottom nav nav-tabs nav-fill">
                             <li class="nav-item">
-                                <a class="nav-link active" href="{{ path("artwork",{'id':id})
-                                }}">Description</a>
+                                <a class="nav-link active"
+                                   href="{{ path("artwork",{'id':id}) }}">Description</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path("begin_route")
-                                }}">Retour
-                                    carte</a>
+                                <a class="nav-link"
+                                   href="{{ path("begin_route") }}">Retour carte</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path("quiz",{'id': id })
-                                }}">Quiz</a>
+                                <a class="nav-link"
+                                   href="{{ path("quiz",{'id': id }) }}">Quiz</a>
                             </li>
                         </ul>
                         <!-- Fin Menu mobile -->
