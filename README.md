@@ -1,4 +1,4 @@
-#MyMuseum
+# MyMuseum
 
 MyMuseum is an application for museums to allow visitors and have an interactive visit . Choose a course, a category (adult or child) and let you guide. When you click on an point on the map (an art), you will have some informations about the art and a quiz to increase your knowledges.
    
